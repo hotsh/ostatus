@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom" xmlns:thr="http://purl.org/syndication/thread/1.0" xmlns:georss="http://www.georss.org/georss" xmlns:activity="http://activitystrea.ms/spec/1.0/" xmlns:media="http://purl.org/syndication/atommedia" xmlns:poco="http://portablecontacts.net/spec/1.0" xmlns:ostatus="http://ostatus.org/schema/1.0" xmlns:statusnet="http://status.net/schema/api/1/">
+	<generator uri="http://status.net" version="0.9.7beta3">StatusNet</generator>
+	<id>http://identi.ca/api/statuses/user_timeline/141464.atom</id>
+	<title>greenmanspirit timeline</title>
+	<subtitle>Updates from greenmanspirit on Identi.ca!</subtitle>
+	<logo>http://avatar.identi.ca/141464-96-20100607212940.jpeg</logo>
+	<updated>2011-03-12T22:10:24+00:00</updated>
+	<author>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
+		<uri>http://identi.ca/user/141464</uri>
+		<name>greenmanspirit</name>
+		<link rel="alternate" type="text/html" href="http://identi.ca/greenmanspirit"/>
+		<link rel="avatar" type="image/jpeg" media:width="480" media:height="480" href="http://avatar.identi.ca/141464-480-20100607212940.jpeg"/>
+		<link rel="avatar" type="image/jpeg" media:width="96" media:height="96" href="http://avatar.identi.ca/141464-96-20100607212940.jpeg"/>
+		<link rel="avatar" type="image/jpeg" media:width="48" media:height="48" href="http://avatar.identi.ca/141464-48-20100607212940.jpeg"/>
+		<link rel="avatar" type="image/jpeg" media:width="24" media:height="24" href="http://avatar.identi.ca/141464-24-20100607212940.jpeg"/>
+		<georss:point>0 0</georss:point>
+		<poco:preferredUsername>greenmanspirit</poco:preferredUsername>
+		<poco:displayName>Adam Hobaugh</poco:displayName>
+		<poco:urls>
+			<poco:type>homepage</poco:type>
+			<poco:value>http://adamhobaugh.com</poco:value>
+			<poco:primary>true</poco:primary>
+
+		</poco:urls>
+		<statusnet:profile_info local_id="141464"></statusnet:profile_info>
+	</author>
+	<!--Deprecation warning: activity:subject is present only for backward compatibility. It will be removed in the next version of StatusNet.-->
+	<activity:subject>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
+		<id>http://identi.ca/user/141464</id>
+		<title>Adam Hobaugh</title>
+		<link rel="alternate" type="text/html" href="http://identi.ca/greenmanspirit"/>
+		<link rel="avatar" type="image/jpeg" media:width="480" media:height="480" href="http://avatar.identi.ca/141464-480-20100607212940.jpeg"/>
+		<link rel="avatar" type="image/jpeg" media:width="96" media:height="96" href="http://avatar.identi.ca/141464-96-20100607212940.jpeg"/>
+		<link rel="avatar" type="image/jpeg" media:width="48" media:height="48" href="http://avatar.identi.ca/141464-48-20100607212940.jpeg"/>
+		<link rel="avatar" type="image/jpeg" media:width="24" media:height="24" href="http://avatar.identi.ca/141464-24-20100607212940.jpeg"/>
+		<georss:point>0 0</georss:point>
+		<poco:preferredUsername>greenmanspirit</poco:preferredUsername>
+		<poco:displayName>Adam Hobaugh</poco:displayName>
+		<poco:urls>
+			<poco:type>homepage</poco:type>
+			<poco:value>http://adamhobaugh.com</poco:value>
+			<poco:primary>true</poco:primary>
+
+		</poco:urls>
+		<statusnet:profile_info local_id="141464"></statusnet:profile_info>
+	</activity:subject>
+	<link href="http://identi.ca/greenmanspirit" rel="alternate" type="text/html"/>
+	<link href="http://identi.ca/main/sup#141464" rel="http://api.friendfeed.com/2008/03#sup" type="application/json"/>
+	<link href="http://identi.ca/api/statuses/user_timeline/141464.atom?max_id=51327114" rel="next" type="application/atom+xml"/>
+	<link href="http://identi.ca/main/push/hub" rel="hub"/>
+	<link href="http://identi.ca/main/salmon/user/141464" rel="salmon"/>
+	<link href="http://identi.ca/main/salmon/user/141464" rel="http://salmon-protocol.org/ns/salmon-replies"/>
+	<link href="http://identi.ca/main/salmon/user/141464" rel="http://salmon-protocol.org/ns/salmon-mention"/>
+	<link href="http://identi.ca/api/statuses/user_timeline/141464.atom" rel="self" type="application/atom+xml"/>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/66822457</id>
+		<title>wilkie said I need my fag</title>
+		<content type="html">wilkie said I need my fag</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/66822457"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2011-03-12T16:29:24+00:00</published>
+		<updated>2011-03-12T16:29:24+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/66023273"/>
+		<georss:point>40.5134 -79.87977</georss:point>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/66822457.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/66822457.atom"/>
+		<statusnet:notice_info local_id="66822457" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/64991641</id>
+		<title>staples come out of the head tomorrow, oh yeah</title>
+		<content type="html">staples come out of the head tomorrow, oh yeah</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/64991641"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2011-02-21T02:15:14+00:00</published>
+		<updated>2011-02-21T02:15:14+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/64239058"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64991641.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64991641.atom"/>
+		<statusnet:notice_info local_id="64991641" source="xmpp" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/64985575</id>
+		<title>getting back into applying for jobs now that I have my debt back under control from unemployment</title>
+		<content type="html">getting back into applying for jobs now that I have my debt back under control from unemployment</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/64985575"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2011-02-21T00:41:24+00:00</published>
+		<updated>2011-02-21T00:41:24+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/64233166"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64985575.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64985575.atom"/>
+		<statusnet:notice_info local_id="64985575" source="xmpp" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/61452377</id>
+		<title>It's times like this I wish I had sleepytime tea</title>
+		<content type="html">It's times like this I wish I had sleepytime tea</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/61452377"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2011-01-03T05:11:50+00:00</published>
+		<updated>2011-01-03T05:11:50+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/60809276"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/61452377.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/61452377.atom"/>
+		<statusnet:notice_info local_id="61452377" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/61441098</id>
+		<title>My latest accomplishment - http://ravel.me/greenmanspirit/ro20b</title>
+		<content type="html">My latest accomplishment - &lt;a href=&quot;http://ravel.me/greenmanspirit/ro20b&quot; title=&quot;http://www.ravelry.com/projects/greenmanspirit/reversible-strands-for-men-and-women-too&quot; rel=&quot;nofollow external&quot;&gt;http://ravel.me/greenmanspirit/ro20b&lt;/a&gt;</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/61441098"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2011-01-02T22:49:44+00:00</published>
+		<updated>2011-01-02T22:49:44+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/60798524"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/61441098.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/61441098.atom"/>
+		<statusnet:notice_info local_id="61441098" source="web" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/60190679</id>
+		<title>First field trip today, and its to the mall</title>
+		<content type="html">First field trip today, and its to the mall</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/60190679"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-12-10T18:50:20+00:00</published>
+		<updated>2010-12-10T18:50:20+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/59590921"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/60190679.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/60190679.atom"/>
+		<statusnet:notice_info local_id="60190679" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/59612332</id>
+		<title>bacon makes everything better</title>
+		<content type="html">bacon makes everything better</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/59612332"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-12-02T02:33:38+00:00</published>
+		<updated>2010-12-02T02:33:38+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/59031019"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/59612332.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/59612332.atom"/>
+		<statusnet:notice_info local_id="59612332" source="xmpp" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/57207676</id>
+		<title>I am now a professional driver, will post my cdl once I'm not to lazy to scratch off personal info</title>
+		<content type="html">I am now a professional driver, will post my cdl once I'm not to lazy to scratch off personal info</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/57207676"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-10-23T00:53:05+00:00</published>
+		<updated>2010-10-23T00:53:05+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/56711855"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/57207676.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/57207676.atom"/>
+		<statusnet:notice_info local_id="57207676" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/56394008</id>
+		<title>Has anyone ever used a pedometer to guide a workout plan, I have one laying around but need a workout plan to go with it and if its worth it</title>
+		<content type="html">Has anyone ever used a pedometer to guide a workout plan, I have one laying around but need a workout plan to go with it and if its worth it</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/56394008"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-10-16T20:29:50+00:00</published>
+		<updated>2010-10-16T20:29:50+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/55912537"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/56394008.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/56394008.atom"/>
+		<statusnet:notice_info local_id="56394008" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/56176750</id>
+		<title>Stargate Universe is by far my favorite show, its what Voyager should have been</title>
+		<content type="html">Stargate Universe is by far my favorite show, its what Voyager should have been</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/56176750"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-10-14T23:24:48+00:00</published>
+		<updated>2010-10-14T23:24:48+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/55699029"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/56176750.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/56176750.atom"/>
+		<statusnet:notice_info local_id="56176750" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/54276991</id>
+		<title>Anyone have 500 I can borrow to cover till my bus job pays, I will to pay $50 in interest, payments 45 for 11, 55 month 12, will pay notary</title>
+		<content type="html">Anyone have 500 I can borrow to cover till my bus job pays, I will to pay $50 in interest, payments 45 for 11, 55 month 12, will pay notary</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/54276991"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-10-05T15:48:37+00:00</published>
+		<updated>2010-10-05T15:48:37+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/53821805"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/54276991.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/54276991.atom"/>
+		<statusnet:notice_info local_id="54276991" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/54003337</id>
+		<title>First day of bus driver training</title>
+		<content type="html">First day of bus driver training</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/54003337"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-10-04T11:33:04+00:00</published>
+		<updated>2010-10-04T11:33:04+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/53550533"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/54003337.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/54003337.atom"/>
+		<statusnet:notice_info local_id="54003337" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/53268824</id>
+		<title>my car is 300 pounds lighter, just returned all my asbestos stuff!</title>
+		<content type="html">my car is 300 pounds lighter, just returned all my asbestos stuff!</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/53268824"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-30T18:47:35+00:00</published>
+		<updated>2010-09-30T18:47:35+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/52822605"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/53268824.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/53268824.atom"/>
+		<statusnet:notice_info local_id="53268824" source="xmpp" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/53053891</id>
+		<title>Got the job as a school bus driver, I start cdl class next week</title>
+		<content type="html">Got the job as a school bus driver, I start cdl class next week</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/53053891"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-29T16:34:59+00:00</published>
+		<updated>2010-09-29T16:34:59+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/52610163"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/53053891.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/53053891.atom"/>
+		<statusnet:notice_info local_id="53053891" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/52674737</id>
+		<title>My bro is selling a nook and kindle for a friend, much fun shall be had by me</title>
+		<content type="html">My bro is selling a nook and kindle for a friend, much fun shall be had by me</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/52674737"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-27T16:04:44+00:00</published>
+		<updated>2010-09-27T16:04:44+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/52235564"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52674737.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52674737.atom"/>
+		<statusnet:notice_info local_id="52674737" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/52400602</id>
+		<title>Made mozzarella today, woot, next step, Swiss or Cheddar? Hmm</title>
+		<content type="html">Made mozzarella today, woot, next step, Swiss or Cheddar? Hmm</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/52400602"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-25T23:54:10+00:00</published>
+		<updated>2010-09-25T23:54:10+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/51964154"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52400602.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52400602.atom"/>
+		<statusnet:notice_info local_id="52400602" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/52201233</id>
+		<title>RT @candrews #Facebook went down yesterday, taking 1,000s of sites down with it. Is this single point of failure really worth it? http:/ ...</title>
+		<content type="html">RT @&lt;span class=&quot;vcard&quot;&gt;&lt;a href=&quot;http://identi.ca/user/12287&quot; class=&quot;url&quot; title=&quot;Craig Andrews&quot;&gt;&lt;span class=&quot;fn nickname&quot;&gt;candrews&lt;/span&gt;&lt;/a&gt;&lt;/span&gt; #&lt;span class=&quot;tag&quot;&gt;&lt;a href=&quot;http://identi.ca/tag/facebook&quot; rel=&quot;tag&quot;&gt;Facebook&lt;/a&gt;&lt;/span&gt; went down yesterday, taking 1,000s of sites down with it. Is this single point of failure really worth it? http:/ ...</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/52201233"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-24T18:40:10+00:00</published>
+		<updated>2010-09-24T18:40:10+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/51766744"/>
+		<ostatus:forward ref="http://identi.ca/notice/52180213" href="http://identi.ca/notice/52180213"></ostatus:forward>
+		<category term="facebook"></category>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52201233.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52201233.atom"/>
+		<statusnet:notice_info local_id="52201233" source="web" favorite="false" repeated="false" repeat_of="52180213"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/52198476</id>
+		<title>anyone with an iphone want to trade a 15 dollar gift card for 15 cash, I got this as a gift and it is useless to me</title>
+		<content type="html">anyone with an iphone want to trade a 15 dollar gift card for 15 cash, I got this as a gift and it is useless to me</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/52198476"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-24T18:20:10+00:00</published>
+		<updated>2010-09-24T18:20:10+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/51764033"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52198476.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52198476.atom"/>
+		<statusnet:notice_info local_id="52198476" source="xmpp" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/52078750</id>
+		<title>everytime the compressor for my air conditioner shuts off, my dog jumps thinking someone is at the door</title>
+		<content type="html">everytime the compressor for my air conditioner shuts off, my dog jumps thinking someone is at the door</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/52078750"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-24T02:40:22+00:00</published>
+		<updated>2010-09-24T02:40:22+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/51645609"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52078750.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/52078750.atom"/>
+		<statusnet:notice_info local_id="52078750" source="xmpp" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+	<entry>
+		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<id>http://identi.ca/notice/51893773</id>
+		<title>5.5 hours without power</title>
+		<content type="html">5.5 hours without power</content>
+		<link rel="alternate" type="text/html" href="http://identi.ca/notice/51893773"/>
+		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
+		<published>2010-09-23T02:15:02+00:00</published>
+		<updated>2010-09-23T02:15:02+00:00</updated>
+		<link rel="ostatus:conversation" href="http://identi.ca/conversation/51462564"/>
+		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/51893773.atom"/>
+		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/51893773.atom"/>
+		<statusnet:notice_info local_id="51893773" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
+
+	</entry>
+</feed>
+
