@@ -24,10 +24,6 @@ module OStatus
       Activity.new(@entry)
     end
 
-    def to_s
-      info.to_s
-    end
-
     def pick_first_node(a)
       if a.empty?
         nil

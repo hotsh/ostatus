@@ -4,7 +4,9 @@ module OStatus
   class Activity
 
     # This will create an instance of an Activity class populated
-    # with the given XML data.
+    # with the given data as a Hash or parsable XML given by a 
+    # Nokogiri::XML::Element that serves as the root node of
+    # anything containing the activity tags.
     def initialize(activity_root)
       if activity_root.class == Hash
         @activity_data = activity_root
