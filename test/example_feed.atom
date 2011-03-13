@@ -57,29 +57,14 @@
 	<link href="http://identi.ca/api/statuses/user_timeline/141464.atom" rel="self" type="application/atom+xml"/>
 	<entry>
 		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
-		<id>http://identi.ca/notice/66822457</id>
-		<title>wilkie said I need my fag</title>
-		<content type="html">wilkie said I need my fag</content>
-		<link rel="alternate" type="text/html" href="http://identi.ca/notice/66822457"/>
-		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
-		<published>2011-03-12T16:29:24+00:00</published>
-		<updated>2011-03-12T16:29:24+00:00</updated>
-		<link rel="ostatus:conversation" href="http://identi.ca/conversation/66023273"/>
-		<georss:point>40.5134 -79.87977</georss:point>
-		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/66822457.atom"/>
-		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/66822457.atom"/>
-		<statusnet:notice_info local_id="66822457" source="&lt;a href=&quot;http://mustard.macno.org&quot; rel=&quot;nofollow&quot;&gt;mustard&lt;/a&gt;" source_link="http://mustard.macno.org" favorite="false" repeated="false"></statusnet:notice_info>
-
-	</entry>
-	<entry>
-		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
+		<activity:object>Foobar</activity:object>
 		<id>http://identi.ca/notice/64991641</id>
 		<title>staples come out of the head tomorrow, oh yeah</title>
 		<content type="html">staples come out of the head tomorrow, oh yeah</content>
 		<link rel="alternate" type="text/html" href="http://identi.ca/notice/64991641"/>
 		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
 		<published>2011-02-21T02:15:14+00:00</published>
-		<updated>2011-02-21T02:15:14+00:00</updated>
+		<updated>2011-03-22T02:15:14+00:00</updated>
 		<link rel="ostatus:conversation" href="http://identi.ca/conversation/64239058"/>
 		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64991641.atom"/>
 		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64991641.atom"/>
@@ -87,14 +72,12 @@
 
 	</entry>
 	<entry>
-		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
 		<id>http://identi.ca/notice/64985575</id>
 		<title>getting back into applying for jobs now that I have my debt back under control from unemployment</title>
 		<content type="html">getting back into applying for jobs now that I have my debt back under control from unemployment</content>
 		<link rel="alternate" type="text/html" href="http://identi.ca/notice/64985575"/>
-		<activity:verb>http://activitystrea.ms/schema/1.0/post</activity:verb>
 		<published>2011-02-21T00:41:24+00:00</published>
-		<updated>2011-02-21T00:41:24+00:00</updated>
+		<updated>2011-03-22T00:41:24+00:00</updated>
 		<link rel="ostatus:conversation" href="http://identi.ca/conversation/64233166"/>
 		<link rel="self" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64985575.atom"/>
 		<link rel="edit" type="application/atom+xml" href="http://identi.ca/api/statuses/show/64985575.atom"/>
