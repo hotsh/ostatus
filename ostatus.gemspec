@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "oauth"
   s.add_dependency "nokogiri"
+  s.add_dependency "tinyatom"
   s.add_development_dependency "rspec"
 
   s.files         = `git ls-files`.split("\n")
