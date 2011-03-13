@@ -1,13 +1,20 @@
 require_relative 'activity'
 
 module OStatus
+
+  # Holds information about an individual entry in the Feed.
   class Entry
-    def initialize(entry_nodeset)
-      @entry = entry_nodeset
+
+    # Instantiates an Entry object from a given the <entry></entry> root
+    # passed as an instance of a Norogiri::XML::Element.
+    def initialize(entry_node)
+      @entry = entry_node
     end
 
+    # Gives an instance of an OStatus::Activity that parses the fields
+    # having an activity prefix.
     def activity
-      Activity.new(@entry.xpath('activity:*'))
+      Activity.new(@entry)
     end
 
     def to_s
@@ -23,28 +30,38 @@ module OStatus
     end
     private :pick_first_node
 
+    # Returns the title of the entry.
     def title
       pick_first_node(@entry.css('title'))
     end
 
+    # Returns the content of the entry.
     def content
       pick_first_node(@entry.css('content'))
     end
 
+    # Returns the content-type of the entry.
     def content_type
       content = @entry.css('content')
-      content_type = content[0]['type'] unless content.empty?
-      content.empty? ? "" : content[0].content
+      content.empty? ? "" : content[0]['type']
     end
 
+    # Returns the DateTime that this entry was published.
     def published
-      Date.parse(pick_first_node(@entry.css('published')))
+      DateTime.parse(pick_first_node(@entry.css('published')))
     end
 
+    # Returns the DateTime that this entry was updated.
     def updated
-      Date.parse(pick_first_node(@entry.css('updated')))
+      DateTime.parse(pick_first_node(@entry.css('updated')))
     end
 
+    # Returns the id of the entry.
+    def id
+      pick_first_node(@entry.css('id'))
+    end
+
+    # Returns a Hash of all fields.
     def info
       {
         :activity => self.activity.info,
