@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name        = "ostatus"
   s.version     = OStatus::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = [Hackers of the Severed Hand]
-  s.email       = [hotsh@xomb.org]
+  s.authors     = ['Hackers of the Severed Hand']
+  s.email       = ['hotsh@xomb.org']
   s.homepage    = "http://github.com/hotsh/ostatus"
   s.summary     = %q{Implementations of the OStatus data stream objects.}
   s.description = %q{This project is to be used to jumpstart OStatus related projects that implement the PubSubHubbub protocols by providing the common fundamentals of Atom parsing and OStatus object creation.}
