@@ -6,7 +6,13 @@ module OStatus
     # This will create an instance of an Activity class populated
     # with the given XML data.
     def initialize(activity_root)
-      @activity = activity_root
+      if activity_root.class == Hash
+        @activity_data = activity_root
+        @activity = nil
+      else
+        @activity = activity_root
+        @activity_data = nil
+      end
     end
 
     def pick_first_node(a)
@@ -20,21 +26,25 @@ module OStatus
 
     # Returns the object field or nil if it does not exist.
     def object
+      return @activity_data[:object] unless @activity_data == nil
       pick_first_node(@activity.xpath('./activity:object'))
     end
 
     # Returns the target field or nil if it does not exist.
     def target
+      return @activity_data[:target] unless @activity_data == nil
       pick_first_node(@activity.xpath('./activity:target'))
     end
 
     # Returns the verb field or nil if it does not exist.
     def verb
+      return @activity_data[:verb] unless @activity_data == nil
       pick_first_node(@activity.xpath('./activity:verb'))
     end
 
     # Returns the object-type field or nil if it does not exist.
     def object_type
+      return @activity_data[:object_type] unless @activity_data == nil
       pick_first_node(@activity.xpath('./activity:object-type'))
     end
 
