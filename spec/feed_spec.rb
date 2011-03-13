@@ -12,9 +12,9 @@ describe OStatus::Feed do
     end
   end
 
-  describe "#hub" do
+  describe "#hubs" do
     it "should return a String containing the hub url given in the link tag" do
-      @feed.hub.should eql('http://identi.ca/main/push/hub')
+      @feed.hubs.should eql(['http://identi.ca/main/push/hub', 'http://identi.ca/main/push/hub2'])
     end
   end
 

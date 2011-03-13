@@ -64,6 +64,7 @@ bar</poco:note>
 	<link href="http://identi.ca/main/sup#141464" rel="http://api.friendfeed.com/2008/03#sup" type="application/json"/>
 	<link href="http://identi.ca/api/statuses/user_timeline/141464.atom?max_id=51327114" rel="next" type="application/atom+xml"/>
 	<link href="http://identi.ca/main/push/hub" rel="hub"/>
+	<link href="http://identi.ca/main/push/hub2" rel="hub"/>
 	<link href="http://identi.ca/main/salmon/user/141464" rel="salmon"/>
 	<link href="http://identi.ca/main/salmon/user/141464" rel="http://salmon-protocol.org/ns/salmon-replies"/>
 	<link href="http://identi.ca/main/salmon/user/141464" rel="http://salmon-protocol.org/ns/salmon-mention"/>

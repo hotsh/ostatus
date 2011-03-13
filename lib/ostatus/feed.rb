@@ -26,7 +26,7 @@ module OStatus
 
     # Creates a new Feed instance that contains the information given by
     # the various instances of author and entries.
-    def Feed.from_data(author, entries, hub_url)
+    def Feed.from_data(author, entries)
       Feed.new(nil, nil, author, entries)
     end
 
@@ -48,8 +48,10 @@ module OStatus
     end
 
     # Returns the hub URL from the link tag.
-    def hub
-      link(:hub).first[:href]
+    def hubs
+      link(:hub).map do |link|
+        link[:href]
+      end
     end
 
     # Returns the salmon URL from the link tag.
