@@ -8,9 +8,6 @@
 	<updated>2011-03-12T22:10:24+00:00</updated>
 	<author>
 		<activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
-		<uri>http://identi.ca/user/141464</uri>
-		<name>greenmanspirit</name>
-		<email>foo@example.com</email>
 		<link rel="alternate" type="text/html" href="http://identi.ca/greenmanspirit"/>
 		<link rel="avatar" type="image/jpeg" media:width="480" media:height="480" href="http://avatar.identi.ca/141464-480-20100607212940.jpeg"/>
 		<link rel="avatar" type="image/jpeg" media:width="96" media:height="96" href="http://avatar.identi.ca/141464-96-20100607212940.jpeg"/>

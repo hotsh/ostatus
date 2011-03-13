@@ -5,8 +5,8 @@ module OStatus
   # Holds information about an individual entry in the Feed.
   class Entry
 
-    # Instantiates an Entry object from a given the <entry></entry> root
-    # passed as an instance of a Norogiri::XML::Element.
+    # Instantiates an Entry object from a given <entry></entry> root
+    # passed as an instance of a Nokogiri::XML::Element.
     def initialize(entry_node)
       @entry = entry_node
     end

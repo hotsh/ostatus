@@ -1,10 +1,17 @@
 require_relative '../lib/ostatus/feed.rb'
 require_relative '../lib/ostatus/entry.rb'
+require_relative '../lib/ostatus/activity.rb'
 
 describe OStatus::Entry do
   before(:each) do
     @feed = OStatus::Feed.new('test/example_feed.atom')
     @entry = @feed.entries[0]
+  end
+
+  describe "#activity" do
+    it "should return an Activity instance" do
+      @entry.activity.class.should eql(OStatus::Activity)
+    end
   end
 
   describe "#title" do

@@ -26,7 +26,13 @@ module OStatus
       end
     end
 
+    # Returns an OStatus::Author that will parse the author information
+    # within the Feed.
     def author
+      xml = Nokogiri::XML::Document.parse(self.atom)
+
+      author_xml = xml.at_css('author')
+      OStatus::Author.new(author_xml)
     end
 
     # This method gives you an array of OStatus::Entry instances for 
