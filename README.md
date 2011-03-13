@@ -1,7 +1,7 @@
 OStatus
 =======
 
-This gem implements the OStatus protocol and the technologies that are related to it such as PubSubHubbub, ActivityStreams, PortableContacts, and Salmon.
+This gem implements the OStatus protocol data streams and the technologies that are related to it such as ActivityStreams, PortableContacts, and Salmon.
 
 What it does
 ------------
