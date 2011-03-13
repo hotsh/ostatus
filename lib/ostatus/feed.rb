@@ -47,7 +47,7 @@ module OStatus
       end
     end
 
-    # Returns the hub URL from the link tag.
+    # Returns an array of URLs for each hub link tag.
     def hubs
       link(:hub).map do |link|
         link[:href]
