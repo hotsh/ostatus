@@ -30,7 +30,7 @@
 		<poco:note>foo
 bar</poco:note>
 		<poco:utcOffset>-08:00</poco:utcOffset>
-		<poco:connected>true</poco:connected>
+		<poco:connected>false</poco:connected>
 		<poco:urls>
 			<poco:type>homepage</poco:type>
 			<poco:value>http://adamhobaugh.com</poco:value>

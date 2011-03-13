@@ -1,4 +1,5 @@
 require_relative 'activity'
+require_relative 'portable_contacts'
 
 module OStatus
 
@@ -36,6 +37,10 @@ module OStatus
 
     def uri
       pick_first_node(@author.css('uri'))
+    end
+
+    def portable_contacts
+      PortableContacts.new(@author)
     end
   end
 end

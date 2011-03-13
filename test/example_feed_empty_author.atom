@@ -14,14 +14,6 @@
 		<link rel="avatar" type="image/jpeg" media:width="48" media:height="48" href="http://avatar.identi.ca/141464-48-20100607212940.jpeg"/>
 		<link rel="avatar" type="image/jpeg" media:width="24" media:height="24" href="http://avatar.identi.ca/141464-24-20100607212940.jpeg"/>
 		<georss:point>0 0</georss:point>
-		<poco:preferredUsername>greenmanspirit</poco:preferredUsername>
-		<poco:displayName>Adam Hobaugh</poco:displayName>
-		<poco:urls>
-			<poco:type>homepage</poco:type>
-			<poco:value>http://adamhobaugh.com</poco:value>
-			<poco:primary>true</poco:primary>
-
-		</poco:urls>
 		<statusnet:profile_info local_id="141464"></statusnet:profile_info>
 	</author>
 	<!--Deprecation warning: activity:subject is present only for backward compatibility. It will be removed in the next version of StatusNet.-->
