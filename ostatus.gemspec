@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "ostatus"
 
   s.add_dependency "oauth"
+  s.add_dependency "nokogiri"
   s.add_development_dependency "rspec"
 
   s.files         = `git ls-files`.split("\n")
