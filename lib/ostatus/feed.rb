@@ -10,7 +10,7 @@ module OStatus
       @access_token = access_token
     end
 
-    def retrieve_atom
+    def atom
       if @access_token == nil
         open(@url).read
       else
@@ -22,8 +22,7 @@ module OStatus
     end
 
     def entries
-      atom = retrieve_atom()
-      xml = Nokogiri::XML::Document.parse(atom)
+      xml = Nokogiri::XML::Document.parse(self.atom)
       entries_xml = xml.css('entry')
 
       entries_xml.map do |entry|
