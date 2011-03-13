@@ -7,12 +7,23 @@ module OStatus
 
   # This class represents an OStatus Feed object.
   class Feed
+    def initialize(url, access_token, author, entries)
+      @url = url
+      @access_token = access_token
+      @author = author
+      @entries = entries
+    end
 
     # Creates a new Feed instance given by the atom feed located at 'url'
     # and optionally using the OAuth::AccessToken given.
-    def initialize(url, access_token = nil)
-      @url = url
-      @access_token = access_token
+    def Feed.from_url(url, access_token = nil)
+      Feed.new(url, access_token, nil, nil)
+    end
+
+    # Creates a new Feed instance that contains the information given by
+    # the various instances of author and entries.
+    def Feed.from_data(author, entries)
+      Feed.new(nil, nil, author, entries)
     end
 
     # This method will return a String containing the actual content of
@@ -20,15 +31,21 @@ module OStatus
     # an access token was given) to retrieve the document if necessary.
     def atom
       if @access_token == nil
+        # simply open the url
         open(@url).read
-      else
+      elsif @url != nil
+        # open the url through OAuth
         @access_token.get(@url).body
+      else
+        # build the atom file from internal information
       end
     end
 
     # Returns an OStatus::Author that will parse the author information
     # within the Feed.
     def author
+      return @author unless @author == nil
+
       xml = Nokogiri::XML::Document.parse(self.atom)
 
       author_xml = xml.at_css('author')
@@ -38,6 +55,8 @@ module OStatus
     # This method gives you an array of OStatus::Entry instances for 
     # each entry listed in the feed.
     def entries
+      return @entries unless @entries == nil
+
       xml = Nokogiri::XML::Document.parse(self.atom)
       entries_xml = xml.css('entry')
 

@@ -4,13 +4,13 @@ require_relative '../lib/ostatus/activity.rb'
 
 describe OStatus::PortableContacts do
   before(:each) do
-    feed = OStatus::Feed.new('test/example_feed.atom')
+    feed = OStatus::Feed.from_url('test/example_feed.atom')
     author = feed.author
     @poco = author.portable_contacts
-    feed = OStatus::Feed.new('test/example_feed_false_connected.atom')
+    feed = OStatus::Feed.from_url('test/example_feed_false_connected.atom')
     author = feed.author
     @poco_false = author.portable_contacts
-    feed = OStatus::Feed.new('test/example_feed_empty_author.atom')
+    feed = OStatus::Feed.from_url('test/example_feed_empty_author.atom')
     author = feed.author
     @poco_empty = author.portable_contacts
   end

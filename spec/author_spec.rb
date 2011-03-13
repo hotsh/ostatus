@@ -4,9 +4,9 @@ require_relative '../lib/ostatus/portable_contacts.rb'
 
 describe OStatus::Author do
   before(:each) do
-    feed = OStatus::Feed.new('test/example_feed.atom')
+    feed = OStatus::Feed.from_url('test/example_feed.atom')
     @author = feed.author
-    feed = OStatus::Feed.new('test/example_feed_empty_author.atom')
+    feed = OStatus::Feed.from_url('test/example_feed_empty_author.atom')
     @author_empty = feed.author
   end
 

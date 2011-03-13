@@ -3,7 +3,7 @@ require_relative '../lib/ostatus/entry.rb'
 
 describe OStatus::Feed do
   before(:each) do
-    @feed = OStatus::Feed.new('test/example_feed.atom')
+    @feed = OStatus::Feed.from_url('test/example_feed.atom')
   end
 
   describe "#atom" do

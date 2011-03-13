@@ -4,7 +4,7 @@ require_relative '../lib/ostatus/activity.rb'
 
 describe OStatus::Activity do
   before(:each) do
-    feed = OStatus::Feed.new('test/example_feed.atom')
+    feed = OStatus::Feed.from_url('test/example_feed.atom')
     entry = feed.entries[0]
     @activity = entry.activity
     entry = feed.entries[1]
