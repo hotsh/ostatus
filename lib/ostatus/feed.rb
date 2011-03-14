@@ -94,7 +94,7 @@ module OStatus
             entry.title,
             entry.updated,
 
-            '',
+            @url,
 
             :content => entry.content,
 
