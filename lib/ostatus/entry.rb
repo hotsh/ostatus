@@ -70,6 +70,25 @@ module OStatus
       pick_first_node(@entry.css('id'))
     end
 
+    def link
+      return @entry_data[:link] unless @entry_data == nil
+
+      result = {}
+
+      @entry.css('link').each do |node|
+        if node[:rel] != nil
+          rel = node[:rel].intern
+          if result[rel] == nil
+            result[rel] = []
+          end
+
+          result[rel] << node
+        end
+      end
+
+      result
+    end
+
     # Returns a Hash of all fields.
     def info
       return @entry_data unless @entry_data == nil
@@ -79,7 +98,7 @@ module OStatus
         :title => self.title,
         :content => self.content,
         :content_type => self.content_type,
-        :link => @entry.css('link'),
+        :link => self.link,
         :published => self.published,
         :updated => self.updated
       }

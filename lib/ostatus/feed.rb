@@ -8,13 +8,14 @@ module OStatus
 
   # This class represents an OStatus Feed object.
   class Feed
-    def initialize(url, access_token, author, entries, id, title)
+    def initialize(url, access_token, author, entries, id, title, links)
       @url = url
       @access_token = access_token
       @author = author
       @entries = entries
       @id = id
       @title = title
+      @links = links
 
       if id == nil
         @xml = Nokogiri::XML::Document.parse(self.atom)
@@ -24,13 +25,13 @@ module OStatus
     # Creates a new Feed instance given by the atom feed located at 'url'
     # and optionally using the OAuth::AccessToken given.
     def Feed.from_url(url, access_token = nil)
-      Feed.new(url, access_token, nil, nil, nil, nil)
+      Feed.new(url, access_token, nil, nil, nil, nil, nil)
     end
 
     # Creates a new Feed instance that contains the information given by
     # the various instances of author and entries.
-    def Feed.from_data(id, title, url, author, entries)
-      Feed.new(url, nil, author, entries, id, title)
+    def Feed.from_data(id, title, url, author, entries, links)
+      Feed.new(url, nil, author, entries, id, title, links)
     end
 
     # Returns an array of  Nokogiri::XML::Element instances for all link tags
@@ -42,7 +43,7 @@ module OStatus
     #                              returns the contents of the href attribute.
     #
     def link(attribute)
-      return @hub_url[:link][attribute] unless @hub_url == nil or @hub_url[:link] == nil
+      return @links[attribute] unless @links == nil
 
       # get all links with rel attribute being equal to attribute
       @xml.xpath('/xmlns:feed/xmlns:link').select do |link|
@@ -66,10 +67,10 @@ module OStatus
     # the atom feed. It will make a network request (through OAuth if
     # an access token was given) to retrieve the document if necessary.
     def atom
-      if @access_token == nil
+      if @id == nil and @access_token == nil
         # simply open the url
         open(@url).read
-      elsif @url != nil
+      elsif @id == nil and @url != nil
         # open the url through OAuth
         @access_token.get(@url).body
       else
@@ -86,7 +87,23 @@ module OStatus
           :hubs => self.hubs
         )
 
-        feed.add_entry
+        @entries.each do |entry|
+          feed.add_entry(
+            entry.id,
+            entry.title,
+            entry.updated,
+
+            '',
+
+            :content => entry.content,
+
+            :author_name => self.author.name,
+            :author_email => self.author.email,
+            :author_uri => self.author.uri
+          )
+        end
+
+        feed.make(:indent => 2)
       end
     end
 
