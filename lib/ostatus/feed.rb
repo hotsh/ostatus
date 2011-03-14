@@ -3,6 +3,7 @@ require 'open-uri'
 require 'tinyatom'
 
 require_relative 'entry'
+require_relative 'author'
 
 module OStatus
 
