@@ -9,7 +9,8 @@ module OStatus
 
   # This class represents an OStatus Feed object.
   class Feed
-    def initialize(url, access_token, author, entries, id, title, links)
+    def initialize(str, url, access_token, author, entries, id, title, links)
+      @str = str
       @url = url
       @access_token = access_token
       @author = author
@@ -26,13 +27,17 @@ module OStatus
     # Creates a new Feed instance given by the atom feed located at 'url'
     # and optionally using the OAuth::AccessToken given.
     def Feed.from_url(url, access_token = nil)
-      Feed.new(url, access_token, nil, nil, nil, nil, nil)
+      Feed.new(nil, url, access_token, nil, nil, nil, nil, nil)
     end
 
     # Creates a new Feed instance that contains the information given by
     # the various instances of author and entries.
     def Feed.from_data(id, title, url, author, entries, links)
-      Feed.new(url, nil, author, entries, id, title, links)
+      Feed.new(nil, url, nil, author, entries, id, title, links)
+    end
+
+    def Feed.from_string(str)
+      Feed.new(str, nil, nil, nil, nil, nil, nil, nil)
     end
 
     # Returns an array of  Nokogiri::XML::Element instances for all link tags
@@ -68,7 +73,9 @@ module OStatus
     # the atom feed. It will make a network request (through OAuth if
     # an access token was given) to retrieve the document if necessary.
     def atom
-      if @id == nil and @access_token == nil
+      if @str != nil
+        @str
+      elsif @id == nil and @access_token == nil
         # simply open the url
         open(@url).read
       elsif @id == nil and @url != nil
@@ -79,6 +86,7 @@ module OStatus
         feed = TinyAtom::Feed.new(
           self.id,
           self.title,
+
           @url,
 
           :author_name => self.author.name,
@@ -89,12 +97,17 @@ module OStatus
         )
 
         @entries.each do |entry|
+          entry_url = entry.link[:href]
+          entry_url = @url if entry_url == nil
+
           feed.add_entry(
             entry.id,
             entry.title,
             entry.updated,
 
-            @url,
+            entry_url,
+
+            :published => entry.published,
 
             :content => entry.content,
 

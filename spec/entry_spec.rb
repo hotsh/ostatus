@@ -79,9 +79,8 @@ describe OStatus::Entry do
       @entry.info[:content_type].should eql("html")
     end
 
-    it "should contain a Nokogiri NodeSet for the link" do
-      @entry.info[:link].class.should eql(Nokogiri::XML::NodeSet)
-      @entry.info[:link][0].class.should eql(Nokogiri::XML::Element)
+    it "should contain a Hash for the link" do
+      @entry.info[:link].class.should eql(Hash)
     end
     
     it "should contain the published DateTime" do
