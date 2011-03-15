@@ -9,17 +9,13 @@ module OStatus
 
   # This class represents an OStatus Feed object.
   class Feed
-    def initialize(str, url, access_token, author, entries, id, title, links)
+    def initialize(str, url, access_token, options)
       @str = str
       @url = url
       @access_token = access_token
-      @author = author
-      @entries = entries
-      @id = id
-      @title = title
-      @links = links
+      @options = options
 
-      if id == nil
+      if options == nil
         @xml = Nokogiri::XML::Document.parse(self.atom)
       end
     end
@@ -27,17 +23,17 @@ module OStatus
     # Creates a new Feed instance given by the atom feed located at 'url'
     # and optionally using the OAuth::AccessToken given.
     def Feed.from_url(url, access_token = nil)
-      Feed.new(nil, url, access_token, nil, nil, nil, nil, nil)
+      Feed.new(nil, url, access_token, nil)
     end
 
     # Creates a new Feed instance that contains the information given by
     # the various instances of author and entries.
-    def Feed.from_data(id, title, url, author, entries, links)
-      Feed.new(nil, url, nil, author, entries, id, title, links)
+    def Feed.from_data(url, options)
+      Feed.new(nil, url, nil, options)
     end
 
     def Feed.from_string(str)
-      Feed.new(str, nil, nil, nil, nil, nil, nil, nil)
+      Feed.new(str, nil, nil, nil)
     end
 
     # Returns an array of  Nokogiri::XML::Element instances for all link tags
@@ -49,7 +45,7 @@ module OStatus
     #                              returns the contents of the href attribute.
     #
     def link(attribute)
-      return @links[attribute] unless @links == nil
+      return @options[:links][attribute] unless @options == nil
 
       # get all links with rel attribute being equal to attribute
       @xml.xpath('/xmlns:feed/xmlns:link').select do |link|
@@ -131,13 +127,13 @@ module OStatus
     private :pick_first_node
 
     def id
-      return @id if @xml == nil
+      return @options[:id] unless @options == nil
 
       pick_first_node(@xml.xpath('/xmlns:feed/xmlns:id'))
     end
 
     def title
-      return @title if @xml == nil
+      return @options[:title] unless @title == nil
 
       pick_first_node(@xml.xpath('/xmlns:feed/xmlns:title'))
     end
@@ -149,7 +145,7 @@ module OStatus
     # Returns an OStatus::Author that will parse the author information
     # within the Feed.
     def author
-      return @author if @xml == nil
+      return @options[:author] unless @options == nil
 
       author_xml = @xml.at_css('author')
       OStatus::Author.new(author_xml)
@@ -158,7 +154,7 @@ module OStatus
     # This method gives you an array of OStatus::Entry instances for 
     # each entry listed in the feed.
     def entries
-      return @entries if @xml == nil
+      return @options[:entries] unless @options == nil
 
       entries_xml = @xml.css('entry')
 
