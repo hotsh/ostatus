@@ -45,7 +45,8 @@ module OStatus
     #                              returns the contents of the href attribute.
     #
     def link(attribute)
-      return @options[:links][attribute] unless @options == nil
+      return @options[:links][attribute] unless @options == nil or @options[:links] == nil
+      return nil if @options != nil
 
       # get all links with rel attribute being equal to attribute
       @xml.xpath('/xmlns:feed/xmlns:link').select do |link|
@@ -55,8 +56,12 @@ module OStatus
 
     # Returns an array of URLs for each hub link tag.
     def hubs
-      link(:hub).map do |link|
-        link[:href]
+      if link(:hub)
+        link(:hub).map do |link|
+          link[:href]
+        end
+      else
+        []
       end
     end
 
@@ -65,16 +70,30 @@ module OStatus
       link(:salmon).first[:href]
     end
 
+    # Returns the logo
+    def logo
+      return @options[:logo] unless @options == nil
+
+      pick_first_node(@xml.xpath('/xmlns:feed/xmlns:logo'))
+    end
+
+    # Returns the icon
+    def icon
+      return @options[:icon] unless @options == nil
+
+      pick_first_node(@xml.xpath('/xmlns:feed/xmlns:icon'))
+    end
+
     # This method will return a String containing the actual content of
     # the atom feed. It will make a network request (through OAuth if
     # an access token was given) to retrieve the document if necessary.
     def atom
       if @str != nil
         @str
-      elsif @id == nil and @access_token == nil
+      elsif @options == nil and @access_token == nil
         # simply open the url
         open(@url).read
-      elsif @id == nil and @url != nil
+      elsif @options == nil and @url != nil
         # open the url through OAuth
         @access_token.get(@url).body
       else
@@ -92,8 +111,8 @@ module OStatus
           :hubs => self.hubs
         )
 
-        @entries.each do |entry|
-          entry_url = entry.link[:href]
+        @options[:entries].each do |entry|
+          entry_url = entry.url
           entry_url = @url if entry_url == nil
 
           feed.add_entry(
@@ -133,7 +152,7 @@ module OStatus
     end
 
     def title
-      return @options[:title] unless @title == nil
+      return @options[:title] unless @options == nil
 
       pick_first_node(@xml.xpath('/xmlns:feed/xmlns:title'))
     end

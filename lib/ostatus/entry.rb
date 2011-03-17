@@ -70,6 +70,29 @@ module OStatus
       pick_first_node(@entry.css('id'))
     end
 
+    def url
+      return @entry_data[:url] unless @entry_data == nil or @entry_data[:url] == nil
+      return nil if @entry_data != nil
+
+      cur_url = nil
+      @entry.css('link').each do |node|
+        if node[:href]
+          cur_url = node[:href]
+        end
+      end
+
+      if cur_url
+        cur_url
+      else
+        links = self.link
+        if links[:self]
+          links[:self][:href]
+        elsif links[:alternate]
+          links[:altername][:href]
+        end
+      end
+    end
+
     def link
       return @entry_data[:link] unless @entry_data == nil
 
