@@ -83,9 +83,9 @@ module OStatus
 
       links = self.link
       if links[:alternate]
-        links[:alternate][0][:href]
+        links[:alternate][0][:href].value
       elsif links[:self]
-        links[:self][0][:href]
+        links[:self][0][:href].value
       else
         cur_url
       end
