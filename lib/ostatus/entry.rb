@@ -81,15 +81,13 @@ module OStatus
         end
       end
 
-      if cur_url
-        cur_url
+      links = self.link
+      if links[:alternate]
+        links[:alternate][0][:href]
+      elsif links[:self]
+        links[:self][0][:href]
       else
-        links = self.link
-        if links[:self]
-          links[:self][:href]
-        elsif links[:alternate]
-          links[:altername][:href]
-        end
+        cur_url
       end
     end
 
@@ -105,7 +103,14 @@ module OStatus
             result[rel] = []
           end
 
-          result[rel] << node
+          attrs = node.attributes
+
+          map = {}
+          attrs.keys.each do |key|
+            map[key.intern] = attrs[key]
+          end
+
+          result[rel] << map
         end
       end
 
