@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 require 'tinyatom'
+require 'atom'
 
 require_relative 'entry'
 require_relative 'author'
@@ -15,8 +16,8 @@ module OStatus
       @access_token = access_token
       @options = options
 
-      if options == nil
-        @xml = Nokogiri::XML::Document.parse(self.atom)
+      if options.nil?
+        @f = Atom::Feed.load_feed(self.atom)
       end
     end
 
@@ -45,29 +46,19 @@ module OStatus
     #                              returns the contents of the href attribute.
     #
     def link(attribute)
-      return @options[:links][attribute] unless @options == nil or @options[:links] == nil
-      return nil if @options != nil
-
-      # get all links with rel attribute being equal to attribute
-      @xml.xpath('/xmlns:feed/xmlns:link').select do |link|
-        link[:rel] == attribute.to_s
-      end
+      @f.links.find_all { |l| l.rel == attribute.to_s }
     end
 
     # Returns an array of URLs for each hub link tag.
     def hubs
-      if link(:hub)
-        link(:hub).map do |link|
-          link[:href]
-        end
-      else
-        []
+      link(:hub).map do |link|
+        link.href
       end
     end
 
     # Returns the salmon URL from the link tag.
     def salmon
-      link(:salmon).first[:href]
+      link(:salmon).first.href
     end
 
     # Returns the logo
@@ -173,11 +164,7 @@ module OStatus
     # This method gives you an array of OStatus::Entry instances for 
     # each entry listed in the feed.
     def entries
-      return @options[:entries] unless @options == nil
-
-      entries_xml = @xml.css('entry')
-
-      entries_xml.map do |entry|
+      @f.entries.map do |entry|
         OStatus::Entry.new(entry)
       end
     end

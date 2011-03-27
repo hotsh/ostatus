@@ -6,16 +6,10 @@ module OStatus
   class Entry
 
     # Instantiates an Entry object from either a given <entry></entry> root
-    # passed as an instance of a Nokogiri::XML::Element or a Hash
+    # passed as an instance of an ratom Atom::Entry or a Hash
     # containing the properties.
     def initialize(entry_node)
-      if entry_node.class == Hash
-        @entry_data = entry_node
-        @entry = nil
-      else
-        @entry = entry_node
-        @entry_data = nil
-      end
+      @entry = entry_node
     end
 
     # Gives an instance of an OStatus::Activity that parses the fields
@@ -24,93 +18,57 @@ module OStatus
       Activity.new(@entry)
     end
 
-    def pick_first_node(a)
-      if a.empty?
-        nil
-      else
-        a[0].content
-      end
-    end
-    private :pick_first_node
-
     # Returns the title of the entry.
     def title
-      return @entry_data[:title] unless @entry_data == nil
-      pick_first_node(@entry.css('title'))
+      @entry.title
     end
 
     # Returns the content of the entry.
     def content
-      return @entry_data[:content] unless @entry_data == nil
-      pick_first_node(@entry.css('content'))
+      @entry.content
     end
 
     # Returns the content-type of the entry.
     def content_type
-      return @entry_data[:content_type] unless @entry_data == nil
-      content = @entry.css('content')
-      content.empty? ? "" : content[0]['type']
+      @entry.content.type
     end
 
     # Returns the DateTime that this entry was published.
     def published
-      return @entry_data[:published] unless @entry_data == nil
-      DateTime.parse(pick_first_node(@entry.css('published')))
+      DateTime.parse(@entry.published.to_s)
     end
 
     # Returns the DateTime that this entry was updated.
     def updated
-      return @entry_data[:updated] unless @entry_data == nil
-      DateTime.parse(pick_first_node(@entry.css('updated')))
+      DateTime.parse(@entry.updated.to_s)
     end
 
     # Returns the id of the entry.
     def id
-      return @entry_data[:id] unless @entry_data == nil
-      pick_first_node(@entry.css('id'))
+      @entry.id
     end
 
     def url
-      return @entry_data[:url] unless @entry_data == nil or @entry_data[:url] == nil
-      return nil if @entry_data != nil
-
-      cur_url = nil
-      @entry.css('link').each do |node|
-        if node[:href]
-          cur_url = node[:href]
-        end
-      end
-
       links = self.link
-      if links[:alternate]
-        links[:alternate][0][:href].value
-      elsif links[:self]
-        links[:self][0][:href].value
+      if @entry.links.alternate
+        @entry.links.alternate.href
+      elsif @entry.links.self
+        @enry.links.self.first
       else
-        cur_url
+        @entry.map.each do |l|
+          l.href
+        end.compact.first
       end
     end
 
     def link
-      return @entry_data[:link] unless @entry_data == nil
-
       result = {}
 
-      @entry.css('link').each do |node|
-        if node[:rel] != nil
-          rel = node[:rel].intern
-          if result[rel] == nil
-            result[rel] = []
-          end
-
-          attrs = node.attributes
-
-          map = {}
-          attrs.keys.each do |key|
-            map[key.intern] = attrs[key]
-          end
-
-          result[rel] << map
+      @entry.links.each do |l|
+        if l.rel
+          rel = l.rel.intern
+          result[rel] ||= []
+          result[rel] << l
         end
       end
 
@@ -122,7 +80,7 @@ module OStatus
       return @entry_data unless @entry_data == nil
       {
         :activity => self.activity.info,
-        :id => pick_first_node(@entry.css('id')),
+        :id => self.id,
         :title => self.title,
         :content => self.content,
         :content_type => self.content_type,
