@@ -35,12 +35,12 @@ module OStatus
 
     # Returns the DateTime that this entry was published.
     def published
-      DateTime.parse(@entry.published.to_s)
+      DateTime.parse(@entry.published.to_s).new_offset(0)
     end
 
     # Returns the DateTime that this entry was updated.
     def updated
-      DateTime.parse(@entry.updated.to_s)
+      DateTime.parse(@entry.updated.to_s).new_offset(0)
     end
 
     # Returns the id of the entry.
