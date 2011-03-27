@@ -1,20 +1,15 @@
 module OStatus
+  POCO_NS = 'http://portablecontacts.net/spec/1.0'
 
   # Holds information about the extended contact information
   # in the Feed given in the Portable Contacts specification.
   class PortableContacts
     
     # Instantiates a OStatus::PortableContacts object from either
-    # a given root that contains all <poco:*> tags as a
-    # Nokogiri::XML::Element or a Hash containing the properties.
-    def initialize(author_node)
-      if author_node.class == Hash
-        @poco_data = author_node
-        @poco = nil
-      else
-        @poco = author_node
-        @poco_data = nil
-      end
+    # a given root that contains all <poco:*> tags as an ratom Person
+    #  or a Hash containing the properties.
+    def initialize(poco)
+      @poco = poco
     end
 
     def pick_first_node(a)
@@ -100,17 +95,14 @@ module OStatus
 
     # Returns the preferred username of the contact, if it exists.
     def preferred_username
-      return @poco_data[:preferred_username] unless @poco_data == nil
-      pick_first_node(@poco.xpath('./poco:preferredUsername'))
+      @poco[POCO_NS, 'preferredUsername'].first
     end
 
     # Returns a boolean that indicates that a bi-directional connection
     # has been established between the user and the contact, if it is
     # able to assert this.
     def connected
-      return @poco_data[:connected] unless @poco_data == nil
-      str = pick_first_node(@poco.xpath('./poco:connected'))
-      return nil if str == nil
+      str = @poco[POCO_NS, 'connected'].first
 
       if str == "true"
         true

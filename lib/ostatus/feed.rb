@@ -17,7 +17,7 @@ module OStatus
       @options = options
 
       if options.nil?
-        @f = Atom::Feed.load_feed(self.atom)
+        @feed = Atom::Feed.load_feed(self.atom)
       end
     end
 
@@ -46,7 +46,7 @@ module OStatus
     #                              returns the contents of the href attribute.
     #
     def link(attribute)
-      @f.links.find_all { |l| l.rel == attribute.to_s }
+      @feed.links.find_all { |l| l.rel == attribute.to_s }
     end
 
     # Returns an array of URLs for each hub link tag.
@@ -155,16 +155,13 @@ module OStatus
     # Returns an OStatus::Author that will parse the author information
     # within the Feed.
     def author
-      return @options[:author] unless @options == nil
-
-      author_xml = @xml.at_css('author')
-      OStatus::Author.new(author_xml)
+      OStatus::Author.new(@feed.authors.first)
     end
 
     # This method gives you an array of OStatus::Entry instances for 
     # each entry listed in the feed.
     def entries
-      @f.entries.map do |entry|
+      @feed.entries.map do |entry|
         OStatus::Entry.new(entry)
       end
     end

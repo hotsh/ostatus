@@ -1,3 +1,8 @@
+# it is unfortunate that ratom doesn't do this on its own.
+class Atom::Person
+  include Atom::SimpleExtensions
+end
+
 module OStatus
   ACTIVITY_NS = 'http://activitystrea.ms/spec/1.0/'
 
