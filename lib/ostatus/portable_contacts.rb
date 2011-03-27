@@ -12,85 +12,66 @@ module OStatus
       @poco = poco
     end
 
-    def pick_first_node(a)
-      if a.empty?
-        nil
-      else
-        a[0].content
-      end
-    end
-    private :pick_first_node
-
     # Returns the id of the contact, if it exists.
     def id
-      return @poco_data[:id] unless @poco_data == nil
-      pick_first_node(@poco.xpath('./poco:id'))
+      @poco[POCO_NS, 'id'].first
     end
 
     # Returns the display_name of the contact, if it exists.
     def display_name
-      return @poco_data[:display_name] unless @poco_data == nil
-      pick_first_node(@poco.xpath('./poco:displayName'))
+      @poco[POCO_NS, 'displayName'].first
     end
 
     # Returns the name of the contact, if it exists.
     def name
-      return @poco_data[:name] unless @poco_data == nil
-      pick_first_node(@poco.xpath('./poco:name'))
+      @poco[POCO_NS, 'name'].first
     end
 
     # Returns the nickname of the contact, if it exists.
     def nickname
-      return @poco_data[:nickname] unless @poco_data == nil
-      pick_first_node(@poco.xpath('./poco:nickname'))
+      @poco[POCO_NS, 'nickname'].first
     end
 
     # Returns the published of the contact, if it exists.
     def published
-      return @poco_data[:published] unless @poco_data == nil
-      pub = pick_first_node(@poco.xpath('./poco:published'))
-      if pub != nil
-        DateTime.parse(pub)
+      date = @poco[POCO_NS, 'published'].first
+      unless date.nil?
+        DateTime.parse(date)
       end
     end
 
     # Returns the updated of the contact, if it exists.
     def updated
-      return @poco_data[:updated] unless @poco_data == nil
-      upd = pick_first_node(@poco.xpath('./poco:updated'))
-      if upd != nil
-        DateTime.parse(upd)
+      date = @poco[POCO_NS, 'updated'].first
+      unless date.nil?
+        DateTime.parse(date)
       end
     end
 
     # Returns the birthday of the contact, if it exists.
     def birthday
-      return @poco_data[:birthday] unless @poco_data == nil
-      bday = pick_first_node(@poco.xpath('./poco:birthday'))
-      if bday != nil
-        Date.parse(bday)
+      date = @poco[POCO_NS, 'birthday'].first
+      unless date.nil?
+        Date.parse(date)
       end
     end
 
     # Returns the anniversary of the contact, if it exists.
     def anniversary
-      return @poco_data[:anniversary] unless @poco_data == nil
-      anni = pick_first_node(@poco.xpath('./poco:anniversary'))
-      if anni != nil
-        Date.parse(anni)
+      date = @poco[POCO_NS, 'anniversary'].first
+      unless date.nil?
+        Date.parse(date)
       end
     end
 
     # Returns the gender of the contact, if it exists.
     def gender
-      return @poco_data[:gender] unless @poco_data == nil
-      pick_first_node(@poco.xpath('./poco:gender'))
+      @poco[POCO_NS, 'gender'].first
     end
 
     # Returns the note of the contact, if it exists.
     def note
-      return @poco_data[:note] unless @poco_data == nil
-      pick_first_node(@poco.xpath('./poco:note'))
+      @poco[POCO_NS, 'note'].first
     end
 
     # Returns the preferred username of the contact, if it exists.
