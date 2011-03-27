@@ -22,11 +22,11 @@
 		<poco:id>foobar</poco:id>
 		<poco:name>barbaz</poco:name>
 		<poco:nickname>spaz</poco:nickname>
-		<poco:published>2012-02-21T02:15:14+00:00</pico:published>
-		<poco:updated>2013-02-21T02:15:14+00:00</pico:updated>
-		<poco:birthday>2014-02-21</pico:birthday>
-		<poco:anniversary>2015-02-21</pico:anniversary>
-		<poco:gender>male</pico:gender>
+		<poco:published>2012-02-21T02:15:14+00:00</poco:published>
+		<poco:updated>2013-02-21T02:15:14+00:00</poco:updated>
+		<poco:birthday>2014-02-21</poco:birthday>
+		<poco:anniversary>2015-02-21</poco:anniversary>
+		<poco:gender>male</poco:gender>
 		<poco:note>foo
 bar</poco:note>
 		<poco:utcOffset>-08:00</poco:utcOffset>
@@ -71,7 +71,7 @@ bar</poco:note>
 	<entry>
 		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
 		<activity:object>Foobar</activity:object>
-		<activity:target>Barbaz</activity:object>
+		<activity:target>Barbaz</activity:target>
 		<id>http://identi.ca/notice/64991641</id>
 		<title>staples come out of the head tomorrow, oh yeah</title>
 		<content type="html">staples come out of the head tomorrow, oh yeah</content>
