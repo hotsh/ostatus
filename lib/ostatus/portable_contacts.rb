@@ -8,82 +8,110 @@ module OStatus
     # Instantiates a OStatus::PortableContacts object from either
     # a given root that contains all <poco:*> tags as an ratom Person
     #  or a Hash containing the properties.
-    def initialize(poco)
-      @poco = poco
+    def initialize(parent)
+      if parent.is_a? Hash
+        @options = parent
+      else
+        @parent = parent
+      end
     end
 
     # Returns the id of the contact, if it exists.
     def id
-      @poco[POCO_NS, 'id'].first
+      return @options[:id] unless @options.nil?
+      @parent.poco_id
     end
 
     # Returns the display_name of the contact, if it exists.
     def display_name
-      @poco[POCO_NS, 'displayName'].first
+      return @options[:display_name] unless @options.nil?
+      @parent.poco_displayName
     end
 
     # Returns the name of the contact, if it exists.
     def name
-      @poco[POCO_NS, 'name'].first
+      return @options[:name] unless @options.nil?
+      @parent.poco_name
     end
 
     # Returns the nickname of the contact, if it exists.
     def nickname
-      @poco[POCO_NS, 'nickname'].first
+      return @options[:nick_name] unless @options.nil?
+      @parent.poco_nickname
     end
 
     # Returns the published of the contact, if it exists.
     def published
-      date = @poco[POCO_NS, 'published'].first
-      unless date.nil?
-        DateTime.parse(date)
+      if @options.nil?
+        @parent.poco_published
+      else
+        date = @options[:published]
+        unless date.nil?
+          DateTime.parse(date)
+        end
       end
     end
 
     # Returns the updated of the contact, if it exists.
     def updated
-      date = @poco[POCO_NS, 'updated'].first
-      unless date.nil?
-        DateTime.parse(date)
+      if @options.nil?
+        @parent.poco_updated
+      else
+        date = @options[:updated]
+        unless date.nil?
+          DateTime.parse(date)
+        end
       end
     end
 
     # Returns the birthday of the contact, if it exists.
     def birthday
-      date = @poco[POCO_NS, 'birthday'].first
-      unless date.nil?
-        Date.parse(date)
+      if @options.nil?
+        @parent.poco_birthday
+      else
+        date = @options[:birthday]
+        unless date.nil?
+          Date.parse(date)
+        end
       end
     end
 
     # Returns the anniversary of the contact, if it exists.
     def anniversary
-      date = @poco[POCO_NS, 'anniversary'].first
-      unless date.nil?
-        Date.parse(date)
+      if @options.nil?
+        @parent.poco_anniversary
+      else
+        date = @options[:anniversary]
+        unless date.nil?
+          Date.parse(date)
+        end
       end
     end
 
     # Returns the gender of the contact, if it exists.
     def gender
-      @poco[POCO_NS, 'gender'].first
+      return @options[:gender] unless @options.nil?
+      @parent.poco_gender
     end
 
     # Returns the note of the contact, if it exists.
     def note
-      @poco[POCO_NS, 'note'].first
+      return @options[:note] unless @options.nil?
+      @parent.poco_note
     end
 
     # Returns the preferred username of the contact, if it exists.
     def preferred_username
-      @poco[POCO_NS, 'preferredUsername'].first
+      return @options[:preferred_username] unless @options.nil?
+      @parent.poco_preferredUsername
     end
 
     # Returns a boolean that indicates that a bi-directional connection
     # has been established between the user and the contact, if it is
     # able to assert this.
     def connected
-      str = @poco[POCO_NS, 'connected'].first
+      return @options[:connected] unless @options.nil?
+      str = @parent.poco_connected
 
       if str == "true"
         true

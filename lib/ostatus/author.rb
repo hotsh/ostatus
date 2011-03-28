@@ -13,9 +13,10 @@ module OStatus
     element 'poco:id'
     element 'poco:displayName'
     element 'poco:nickname'
-    element 'poco:published'
-    element 'poco:birthday'
-    element 'poco:anniversary'
+    element 'poco:updated',     :class => DateTime, :content_only => true
+    element 'poco:published',   :class => DateTime, :content_only => true
+    element 'poco:birthday',    :class => Date, :content_only => true
+    element 'poco:anniversary', :class => Date, :content_only => true
     element 'poco:gender'
     element 'poco:note'
     element 'poco:preferredUsername'
@@ -68,8 +69,8 @@ module OStatus
     end
 
     def portable_contacts= poco
-      [ 'id', 'name', 'nickname', 'published', 'birthday', 'anniversary',
-        'gender', 'note', 'connected'].each do |p|
+      [ 'id', 'name', 'nickname', 'updated', 'published', 'birthday',
+        'anniversary', 'gender', 'note', 'connected'].each do |p|
         v = poco.send(p)
         self.send("poco_#{p}=", v) if v
       end
