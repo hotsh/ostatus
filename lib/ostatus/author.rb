@@ -4,41 +4,78 @@ require_relative 'portable_contacts'
 module OStatus
 
   # Holds information about the author of the Feed.
-  class Author
+  class Author < Atom::Person
+    namespace Atom::NAMESPACE
+    element :email
+    element :uri
 
-    # Instantiates an Author object either from a given <author></author> root
-    # passed as an instance of an ratom Atom::Author or a Hash containing
-    # the properties.
-    def initialize(author)
-      @author = author
+    add_extension_namespace :poco, POCO_NS
+    element 'poco:id'
+    element 'poco:displayName'
+    element 'poco:nickname'
+    element 'poco:published'
+    element 'poco:birthday'
+    element 'poco:anniversary'
+    element 'poco:gender'
+    element 'poco:note'
+    element 'poco:preferredUsername'
+    element 'poco:connected'
+
+    def initialize *args
+      super(*args)
+    end
+
+    # unfortunately ratom doesn't handle elements with the same local name well.
+    # this is a workaround for that.
+    attr_writer :name, :poco_name
+
+    def name
+      @name or self[Atom::NAMESPACE, 'name'].first
+    end
+
+    def poco_name
+      @poco_name or self[POCO_NS, 'name'].first
+    end
+
+    def to_xml(*args)
+      x = super(*args)
+
+      if self.name
+        node = XML::Node.new('name')
+        node << self.name
+        x << node
+      end
+
+      if self.poco_name
+        node = XML::Node.new('poco:name')
+        node << self.poco_name
+        x << node
+      end
+
+      x
     end
 
     # Gives an instance of an OStatus::Activity that parses the fields
     # having an activity prefix.
     def activity
-      OStatus::Activity.new(@author)
-    end
-
-    # Returns the name of the author, if it exists.
-    def name
-      @author.name
-    end
-
-    # Returns the email of the author, if it exists.
-    def email
-      @author.email
-    end
-
-    # Returns the uri of the author, if it exists.
-    def uri
-      @author.uri
+      OStatus::Activity.new(self)
     end
 
     # Returns an instance of a PortableContacts that further describe the
     # author's contact information, if it exists.
     def portable_contacts
-      return @author_data[:portable_contacts] unless @author_data == nil
-      PortableContacts.new(@author)
+      PortableContacts.new(self)
+    end
+
+    def portable_contacts= poco
+      [ 'id', 'name', 'nickname', 'published', 'birthday', 'anniversary',
+        'gender', 'note', 'connected'].each do |p|
+        v = poco.send(p)
+        self.send("poco_#{p}=", v) if v
+      end
+
+      self.poco_displayName = poco.display_name if poco.display_name
+      self.poco_preferredUsername = poco.preferred_username if poco.preferred_username
     end
   end
 end
