@@ -1,61 +1,38 @@
 require_relative 'activity'
+require_relative 'author'
 
 module OStatus
 
   # Holds information about an individual entry in the Feed.
-  class Entry
+  class Entry < Atom::Entry
+    namespace Atom::NAMESPACE
 
-    # Instantiates an Entry object from either a given <entry></entry> root
-    # passed as an instance of an ratom Atom::Entry or a Hash
-    # containing the properties.
-    def initialize(entry_node)
-      @entry = entry_node
-    end
+    element :title, :id, :summary
+    element :updated, :published, :class => DateTime, :content_only => true
+    element :source, :class => Atom::Source
+    elements :links, :class => Atom::Link
+    elements :authors, :class => OStatus::Author
+    elements :categories, :class => Atom::Category
+    element :content, :class => Atom::Content
 
     # Gives an instance of an OStatus::Activity that parses the fields
     # having an activity prefix.
     def activity
-      Activity.new(@entry)
-    end
-
-    # Returns the title of the entry.
-    def title
-      @entry.title
-    end
-
-    # Returns the content of the entry.
-    def content
-      @entry.content
+      Activity.new(self)
     end
 
     # Returns the content-type of the entry.
     def content_type
-      @entry.content.type
-    end
-
-    # Returns the DateTime that this entry was published.
-    def published
-      DateTime.parse(@entry.published.to_s).new_offset(0)
-    end
-
-    # Returns the DateTime that this entry was updated.
-    def updated
-      DateTime.parse(@entry.updated.to_s).new_offset(0)
-    end
-
-    # Returns the id of the entry.
-    def id
-      @entry.id
+      self.content.type
     end
 
     def url
-      links = self.link
-      if @entry.links.alternate
-        @entry.links.alternate.href
-      elsif @entry.links.self
-        @enry.links.self.first
+      if links.alternate
+        links.alternate.href
+      elsif links.self
+        links.self.href
       else
-        @entry.map.each do |l|
+        links.map.each do |l|
           l.href
         end.compact.first
       end
@@ -64,7 +41,7 @@ module OStatus
     def link
       result = {}
 
-      @entry.links.each do |l|
+      links.each do |l|
         if l.rel
           rel = l.rel.intern
           result[rel] ||= []
@@ -77,7 +54,6 @@ module OStatus
 
     # Returns a Hash of all fields.
     def info
-      return @entry_data unless @entry_data == nil
       {
         :activity => self.activity.info,
         :id => self.id,
