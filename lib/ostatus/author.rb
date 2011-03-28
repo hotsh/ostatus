@@ -5,6 +5,8 @@ module OStatus
 
   # Holds information about the author of the Feed.
   class Author < Atom::Person
+    include Atom::SimpleExtensions
+
     namespace Atom::NAMESPACE
     element :email
     element :uri

@@ -58,13 +58,12 @@ module OStatus
       Feed.new(str, nil, nil, nil)
     end
 
-    # Returns an array of  Nokogiri::XML::Element instances for all link tags
-    # that have a rel equal to that given by attribute. This can be used 
-    # generally as a Hash where the keys are intern strings that give an attribute.
+    # Returns an array of Atom::Link instances for all link tags
+    # that have a rel equal to that given by attribute.
     #
     # For example:
-    #   link(:hub).first[:href] -- Gets the first link tag with rel="hub" and
-    #                              returns the contents of the href attribute.
+    #   link(:hub).first.href -- Gets the first link tag with rel="hub" and
+    #                            returns the contents of the href attribute.
     #
     def link(attribute)
       links.find_all { |l| l.rel == attribute.to_s }
