@@ -69,6 +69,15 @@ module OStatus
       links.find_all { |l| l.rel == attribute.to_s }
     end
 
+    def links=(given)
+      self.links.clear
+      given.each do |rel,links|
+        links.each do |l|
+          self.links << Atom::Link.new(l.merge({:rel => rel}))
+        end
+      end
+    end
+
     # Returns an array of URLs for each hub link tag.
     def hubs
       link(:hub).map { |link| link.href }
@@ -92,6 +101,7 @@ module OStatus
         # open the url through OAuth
         @access_token.get(@url).body
       else
+        self.links << Atom::Link.new(:rel => 'self', :href => @url) if @url
         self.to_xml
       end
     end
