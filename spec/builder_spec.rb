@@ -34,4 +34,26 @@ describe 'XML builder' do
     specify { @feed.atom.should match('<poco:displayName>Dean Venture') }
     specify { @feed.atom.should match('<poco:preferredUsername>dean') }
   end
+
+  describe 'when generating a feed with entries' do
+    before do
+      @now = Time.now
+
+      @feed.entries << OStatus::Entry.new(
+        :title => 'atom powered robots are running amok lol',
+        :content => 'atom powered robots are running amok lol',
+        :updated => @now,
+        :published => @now,
+        :id => 'http://example.org/feed/1',
+        :link => { :href => 'http://example.org/feed/1' }
+      )
+    end
+
+    specify { @feed.atom.should match('<title>atom powered robots') }
+    specify { @feed.atom.should match('<content>atom powered robots') }
+    specify { @feed.atom.should match("<updated>#{@now.iso8601}") }
+    specify { @feed.atom.should match("<published>#{@now.iso8601}") }
+    specify { @feed.atom.should match('<id>http://example.org/feed/1') }
+    specify { @feed.atom.should match('<link href="http://example.org/feed/1"/>') }
+  end
 end

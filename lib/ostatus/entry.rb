@@ -52,6 +52,10 @@ module OStatus
       result
     end
 
+    def link= options
+      links.clear << Atom::Link.new(options)
+    end
+
     # Returns a Hash of all fields.
     def info
       {
