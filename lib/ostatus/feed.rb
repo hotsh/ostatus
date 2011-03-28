@@ -1,6 +1,4 @@
-require 'nokogiri'
 require 'open-uri'
-require 'tinyatom'
 require 'atom'
 
 require_relative 'entry'
