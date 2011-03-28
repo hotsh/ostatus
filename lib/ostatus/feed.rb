@@ -10,7 +10,7 @@ module OStatus
   class Feed < Atom::Feed
     namespace Atom::NAMESPACE
 
-    element :id, :rights
+    element :id, :rights, :icon, :logo
     element :generator, :class => Atom::Generator
     element :title, :subtitle, :class => Atom::Content
     element :updated, :class => Time, :content_only => true
