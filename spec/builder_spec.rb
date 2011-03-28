@@ -15,7 +15,10 @@ describe 'XML builder' do
                                     :title => "Dean's Updates",
                                     :id => @feed_url,
                                     :author => @author,
-                                    :entries => [])
+                                    :entries => [],
+                                    :links => {
+                                      :hub => [{:href => 'http://example.org/hub'}]
+                                    })
   end
 
   it 'should generate the title' do
@@ -24,6 +27,16 @@ describe 'XML builder' do
 
   it 'should generate the id' do
     @feed.atom.should match("<id>#{@feed_url}")
+  end
+
+  it 'should generate a self link' do
+    # depending on this attribute order is a really terrible idea, but oh well.
+    @feed.atom.should match("<link rel=\"self\" href=\"#{@feed_url}\"/>")
+  end
+
+  it 'should generate the hub link' do
+    # depending on this attribute order is a really terrible idea, but oh well.
+    @feed.atom.should match('<link rel="hub" href="http://example.org/hub"/>')
   end
 
   describe 'when generating the author' do
