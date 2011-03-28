@@ -39,17 +39,7 @@ module OStatus
     end
 
     def link
-      result = {}
-
-      links.each do |l|
-        if l.rel
-          rel = l.rel.intern
-          result[rel] ||= []
-          result[rel] << l
-        end
-      end
-
-      result
+      links.group_by { |l| l.rel.intern }
     end
 
     def link= options

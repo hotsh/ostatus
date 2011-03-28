@@ -74,9 +74,7 @@ module OStatus
 
     # Returns an array of URLs for each hub link tag.
     def hubs
-      link(:hub).map do |link|
-        link.href
-      end
+      link(:hub).map { |link| link.href }
     end
 
     # Returns the salmon URL from the link tag.
@@ -104,9 +102,7 @@ module OStatus
     # Returns an OStatus::Author that will parse the author information
     # within the Feed.
     def author
-      return @options[:author] unless @options.nil?
-
-      self.authors.first
+      @options ? @options[:author] : self.authors.first
     end
 
     def author= author
