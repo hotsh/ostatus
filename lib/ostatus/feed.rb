@@ -25,6 +25,9 @@ module OStatus
 
     attr_reader :url
 
+    # Store in reverse order so that the -1 from .index "not found" will sort properly
+    MIME_ORDER = ['application/atom+xml', 'application/rss+xml', 'application/xml'].reverse
+
     def initialize(str, url, access_token, options)
       @str = str
       @url = url
@@ -32,6 +35,31 @@ module OStatus
       @options = options
 
       if str
+
+        if str =~ /<html/
+          doc = Nokogiri.parse(str)
+          links = doc.search('*[rel~=alternate]').map {|el|
+            {:type => el.attributes['type'].to_s,
+             :href => el.attributes['href'].to_s}
+          }.sort {|a, b|
+            MIME_ORDER.index(b[:type]) <=> MIME_ORDER.index(a[:type])
+          }
+
+          # Resolve relative links
+          link = URI::parse(links.first[:href]) rescue URI.new
+
+          unless link.host
+            link.host = URI::parse(@url).host rescue nil
+          end
+
+          unless link.absolute?
+            link.path = File::dirname(URI::parse(@url).path) + '/' + link.path rescue nil
+          end
+
+          @url = link.to_s
+          @str = str = open(@url).read
+        end
+
         super(XML::Reader.string(str))
       else
         super(options)
