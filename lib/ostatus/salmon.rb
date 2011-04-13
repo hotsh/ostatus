@@ -18,7 +18,7 @@ module OStatus
     # OStatus::Entry from a magic envelope
     def Salmon.from_xml source
       if source.is_a?(String)
-        source = XML::Document.string(reader, 
+        source = XML::Document.string(source, 
                                       :options => XML::Parser::Options::NOENT)
       end
 
@@ -51,7 +51,7 @@ module OStatus
                           'me:alg',
                           'me:http://salmon-protocol.org/ns/magic-env').first
 
-      signature = xml.find('me:sig',
+      signature = source.find('me:sig',
                            'me:http://salmon-protocol.org/ns/magic-env').first
 
       # Parse fields
@@ -100,9 +100,6 @@ module OStatus
 
       # Signature plaintext
       plaintext = "#{armored_data}.#{armored_data_type}.#{armored_encoding}.#{armored_algorithm}"
-
-      # Get EMSA Signature
-      emsa = Salmon.generate_signature plaintext
 
       # Interpret data payload
       payload = XML::Reader.string(data)
