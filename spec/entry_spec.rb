@@ -26,12 +26,6 @@ describe OStatus::Entry do
     end
   end
 
-  describe "#content_type" do
-    it "should give a String containing the content of the type attribute on the content tag" do
-      @entry.content_type.should eql("html")
-    end
-  end
-
   describe "#updated" do
     it "should return a DateTime instance" do
       @entry.updated.instance_of?(DateTime).should eql(true)
@@ -73,10 +67,6 @@ describe OStatus::Entry do
 
     it "should contain the title" do
       @entry.info[:title].should eql("staples come out of the head tomorrow, oh yeah")
-    end
-
-    it "should contain the content_type" do
-      @entry.info[:content_type].should eql("html")
     end
 
     it "should contain a Hash for the link" do

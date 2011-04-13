@@ -16,7 +16,7 @@ describe OStatus::Author do
     end
 
     it "should give an Activity instance that is relevant to the author subtree" do
-      @author.activity.object_type.should eql('http://activitystrea.ms/schema/1.0/person')
+      @author.activity.object_type.should eql(:person)
     end
   end
 
