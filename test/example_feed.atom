@@ -71,7 +71,40 @@ bar</poco:note>
 	<link href="http://identi.ca/api/statuses/user_timeline/141464.atom" rel="self" type="application/atom+xml"/>
 	<entry>
 		<activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>
-		<activity:object>Foobar</activity:object>
+		<activity:object>
+			<activity:object-type>http://activitystrea.ms/schema/1.0/person</activity:object-type>
+			<uri>http://identi.ca/user/141464</uri>
+			<name>greenmanspirit</name>
+			<email>foo@example.com</email>
+			<link rel="alternate" type="text/html" href="http://identi.ca/greenmanspirit"/>
+			<link rel="avatar" type="image/jpeg" media:width="480" media:height="480" href="http://avatar.identi.ca/141464-480-20100607212940.jpeg"/>
+			<link rel="avatar" type="image/jpeg" media:width="96" media:height="96" href="http://avatar.identi.ca/141464-96-20100607212940.jpeg"/>
+			<link rel="avatar" type="image/jpeg" media:width="48" media:height="48" href="http://avatar.identi.ca/141464-48-20100607212940.jpeg"/>
+			<link rel="avatar" type="image/jpeg" media:width="24" media:height="24" href="http://avatar.identi.ca/141464-24-20100607212940.jpeg"/>
+			<georss:point>0 0</georss:point>
+			<poco:preferredUsername>greenmanspirit</poco:preferredUsername>
+			<poco:displayName>Adam Hobaugh</poco:displayName>
+			<poco:id>foobar</poco:id>
+			<poco:name>barbaz</poco:name>
+			<poco:nickname>spaz</poco:nickname>
+			<poco:published>2012-02-21T02:15:14+00:00</poco:published>
+			<poco:updated>2013-02-21T02:15:14+00:00</poco:updated>
+			<poco:birthday>2014-02-21</poco:birthday>
+			<poco:anniversary>2015-02-21</poco:anniversary>
+			<poco:gender>male</poco:gender>
+			<poco:note>foo
+				bar</poco:note>
+			<poco:utcOffset>-08:00</poco:utcOffset>
+			<poco:connected>true</poco:connected>
+			<poco:urls>
+				<poco:type>homepage</poco:type>
+				<poco:value>http://adamhobaugh.com</poco:value>
+				<poco:primary>true</poco:primary>
+			</poco:urls>
+
+			<statusnet:profile_info local_id="141464"></statusnet:profile_info>
+		</activity:object>
+
 		<activity:target>Barbaz</activity:target>
 		<id>http://identi.ca/notice/64991641</id>
 		<title>staples come out of the head tomorrow, oh yeah</title>

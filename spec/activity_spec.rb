@@ -1,6 +1,7 @@
 require_relative '../lib/ostatus/feed.rb'
 require_relative '../lib/ostatus/entry.rb'
 require_relative '../lib/ostatus/activity.rb'
+require_relative '../lib/ostatus/author.rb'
 
 describe OStatus::Activity do
   before(:each) do
@@ -12,8 +13,8 @@ describe OStatus::Activity do
   end
 
   describe "#object" do
-    it "should give a String containing the content of the activity:object tag" do
-      @activity.object.should eql('Foobar')
+    it "should give an Author containing the content of the activity:object tag" do
+      @activity.object.class.should eql(OStatus::Author)
     end
 
     it "should give nil when no activity:object was given" do
@@ -23,7 +24,7 @@ describe OStatus::Activity do
 
   describe "#object-type" do
     it "should give a String containing the content of the activity:object-type tag" do
-      @activity.object_type.should eql('http://activitystrea.ms/schema/1.0/note')
+      @activity.object_type.should eql(:note)
     end
 
     it "should give nil when no activity:object-type was given" do
@@ -33,7 +34,7 @@ describe OStatus::Activity do
 
   describe "#verb" do
     it "should give a String containing the content of the activity:verb tag" do
-      @activity.verb.should eql('http://activitystrea.ms/schema/1.0/post')
+      @activity.verb.should eql(:post)
     end
 
     it "should give nil when no activity:verb was given" do
