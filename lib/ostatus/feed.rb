@@ -8,8 +8,12 @@ module OStatus
 
   # This class represents an OStatus Feed object.
   class Feed < Atom::Feed
+    include Atom::SimpleExtensions
+
     namespace Atom::NAMESPACE
 
+    add_extension_namespace :poco, POCO_NS
+    add_extension_namespace :poco, ACTIVITY_NS
     element :id, :rights, :icon, :logo
     element :generator, :class => Atom::Generator
     element :title, :subtitle, :class => Atom::Content
@@ -102,6 +106,7 @@ module OStatus
         @access_token.get(@url).body
       else
         self.links << Atom::Link.new(:rel => 'self', :href => @url) if @url
+        self.links << Atom::Link.new(:rel => 'edit', :href => @url) if @url
         self.to_xml
       end
     end
@@ -114,6 +119,12 @@ module OStatus
 
     def author= author
       self.authors.clear << author
+    end
+
+    def hubs= hubs
+      hubs.each do |hub|
+        links << Atom::Link.new(:rel => 'hub', :href => hub)
+      end
     end
   end
 end
