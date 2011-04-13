@@ -1,5 +1,6 @@
 require_relative 'activity'
 require_relative 'author'
+require_relative 'thread'
 
 module OStatus
   THREAD_NS = 'http://purl.org/syndication/thread/1.0'
@@ -15,7 +16,7 @@ module OStatus
     element 'activity:target'
 
     add_extension_namespace :thr, THREAD_NS
-    element 'thr:in-reply-to'
+    element 'thr:in-reply-to', :class => OStatus::Thread
 
     # This is for backwards compatibility with some implementations of Activity 
     # Streams. It should not be used, and in fact is obscured as it is not a 
