@@ -7,9 +7,14 @@ module OStatus
   class Author < Atom::Person
     include Atom::SimpleExtensions
 
+    add_extension_namespace :activity, ACTIVITY_NS
+    element 'activity:object-type'
+
     namespace Atom::NAMESPACE
     element :email
     element :uri
+
+    elements :links, :class => Atom::Link
 
     add_extension_namespace :poco, POCO_NS
     element 'poco:id'
@@ -25,6 +30,7 @@ module OStatus
     element 'poco:connected'
 
     def initialize *args
+      self.activity_object_type = "http://activitystrea.ms/schema/1.0/person" 
       super(*args)
     end
 
