@@ -2,28 +2,49 @@ require_relative 'activity'
 require_relative 'author'
 
 module OStatus
+  THREAD_NS = 'http://purl.org/syndication/thread/1.0'
 
   # Holds information about an individual entry in the Feed.
   class Entry < Atom::Entry
-    namespace Atom::NAMESPACE
+    include Atom::SimpleExtensions
 
+    add_extension_namespace :activity, ACTIVITY_NS
+    element 'activity:object-type'
+    element 'activity:object', :class => OStatus::Author
+    element 'activity:verb'
+    element 'activity:target'
+
+    add_extension_namespace :thr, THREAD_NS
+    element 'thr:in-reply-to'
+
+    # This is for backwards compatibility with some implementations of Activity 
+    # Streams. It should not be used, and in fact is obscured as it is not a 
+    # method in OStatus::Activity.
+    element 'activity:actor', :class => OStatus::Author
+
+    namespace Atom::NAMESPACE
     element :title, :id, :summary
     element :updated, :published, :class => DateTime, :content_only => true
     element :source, :class => Atom::Source
     elements :links, :class => Atom::Link
-    elements :authors, :class => OStatus::Author
     elements :categories, :class => Atom::Category
     element :content, :class => Atom::Content
+    element :author, :class => OStatus::Author
 
-    # Gives an instance of an OStatus::Activity that parses the fields
-    # having an activity prefix.
     def activity
       Activity.new(self)
     end
 
-    # Returns the content-type of the entry.
-    def content_type
-      self.content.type
+    def activity= value
+      if value.object_type
+        self.activity_object_type = OStatus::Activity::SCHEMA_ROOT + value.object_type.to_s
+      end
+      self.activity_object = value.activity_object if value.object
+      if value.verb
+        self.activity_verb = OStatus::Activity::SCHEMA_ROOT + value.activity_verb.to_s
+      end
+      self.activity_target = value.activity_target if value.target
+      activity_object_type = "HEY"
     end
 
     def url
@@ -36,6 +57,10 @@ module OStatus
           l.href
         end.compact.first
       end
+    end
+
+    def url= value
+      links << Atom::Link.new(:rel => "alternate", :href => value)
     end
 
     def link
@@ -53,7 +78,6 @@ module OStatus
         :id => self.id,
         :title => self.title,
         :content => self.content,
-        :content_type => self.content_type,
         :link => self.link,
         :published => self.published,
         :updated => self.updated
