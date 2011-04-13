@@ -16,14 +16,31 @@ module OStatus
       end
     end
 
-    def id;         get_prop(:id); end
-    def name;       get_prop(:name); end
-    def nickname;   get_prop(:nickname); end
-    def gender;     get_prop(:gender); end
-    def note;       get_prop(:note); end
+    def id;                   get_prop(:id); end
+    def id= value;            set_prop(:id, value); end
 
-    def display_name;       get_prop(:display_name, 'displayName'); end
-    def preferred_username; get_prop(:preferred_username, 'preferredUsername'); end
+    def name;                 get_prop(:name); end
+    def name= value;          set_prop(:name, value); end
+
+    def nickname;             get_prop(:nickname); end
+    def nickname= value;      set_prop(:nickname, value); end
+
+    def gender;               get_prop(:gender); end
+    def gender= value;        set_prop(:gender, value); end
+
+    def note;                 get_prop(:note); end
+    def note= value;          set_prop(:note, value); end
+
+    def display_name;         get_prop(:display_name, 'displayName'); end
+    def display_name= value;  set_prop(:display_name, value, 'displayName'); end
+
+    def preferred_username         
+      get_prop(:preferred_username, 'preferredUsername')
+    end
+
+    def preferred_username= value
+      set_prop(:preferred_username, value, 'preferredUsername')
+    end
 
     def updated;   get_datetime(:updated); end
     def published; get_datetime(:published); end
@@ -51,6 +68,14 @@ module OStatus
 
     def get_prop name, xmlName = name
       @options ? @options[name] : @parent.send("poco_#{xmlName}")
+    end
+
+    def set_prop name, value, xmlName = name
+      if @options
+        @options[name] = value
+      else
+        @parent.send("poco_#{xmlName}=", value)
+      end
     end
 
     def get_datetime x
