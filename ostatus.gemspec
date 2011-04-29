@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "ostatus"
 
-  s.add_dependency "oauth"
   s.add_dependency "ratom"
   s.add_development_dependency "rspec"
 
