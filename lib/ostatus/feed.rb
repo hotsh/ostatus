@@ -25,8 +25,10 @@ module OStatus
 
     attr_reader :url
 
-    # Store in reverse order so that the -1 from .index "not found" will sort properly
-    MIME_ORDER = ['application/atom+xml', 'application/rss+xml', 'application/xml'].reverse
+    # Store in reverse order so that the -1 from .index "not found"
+    # will sort properly
+    MIME_ORDER = ['application/atom+xml', 'application/rss+xml',
+                  'application/xml'].reverse
 
     def initialize(str, url, access_token, options)
       @str = str
@@ -37,8 +39,10 @@ module OStatus
       if str
 
         if str =~ /<html/
-          doc = Nokogiri.parse(str)
-          links = doc.search('*[rel~=alternate]').map {|el|
+          doc = LibXML::XML::HTMLParser.string(str).parse
+          links = doc.find(
+            "//*[contains(concat(' ',normalize-space(@rel),' '), 'alternate')]"
+          ).map {|el|
             {:type => el.attributes['type'].to_s,
              :href => el.attributes['href'].to_s}
           }.sort {|a, b|
@@ -53,7 +57,8 @@ module OStatus
           end
 
           unless link.absolute?
-            link.path = File::dirname(URI::parse(@url).path) + '/' + link.path rescue nil
+            link.path = File::dirname(URI::parse(@url).path) \
+                        + '/' + link.path rescue nil
           end
 
           @url = link.to_s
