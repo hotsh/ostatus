@@ -6,6 +6,13 @@ describe OStatus::Feed do
     @feed = OStatus::Feed.from_url('test/example_feed.atom')
   end
 
+  describe "#initialize" do
+    it "should detect a feed URI in an HTML page" do
+      @feed = OStatus::Feed.from_url('test/example_page.html')
+      @feed.url.should == 'test/example_feed.atom'
+    end
+  end
+
   describe "#atom" do
     it "should return a String containing the atom information" do
       @feed.atom.start_with?("<?xml").should eql(true)
