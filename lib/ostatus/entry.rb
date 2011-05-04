@@ -45,7 +45,6 @@ module OStatus
         self.activity_verb = OStatus::Activity::SCHEMA_ROOT + value.activity_verb.to_s
       end
       self.activity_target = value.activity_target if value.target
-      activity_object_type = "HEY"
     end
 
     def url
