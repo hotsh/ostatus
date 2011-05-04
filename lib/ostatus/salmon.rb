@@ -14,6 +14,34 @@ module OStatus
       @plaintext = plaintext
     end
 
+    # Creates an entry for following a particular Author
+    def Salmon.from_follow(user_author, followed_author)
+      entry = OStatus::Entry.new(
+        :author => user_author,
+        :title => "Now following #{followed_author.name}",
+        :content => Atom::Content::Html.new("Now following #{followed_author.name}")
+      )
+
+      entry.activity_verb = :follow
+      entry.activity_object = followed_author
+
+      OStatus::Salmon.new(entry)
+    end
+
+    # Creates an entry for unfollowing a particular Author
+    def Salmon.from_unfollow(user_author, followed_author)
+      entry = OStatus::Entry.new(
+        :author => user_author,
+        :title => "Stopped following #{followed_author.name}",
+        :content => Atom::Content::Html.new("Stopped following #{followed_author.name}")
+      )
+
+      entry.activity_verb = "http://ostatus.org/schema/1.0/unfollow"
+      entry.activity_object = followed_author
+
+      OStatus::Salmon.new(entry)
+    end
+
     # Generate a magic envelope from an OStatus::Entry or pull an
     # OStatus::Entry from a magic envelope
     def Salmon.from_xml source
@@ -106,6 +134,48 @@ module OStatus
       Salmon.new OStatus::Entry.new(payload), signature, plaintext
     end
 
+    # Generate the xml for this Salmon notice and sign with the given private
+    # key.
+    def to_xml key
+      # Generate magic envelope
+      magic_envelope = XML::Document.new
+
+      magic_envelope.root = XML::Node.new 'env'
+
+      me_ns = XML::Namespace.new(magic_envelope.root, 
+                   'me', 'http://salmon-protocol.org/ns/magic-env')
+
+      magic_envelope.root.namespaces.namespace = me_ns
+
+      # Armored Data <me:data>
+      data = @entry.to_xml
+      @plaintext = data
+      data_armored = Base64::urlsafe_encode64(data)
+      elem = XML::Node.new 'data', data_armored, me_ns
+      elem.attributes['type'] = 'application/atom+xml'
+      data_type_armored = 'YXBwbGljYXRpb24vYXRvbSt4bWw='
+      magic_envelope.root << elem
+
+      # Encoding <me:encoding>
+      magic_envelope.root << XML::Node.new('encoding', 'base64url', me_ns)
+      encoding_armored = 'YmFzZTY0dXJs'
+
+      # Signing Algorithm <me:alg>
+      magic_envelope.root << XML::Node.new('alg', 'RSA-SHA256', me_ns)
+      algorithm_armored = 'UlNBLVNIQTI1Ng=='
+
+      # Signature <me:sig>
+      plaintext = "#{data_armored}.#{data_type_armored}.#{encoding_armored}.#{algorithm_armored}"
+      
+      # Assign @signature to the signature generated from the plaintext
+      sign(plaintext, key)
+
+      signature_armored = Base64::urlsafe_encode64(@signature)
+      magic_envelope.root << XML::Node.new('sig', signature_armored, me_ns)
+      
+      magic_envelope.to_s :indent => true, :encoding => XML::Encoding::UTF_8
+    end
+
     # Return the EMSA string for this Salmon instance given the size of the
     # public key modulus.
     def signature modulus_byte_length
@@ -119,37 +189,28 @@ module OStatus
         padding = padding + "\xff"
       end
 
-      emsa = "\x00\x01#{padding}\x00#{prefix}#{plaintext}"
+      "\x00\x01#{padding}\x00#{prefix}#{plaintext}"
     end
 
-    def sign key
+    def sign message, key
+      @plaintext = message 
+
+      modulus_byte_count = key.private_key.modulus.size
+
+      @signature = signature(modulus_byte_count)
+      @signature = key.decrypt(@signature)
     end
 
     # Use RSA to verify the signature
-    # key - Public key as a string of the form RSA.A.B where A and B are Base64
-    #   urlsafe encoded and A is the modulus and B is the exponent
+    # key - RSA::KeyPair with the public key to use
     def verified? key
       # RSA encryption is needed to compare the signatures
-      # Create the public key from the key
-
-      # Retrieve the exponent and modulus from the key string
-      key.match /^RSA\.(.*?)\.(.*)$/
-      modulus = Base64::urlsafe_decode64($1)
-      exponent = Base64::urlsafe_decode64($2)
-
-      modulus_byte_length = modulus.bytes.count
-      modulus = modulus.bytes.inject(0) {|num, byte| (num << 8) | byte }
-      exponent = exponent.bytes.inject(0) { |num, byte| (num << 8) | byte }
-
-      # Create the public key instance
-      key = RSA::Key.new(modulus, exponent)
-      keypair = RSA::KeyPair.new(nil, key)
 
       # Get signature to check
-      emsa = self.signature modulus_byte_length
+      emsa = self.signature key.public_key.modulus.size
 
       # Get signature in payload
-      emsa_signature = keypair.encrypt(@signature)
+      emsa_signature = key.encrypt(@signature)
 
       # RSA gem drops leading 0s since it does math upon an Integer
       # As a workaround, I check for what I expect the second byte to be (\x01)
