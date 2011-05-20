@@ -14,7 +14,7 @@ module OStatus
       @plaintext = plaintext
     end
 
-    # Creates an entry for following a particular Author
+    # Creates an entry for following a particular Author.
     def Salmon.from_follow(user_author, followed_author)
       entry = OStatus::Entry.new(
         :author => user_author,
@@ -28,7 +28,7 @@ module OStatus
       OStatus::Salmon.new(entry)
     end
 
-    # Creates an entry for unfollowing a particular Author
+    # Creates an entry for unfollowing a particular Author.
     def Salmon.from_unfollow(user_author, followed_author)
       entry = OStatus::Entry.new(
         :author => user_author,
@@ -42,8 +42,7 @@ module OStatus
       OStatus::Salmon.new(entry)
     end
 
-    # Generate a magic envelope from an OStatus::Entry or pull an
-    # OStatus::Entry from a magic envelope
+    # Will pull a OStatus::Entry from a magic envelope described by the xml.
     def Salmon.from_xml source
       if source.is_a?(String)
         source = XML::Document.string(source, 
