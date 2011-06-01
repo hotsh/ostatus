@@ -1,7 +1,6 @@
 require 'xml'
 require 'atom'
 require 'digest/sha2'
-require 'rsa'
 
 module OStatus
   class Salmon
