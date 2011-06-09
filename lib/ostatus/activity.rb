@@ -45,6 +45,19 @@ module OStatus
       end
     end
 
+    def verb= value
+      if @entry.is_a? Hash
+        @entry[:object] = value
+      else
+        if [:favorite, :follow, :like, :"make-friend", :join,
+          :play, :save, :share, :tag, :update].include? value
+          value = "#{SCHEMA_ROOT}#{value}"
+        end
+
+        @entry.activity_verb = value
+      end
+    end
+
     # Returns the object-type field or nil if it does not exist.
     # :article, :audio, :bookmark, :comment, :file, :folder, :group, 
     # :list, :note, :person, :photo, :"photo-album", :place, :playlist, 
