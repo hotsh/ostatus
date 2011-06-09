@@ -21,7 +21,7 @@ module OStatus
         :content => Atom::Content::Html.new("Now following #{followed_author.name}")
       )
 
-      entry.activity_verb = :follow
+      entry.activity.verb = :follow
       entry.activity_object = followed_author
 
       OStatus::Salmon.new(entry)
