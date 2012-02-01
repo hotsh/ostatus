@@ -1,5 +1,6 @@
 require_relative 'activity'
 require_relative 'portable_contacts'
+require 'date'
 
 module OStatus
 
@@ -30,7 +31,7 @@ module OStatus
     element 'poco:connected'
 
     def initialize *args
-      self.activity_object_type = "http://activitystrea.ms/schema/1.0/person" 
+      self.activity_object_type = "http://activitystrea.ms/schema/1.0/person"
       super(*args)
     end
 
