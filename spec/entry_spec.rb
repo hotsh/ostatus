@@ -1,11 +1,14 @@
 require_relative '../lib/ostatus/feed.rb'
 require_relative '../lib/ostatus/entry.rb'
 require_relative '../lib/ostatus/activity.rb'
+require_relative '../lib/ostatus/link.rb'
 
 describe OStatus::Entry do
   before(:each) do
     @feed = OStatus::Feed.from_url('test/example_feed.atom')
     @entry = @feed.entries[0]
+    @feed_link_without_href = OStatus::Feed.from_url('test/example_feed_link_without_href.atom')
+    @entry_link_without_href = @feed_link_without_href.entries[0]
   end
 
   describe "#activity" do
@@ -45,7 +48,7 @@ describe OStatus::Entry do
       @entry.published.strftime("%Y-%m-%dT%I:%M:%S%z").should eql('2011-02-21T02:15:14+0000')
     end
   end
-  
+
   describe "#id" do
     it "should return the id given in the id tag" do
       @entry.id.should eql('http://identi.ca/notice/64991641')
@@ -72,7 +75,7 @@ describe OStatus::Entry do
     it "should contain a Hash for the link" do
       @entry.info[:link].class.should eql(Hash)
     end
-    
+
     it "should contain the published DateTime" do
       @entry.info[:published].class.should eql(DateTime)
       @entry.info[:published].strftime("%Y-%m-%dT%I:%M:%S%z").should eql('2011-02-21T02:15:14+0000')
@@ -81,6 +84,22 @@ describe OStatus::Entry do
     it "should contain the updated DateTime" do
       @entry.info[:updated].class.should eql(DateTime)
       @entry.info[:updated].strftime("%Y-%m-%dT%I:%M:%S%z").should eql('2011-03-22T02:15:14+0000')
+    end
+  end
+
+  describe "#links" do
+    it "should use OStatus::Link elements" do
+      @entry.links.first.class.should eql(OStatus::Link)
+    end
+  end
+
+  describe "#url" do
+    it "should return the alternate link's href attribute" do
+      @entry.url.should eql("http://identi.ca/notice/64991641")
+    end
+
+    it "should return the alternate link's content if there's no href" do
+      @entry_link_without_href.url.should eql("http://identi.ca/notice/89057569")
     end
   end
 end
