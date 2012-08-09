@@ -44,19 +44,23 @@ module OStatus
     # Will pull a OStatus::Entry from a magic envelope described by the xml.
     def Salmon.from_xml source
       if source.is_a?(String)
-        source = XML::Document.string(source, 
+        if source.length == 0
+          return nil
+        end
+
+        source = XML::Document.string(source,
                                       :options => XML::Parser::Options::NOENT)
       end
 
       # Retrieve the envelope
-      envelope = source.find('/me:env', 
+      envelope = source.find('/me:env',
                           'me:http://salmon-protocol.org/ns/magic-env').first
 
       if envelope.nil?
         return nil
       end
 
-      data = envelope.find('me:data', 
+      data = envelope.find('me:data',
                            'me:http://salmon-protocol.org/ns/magic-env').first
       if data.nil?
         return nil
@@ -140,7 +144,7 @@ module OStatus
 
       magic_envelope.root = XML::Node.new 'env'
 
-      me_ns = XML::Namespace.new(magic_envelope.root, 
+      me_ns = XML::Namespace.new(magic_envelope.root,
                    'me', 'http://salmon-protocol.org/ns/magic-env')
 
       magic_envelope.root.namespaces.namespace = me_ns
@@ -164,13 +168,13 @@ module OStatus
 
       # Signature <me:sig>
       plaintext = "#{data_armored}.#{data_type_armored}.#{encoding_armored}.#{algorithm_armored}"
-      
+
       # Assign @signature to the signature generated from the plaintext
       sign(plaintext, key)
 
       signature_armored = Base64::urlsafe_encode64(@signature)
       magic_envelope.root << XML::Node.new('sig', signature_armored, me_ns)
-      
+
       magic_envelope.to_s :indent => true, :encoding => XML::Encoding::UTF_8
     end
 
@@ -183,7 +187,7 @@ module OStatus
       padding_count = modulus_byte_length - prefix.bytes.count - plaintext.bytes.count - 3
 
       padding = ""
-      padding_count.times do 
+      padding_count.times do
         padding = padding + "\xff"
       end
 
@@ -191,7 +195,7 @@ module OStatus
     end
 
     def sign message, key
-      @plaintext = message 
+      @plaintext = message
 
       modulus_byte_count = key.private_key.modulus.size
 
