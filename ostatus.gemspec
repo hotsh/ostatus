@@ -14,8 +14,9 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "ostatus"
 
-  s.add_dependency "ratom"
-  s.add_development_dependency "rspec"
+  s.add_dependency "ratom", "~> 0.7.0"
+  s.add_development_dependency "rspec", "~> 2.10.0"
+  s.add_development_dependency "rake", "~> 0.9.2"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

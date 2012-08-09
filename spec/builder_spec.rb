@@ -64,8 +64,8 @@ describe 'XML builder' do
 
     specify { @feed.atom.should match('<title>atom powered robots') }
     specify { @feed.atom.should match('<content>atom powered robots') }
-    specify { @feed.atom.should match("<updated>#{@now.iso8601}") }
-    specify { @feed.atom.should match("<published>#{@now.iso8601}") }
+    specify { @feed.atom.should match(Regexp.escape("<updated>#{@now.iso8601}")) }
+    specify { @feed.atom.should match(Regexp.escape("<published>#{@now.iso8601}")) }
     specify { @feed.atom.should match('<id>http://example.org/feed/1') }
     specify { @feed.atom.should match('<link href="http://example.org/feed/1"/>') }
   end
