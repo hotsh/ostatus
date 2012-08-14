@@ -1,0 +1,874 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+  <title>otakukuma - Identi.ca</title>
+  <link rel="shortcut icon" href="https://identi.ca/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" href="https://theme2.status.net/base/css/display.css?version=1.1.0-release" media="screen, projection, tv, print"/>
+  <link rel="stylesheet" type="text/css" href="https://theme2.status.net/neo/css/display.css?version=1.1.0-release" media="screen, projection, tv, print"/>
+  <link rel="stylesheet" type="text/css" href="https://plugins2.status.net/OStatus/theme/base/css/ostatus.css" media=""/>
+  <link rel="stylesheet" type="text/css" href="https://plugins2.status.net/ModPlus/modplus.css" media=""/>
+  <link rel="stylesheet" type="text/css" href="https://plugins2.status.net/Realtime/realtimeupdate.css" media="screen, projection, tv"/>
+  <link rel="stylesheet" type="text/css" href="https://identi.ca/js/css/smoothness/jquery-ui.css" media=""/>
+  <!--[if IE]><link rel="stylesheet" type="text/css" href="https://theme2.status.net/base/css/ie.css?version=1.1.0-release" /><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="https://theme2.status.net/base/css/ie6.css?version=1.1.0-release" /><![endif]-->
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="https://theme2.status.net/base/css/ie7.css?version=1.1.0-release" /><![endif]-->
+  <style>#site_notice { width: 100% }</style>
+  <style>.form-train-spam input.submit { background: url(https://plugins2.status.net/ActivitySpam/icons/bullet_black.png) no-repeat 0px 0px }
+.form-train-ham input.submit { background: url(https://plugins2.status.net/ActivitySpam/icons/exclamation.png) no-repeat 0px 0px } </style>
+  <link rel="stylesheet" type="text/css" href="https://plugins2.status.net/Bookmark/bookmark.css" media=""/>
+  <link rel="stylesheet" type="text/css" href="https://plugins2.status.net/Event/event.css" media=""/>
+  <link rel="stylesheet" type="text/css" href="https://plugins2.status.net/Poll/poll.css" media=""/>
+  <link rel="stylesheet" type="text/css" href="https://plugins2.status.net/QnA/css/qna.css" media=""/>
+  <link rel="search" type="application/opensearchdescription+xml" href="http://identi.ca/opensearch/people" title="Identi.ca People Search"/>
+  <link rel="search" type="application/opensearchdescription+xml" href="http://identi.ca/opensearch/notice" title="Identi.ca Notice Search"/>
+  <link rel="alternate" href="http://identi.ca/api/statuses/user_timeline/184603.as" type="application/stream+json" title="Notice feed for otakukuma (Activity Streams JSON)"/>
+  <link rel="alternate" href="http://identi.ca/otakukuma/rss" type="application/rdf+xml" title="Notice feed for otakukuma (RSS 1.0)"/>
+  <link rel="alternate" href="http://identi.ca/api/statuses/user_timeline/184603.rss" type="application/rss+xml" title="Notice feed for otakukuma (RSS 2.0)"/>
+  <link rel="alternate" href="http://identi.ca/api/statuses/user_timeline/184603.atom" type="application/atom+xml" title="Notice feed for otakukuma (Atom)"/>
+  <link rel="meta" href="http://identi.ca/otakukuma/foaf" type="application/rdf+xml" title="FOAF for otakukuma"/>
+  <meta name="description" content="command line user on a GNU-Linux system"/>
+  <meta name="microid" content="mailto+http:sha1:ec8d60e34f4fcc1357b5168aea78d78da52d0a00"/>
+  <link rel="microsummary" href="http://identi.ca/otakukuma/microsummary"/>
+  <link rel="EditURI" type="application/rsd+xml" href="http://identi.ca/rsd.xml"/>
+  <link rel="openid2.provider" href="http://identi.ca/main/openidserver"/>
+  <link rel="openid2.local_id" href="http://identi.ca/otakukuma"/>
+  <link rel="openid.server" href="http://identi.ca/main/openidserver"/>
+  <link rel="openid.delegate" href="http://identi.ca/otakukuma"/>
+ </head>
+ <body id="showstream">
+  <div id="wrap">
+   <div id="fb-root"></div>
+   <div id="header">
+    <address id="site_contact" class="vcard">
+     <a class="url home bookmark" href="http://identi.ca/">
+      <img class="logo photo" src="https://file.status.net/i/identica/jordanc-20110919T224313-xycjlk9.png" alt="Identi.ca"/>
+       <span class="fn org">Identi.ca</span>
+     </a>
+    </address>
+    <div id="site_nav_global_primary">
+     <form id="header-search" class="form" method="get" action="http://identi.ca/search/notice">
+      <fieldset>
+       <input name="q" size="20" id="search-q"/>
+       <input type="submit" value="Search"/>
+      </fieldset>
+     </form>
+     <ul class="nav">
+      <li id="nav_login">
+       <a href="https://identi.ca/main/login" title="Login to the site.">Login</a>
+      </li>
+     </ul>
+    </div>
+   </div>
+   <div id="core">
+    <div id="aside_primary_wrapper">
+     <div id="content_wrapper">
+      <div id="site_nav_local_views_wrapper">
+       <div id="site_nav_local_views">
+        <ul id="nav_local_default">
+         <li>
+          <h3>Public</h3>
+          <ul class="nav">
+           <li id="nav_timeline_public">
+            <a href="http://identi.ca/" title="Public timeline">Public</a>
+           </li>
+           <li id="nav_groups">
+            <a href="http://identi.ca/group/" title="User groups">Groups</a>
+           </li>
+           <li id="nav_featured">
+            <a href="http://identi.ca/featured/" title="Featured users">Featured</a>
+           </li>
+           <li id="nav_timeline_favorited">
+            <a href="http://identi.ca/favorited/" title="Popular notices">Popular</a>
+           </li>
+          </ul>
+         </li>
+        </ul>
+       </div>
+       <div id="content">
+        <h1>otakukuma</h1>
+        <div id="content_inner">
+         <div id="notices_primary">
+          <ol class="notices xoxo">
+           <li class="hentry notice notice-source-web" id="notice-95975798">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/group/debian" title="debian" class="addressee group">Debian</a>
+,                <a href="http://identi.ca/psep" title="psep" class="addressee account">Pablo Sepulveda P.</a>
+              </span>
+             </div>
+             <p class="entry-content">No thanks. I want something perfectly stable and squeeze is very good for that.</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95975798">
+              <abbr class="published" title="2012-08-10T19:44:09+00:00">about 3 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">web</span>
+             </span>
+              <a href="http://identi.ca/conversation/95179414#notice-95975798" class="response">in context</a>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-web" id="notice-95975404">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/psep" title="psep" class="addressee account">Pablo Sepulveda P.</a>
+              </span>
+             </div>
+             <p class="entry-content">for more recent versions of mplayer and ffmpeg which display webm contents. too old on squeeze</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95975404">
+              <abbr class="published" title="2012-08-10T19:20:12+00:00">about 3 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">web</span>
+             </span>
+              <a href="http://identi.ca/conversation/95179414#notice-95975404" class="response">in context</a>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95975254">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">more than a million torrent files from the Internet Archive online <a href="http://ur1.ca/9xhzf" title="http://torrentfreak.com/internet-archive-starts-seeding-1398635-torrents-120807" rel="external">http://ur1.ca/9xhzf</a></p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95975254">
+              <abbr class="published" title="2012-08-10T19:14:38+00:00">about 3 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95973696">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/group/php" title="php" class="addressee group">PHP</a>
+              </span>
+             </div>
+             <p class="entry-content">!<span class="vcard"><a href="http://identi.ca/group/240/id" class="url" title="PHP (php)"><span class="fn nickname group">php</span></a></span> shell detector <a href="http://ur1.ca/9xhjr" title="https://github.com/emposha/PHP-Shell-Detector" rel="external">http://ur1.ca/9xhjr</a></p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95973696">
+              <abbr class="published" title="2012-08-10T17:54:08+00:00">about 3 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95963775">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">#<span class="tag"><a href="http://identi.ca/tag/santoku" rel="tag">santoku</a></span> #<span class="tag"><a href="http://identi.ca/tag/mobileforensics" rel="tag">mobileforensics</a></span> <a href="http://ur1.ca/9xef0" title="https://santoku-linux.com/" rel="external">http://ur1.ca/9xef0</a></p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95963775">
+              <abbr class="published" title="2012-08-10T07:53:13+00:00">about 4 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95898805">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">nmap -n -sP <a href="http://192.168.10.0/24" title="http://192.168.10.0/24" rel="external">192.168.10.0/24</a> # know all IP addresses of alive hosts on the LAN</p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95898805">
+              <abbr class="published" title="2012-08-07T10:13:13+00:00">about 6 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95803076">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">canto left for newsbeuter</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95803076">
+              <abbr class="published" title="2012-08-02T07:35:49+00:00">about 12 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95802816">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">debian-multimedia changes its domain name into deb-multimedia. !<span class="vcard"><a href="http://identi.ca/group/14/id" class="url" title="Debian (debian)"><span class="fn nickname group">debian</span></a></span> users, update your apt sources.list</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95802816">
+              <abbr class="published" title="2012-08-02T07:12:24+00:00">about 12 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+              <a href="http://identi.ca/conversation/95179414#notice-95802816" class="response">in context</a>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95802709">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">debian-multimedia changes its domain name into deb-multimedia</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95802709">
+              <abbr class="published" title="2012-08-02T07:04:18+00:00">about 12 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95740331">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/group/cli" title="cli" class="addressee group">Command Line Interface</a>
+              </span>
+             </div>
+             <p class="entry-content">add EXIF timestamps to photos <a href="http://ur1.ca/9uua9" title="http://blog.iandexter.net/2012/07/add-exif-timestamps-to-photos.html" rel="external">http://ur1.ca/9uua9</a> !<span class="vcard"><a href="http://identi.ca/group/676/id" class="url" title="Command Line Interface (cli)"><span class="fn nickname group">cli</span></a></span></p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95740331">
+              <abbr class="published" title="2012-07-30T07:31:17+00:00">about 15 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95709705">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">the statusnet API is not complete and the Twitter API is difficult to find and read on twitter site</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95709705">
+              <abbr class="published" title="2012-07-28T16:21:09+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-puduku" id="notice-95709672">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">source parameter changed</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95709672">
+              <abbr class="published" title="2012-07-28T16:18:48+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">puduku</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-api" id="notice-95709269">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">awk script to play random tones <a href="http://ur1.ca/9ul5z" title="http://kmkeen.com/awk-music/" rel="external">http://ur1.ca/9ul5z</a></p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95709269">
+              <abbr class="published" title="2012-07-28T15:49:30+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">api</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-api" id="notice-95709210">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/group/cli" title="cli" class="addressee group">Command Line Interface</a>
+              </span>
+             </div>
+             <p class="entry-content">!<span class="vcard"><a href="http://identi.ca/group/676/id" class="url" title="Command Line Interface (cli)"><span class="fn nickname group">cli</span></a></span> #<span class="tag"><a href="http://identi.ca/tag/awk" rel="tag">awk</a></span> filters <a href="http://ur1.ca/9ul5c" title="http://www.acc.umu.se/~saasha/filters/" rel="external">http://ur1.ca/9ul5c</a></p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95709210">
+              <abbr class="published" title="2012-07-28T15:44:32+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">api</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-web" id="notice-95709196">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/group/cli" title="cli" class="addressee group">Command Line Interface</a>
+,                <a href="http://identi.ca/chr" title="chr" class="addressee account">chr</a>
+              </span>
+             </div>
+             <p class="entry-content">Oops, sorry, it's always a problem for me to paste links <a href="http://www.acc.umu.se/~saasha/filters/" title="http://www.acc.umu.se/~saasha/filters/" rel="external">http://www.acc.umu.se/~saasha/filters/</a></p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95709196">
+              <abbr class="published" title="2012-07-28T15:43:33+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">web</span>
+             </span>
+              <a href="http://identi.ca/conversation/95057551#notice-95709196" class="response">in context</a>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-api" id="notice-95708849">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">evilvte 0.5.2 adds the #<span class="tag"><a href="http://identi.ca/tag/solarized" rel="tag">solarized</a></span> color style option. pre-release out now</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95708849">
+              <abbr class="published" title="2012-07-28T15:21:59+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">api</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-api" id="notice-95705589">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/group/debian" title="debian" class="addressee group">Debian</a>
+,                <a href="http://identi.ca/group/cli" title="cli" class="addressee group">Command Line Interface</a>
+              </span>
+             </div>
+             <p class="entry-content">#<span class="tag"><a href="http://identi.ca/tag/smxi" rel="tag">smxi</a></span> script for !<span class="vcard"><a href="http://identi.ca/group/14/id" class="url" title="Debian (debian)"><span class="fn nickname group">debian</span></a></span> <a href="http://smxi.org/" title="http://smxi.org/" rel="external">http://smxi.org</a> useful !<span class="vcard"><a href="http://identi.ca/group/676/id" class="url" title="Command Line Interface (cli)"><span class="fn nickname group">cli</span></a></span> tool</p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95705589">
+              <abbr class="published" title="2012-07-28T10:56:48+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">api</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-api" id="notice-95704917">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">#<span class="tag"><a href="http://identi.ca/tag/surf" rel="tag">surf</a></span> the #<span class="tag"><a href="http://identi.ca/tag/suckless" rel="tag">suckless</a></span> browser has a new release (0.5) out !</p>
+            </div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95704917">
+              <abbr class="published" title="2012-07-28T10:05:01+00:00">about 16 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">api</span>
+             </span>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-api" id="notice-95661447">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+              <span class="addressees">
+               <a href="http://identi.ca/group/cli" title="cli" class="addressee group">Command Line Interface</a>
+              </span>
+             </div>
+             <p class="entry-content">!<span class="vcard"><a href="http://identi.ca/group/676/id" class="url" title="Command Line Interface (cli)"><span class="fn nickname group">cli</span></a></span> #<span class="tag"><a href="http://identi.ca/tag/awk" rel="tag">awk</a></span> filters <a href="http://ur1.ca/9u6x7" title="http://s.s/qc_redir?q=html" rel="external">http://ur1.ca/9u6x7</a> entities to txt awk</p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95661447">
+              <abbr class="published" title="2012-07-26T15:49:58+00:00">about 18 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">api</span>
+             </span>
+              <a href="http://identi.ca/conversation/95057551#notice-95661447" class="response">in context</a>
+            </div>
+           </li>
+           <li class="hentry notice notice-source-api" id="notice-95661441">
+            <div class="entry-title">
+             <div class="author">
+              <span class="vcard author">
+               <a href="http://identi.ca/otakukuma" class="url" title="otakukuma">
+                <img src="http://avatar3.status.net/i/identica/184603-48-20110731211144.png" class="avatar photo" width="48" height="48" alt="otakukuma"/>
+                 <span class="fn">otakukuma</span>
+               </a>
+              </span>
+             </div>
+             <p class="entry-content">#<span class="tag"><a href="http://identi.ca/tag/awk" rel="tag">awk</a></span> filters <a href="http://s.s/qc_redir?q=html" title="http://s.s/qc_redir?q=html" rel="external">http://s.s/qc_redir?q=html</a> entities to txt awk</p>
+            </div>
+            <div class="entry-content thumbnails"></div>
+            <div class="entry-content">
+             <a rel="bookmark" class="timestamp" href="http://identi.ca/notice/95661441">
+              <abbr class="published" title="2012-07-26T15:49:41+00:00">about 18 days ago</abbr>
+             </a>
+              <span class="source">from               <span class="device">api</span>
+             </span>
+            </div>
+           </li>
+          </ol>
+         </div>
+         <ul class="nav" id="pagination">
+          <li class="nav_next">
+           <a href="http://identi.ca/otakukuma?page=2" rel="next">Before</a>
+          </li>
+         </ul>
+        </div>
+       </div>
+       <div id="aside_primary" class="aside">
+        <div class="profile_block account_profile_block section">
+         <div class="entity_actions">
+          <h2>User actions</h2>
+          <ul>
+           <li class="entity_subscribe">
+            <a href="http://identi.ca/main/ostatus/nickname/otakukuma" class="entity_remote_subscribe">Subscribe</a>
+           </li>
+           <li class="entity_tag">
+            <a href="http://identi.ca/main/ostatustag" class="entity_remote_tag">List</a>
+           </li>
+          </ul>
+         </div>
+         <img src="http://avatar3.status.net/i/identica/184603-96-20110731211144.png" class="ur_face" alt="otakukuma" width="96" height="96"/>
+         <p class="profile_block_name">
+          <a href="http://identi.ca/otakukuma">otakukuma</a>
+         </p>
+         <p class="profile_block_location">Kadath</p>
+         <a href="http://skingrapher.legtux.org" rel="me" class="profile_block_homepage">http://skingrapher.legtux.org</a>
+         <ul class="profile_block_otherprofile_list">
+          <li>
+           <a href="https://me.yahoo.com/skingrapher" rel="me" class="profile_block_otherprofile" title="OpenID">
+            <img src="https://plugins2.status.net/OpenID/icons/openid-16x16.gif" class="profile_block_otherprofile_icon"/>
+           </a>
+          </li>
+         </ul>
+         <p class="profile_block_description">command line user on a GNU-Linux system</p>
+         <dl class="entity_tags user_profile_tags">
+          <dt>Tags</dt>
+          <dd>
+           <ul class="tags">
+            <li>(None)</li>
+           </ul>
+          </dd>
+         </dl>
+        </div>
+        <div id="generic_section" class="section">
+         <h2>Site notice</h2>
+<ul>
+<li><a href="http://ur1.ca/3j037">API</a></li>
+<li><a href="http://ur1.ca/gklg">Status</a></li>
+<li><a href="http://status.net/2012/08/04/problems-with-ur1-ca">ur1.ca</a></li>
+</ul></div>
+        <div id="entity_subscriptions" class="section">
+         <h2>
+          <a href="http://identi.ca/otakukuma/subscriptions" class="">Following</a>
+ 67</h2>
+         <ul class="entities users xoxo">
+          <li class="vcard">
+           <a href="http://identi.ca/sylvaind" class="url" rel="contact member" title="Sylvain Delafoy">
+            <img src="http://avatar3.status.net/i/identica/141675-24-20100305195710.jpeg" width="24" height="24" class="avatar photo" alt="Sylvain Delafoy"/>
+            <span class="fn nickname">sylvaind</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/thimbl" class="url" rel="contact member" title="Thimbl Network">
+            <img src="https://secure.gravatar.com/avatar.php?gravatar_id=d53e3e2792268658c30c6f036f4d3111&amp;default=https%3A%2F%2Ftheme2.status.net%2Fneo%2Fdefault-avatar-mini.png&amp;size=24" width="24" height="24" class="avatar photo" alt="Thimbl Network"/>
+            <span class="fn nickname">thimbl</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/lolosailing" class="url" rel="contact member" title="Lolo Sailing">
+            <img src="http://avatar3.status.net/i/identica/314626-24-20101103193256.jpeg" width="24" height="24" class="avatar photo" alt="Lolo Sailing"/>
+            <span class="fn nickname">lolosailing</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/pvincent" class="url" rel="contact member" title="pvincent">
+            <img src="http://avatar3.status.net/i/identica/66631-24-20111103181846.jpeg" width="24" height="24" class="avatar photo" alt="pvincent"/>
+            <span class="fn nickname">pvincent</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/behuman" class="url" rel="contact member" title="Be Human">
+            <img src="http://avatar3.status.net/i/identica/171897-24-20110915142936.png" width="24" height="24" class="avatar photo" alt="Be Human"/>
+            <span class="fn nickname">behuman</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/tmp" class="url" rel="contact member" title="Timothy Patishnock">
+            <img src="http://avatar3.status.net/i/identica/485033-24-20110711013944.jpeg" width="24" height="24" class="avatar photo" alt="Timothy Patishnock"/>
+            <span class="fn nickname">tmp</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/fablefou" class="url" rel="contact member" title="fablefou">
+            <img src="http://avatar3.status.net/i/identica/142570-24-20100306153921.png" width="24" height="24" class="avatar photo" alt="fablefou"/>
+            <span class="fn nickname">fablefou</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/lopo" class="url" rel="contact member" title="Lopo Lencastre de Almeida">
+            <img src="http://avatar3.status.net/i/identica/42184-24-20090304215023.png" width="24" height="24" class="avatar photo" alt="Lopo Lencastre de Almeida"/>
+            <span class="fn nickname">lopo</span>
+           </a>
+          </li>
+         </ul>
+        </div>
+        <div id="entity_subscribers" class="section">
+         <h2>
+          <a href="http://identi.ca/otakukuma/subscribers" class="">Followers</a>
+ 132</h2>
+         <ul class="entities users xoxo">
+          <li class="vcard">
+           <a href="http://identi.ca/jarabreter" class="url" rel="contact member nofollow" title="Jara Breter">
+            <img src="http://avatar3.status.net/i/identica/943748-24-20120809144139.png" width="24" height="24" class="avatar photo" alt="Jara Breter"/>
+            <span class="fn nickname">jarabreter</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/surehybreter" class="url" rel="contact member nofollow" title="Surehy Breter">
+            <img src="http://avatar3.status.net/i/identica/914192-24-20120808130921.png" width="24" height="24" class="avatar photo" alt="Surehy Breter"/>
+            <span class="fn nickname">surehybreter</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/jboynyc" class="url" rel="contact member nofollow" title="John">
+            <img src="http://avatar3.status.net/i/identica/231663-24-20100811151853.png" width="24" height="24" class="avatar photo" alt="John"/>
+            <span class="fn nickname">jboynyc</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/aracnus" class="url" rel="contact member nofollow" title="Frederico Goncalves Guimaraes">
+            <img src="http://avatar3.status.net/i/identica/75-24-20090619102418.png" width="24" height="24" class="avatar photo" alt="Frederico Goncalves Guimaraes"/>
+            <span class="fn nickname">aracnus</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/sylvaind" class="url" rel="contact member nofollow" title="Sylvain Delafoy">
+            <img src="http://avatar3.status.net/i/identica/141675-24-20100305195710.jpeg" width="24" height="24" class="avatar photo" alt="Sylvain Delafoy"/>
+            <span class="fn nickname">sylvaind</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/merterrentacar" class="url" rel="contact member nofollow" title="MerterRentACar">
+            <img src="https://secure.gravatar.com/avatar.php?gravatar_id=033cae45b317a8fc1ff350a70eb144bf&amp;default=https%3A%2F%2Ftheme2.status.net%2Fneo%2Fdefault-avatar-mini.png&amp;size=24" width="24" height="24" class="avatar photo" alt="MerterRentACar"/>
+            <span class="fn nickname">merterrentacar</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/sofialegentile" class="url" rel="contact member nofollow" title="Sofia">
+            <img src="http://avatar3.status.net/i/identica/776550-24-20120615115423.jpeg" width="24" height="24" class="avatar photo" alt="Sofia"/>
+            <span class="fn nickname">sofialegentile</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a href="http://identi.ca/tdey" class="url" rel="contact member nofollow" title="Tdey">
+            <img src="http://avatar3.status.net/i/identica/650791-24-20120402123557.png" width="24" height="24" class="avatar photo" alt="Tdey"/>
+            <span class="fn nickname">tdey</span>
+           </a>
+          </li>
+         </ul>
+        </div>
+        <div id="entity_groups" class="section">
+         <h2>
+          <a href="http://identi.ca/otakukuma/groups" class="">Groups</a>
+ 111</h2>
+         <ul class="entities groups xoxo">
+          <li class="vcard">
+           <a title="Command Line Interface" href="http://identi.ca/group/cli" rel="contact group" class="url">
+            <img src="https://theme2.status.net/neo/default-avatar-mini.png" width="24" height="24" class="avatar photo" alt="Command Line Interface"/>
+            <span class="fn org nickname">cli</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a title="Linux" href="http://identi.ca/group/linux" rel="contact group" class="url">
+            <img src="http://avatar.identi.ca/56-24-20090604093321.png" width="24" height="24" class="avatar photo" alt="Linux"/>
+            <span class="fn org nickname">linux</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a title="Uzbl Browser" href="http://identi.ca/group/uzbl" rel="contact group" class="url">
+            <img src="http://avatar.identi.ca/2718-24-20090508211508.png" width="24" height="24" class="avatar photo" alt="Uzbl Browser"/>
+            <span class="fn org nickname">uzbl</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a title="Linux From Scratch" href="http://identi.ca/group/lfs" rel="contact group" class="url">
+            <img src="http://avatar.identi.ca/4937-24-20090919033952.png" width="24" height="24" class="avatar photo" alt="Linux From Scratch"/>
+            <span class="fn org nickname">lfs</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a title="ELinks" href="http://identi.ca/group/elinks" rel="contact group" class="url">
+            <img src="https://theme2.status.net/neo/default-avatar-mini.png" width="24" height="24" class="avatar photo" alt="ELinks"/>
+            <span class="fn org nickname">elinks</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a title="SPIP" href="http://identi.ca/group/spip" rel="contact group" class="url">
+            <img src="http://avatar.identi.ca/1477-24-20090307134632.png" width="24" height="24" class="avatar photo" alt="SPIP"/>
+            <span class="fn org nickname">spip</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a title="The Z SHell Group" href="http://identi.ca/group/zsh" rel="contact group" class="url">
+            <img src="http://avatar.identi.ca/22887-original-20090124215156.jpeg" width="24" height="24" class="avatar photo" alt="The Z SHell Group"/>
+            <span class="fn org nickname">zsh</span>
+           </a>
+          </li>
+          <li class="vcard">
+           <a title="Vim Users" href="http://identi.ca/group/vim" rel="contact group" class="url">
+            <img src="http://avatar.identi.ca/283-24-20090207132942.png" width="24" height="24" class="avatar photo" alt="Vim Users"/>
+            <span class="fn org nickname">vim</span>
+           </a>
+          </li>
+         </ul>
+        </div>
+        <div id="entity_statistics" class="section">
+         <h2>Statistics</h2>
+         <dl class="entity_user-id">
+          <dt>User ID</dt>
+          <dd>184603</dd>
+         </dl>
+         <dl class="entity_member-since">
+          <dt>Member since</dt>
+          <dd>22 May 2010</dd>
+         </dl>
+         <dl class="entity_notices">
+          <dt>Notices</dt>
+          <dd>2326</dd>
+         </dl>
+         <dl class="entity_daily_notices">
+          <dt>Daily average</dt>
+          <dd>3</dd>
+         </dl>
+        </div>
+        <div id="export_data" class="section">
+         <h2>Feeds</h2>
+         <ul class="xoxo">
+          <li>
+           <a href="http://identi.ca/api/statuses/user_timeline/184603.as" class="json" type="application/stream+json" title="Notice feed for otakukuma (Activity Streams JSON)">Activity Streams</a>
+          </li>
+          <li>
+           <a href="http://identi.ca/otakukuma/rss" class="rss" type="application/rdf+xml" title="Notice feed for otakukuma (RSS 1.0)">RSS 1.0</a>
+          </li>
+          <li>
+           <a href="http://identi.ca/api/statuses/user_timeline/184603.rss" class="rss" type="application/rss+xml" title="Notice feed for otakukuma (RSS 2.0)">RSS 2.0</a>
+          </li>
+          <li>
+           <a href="http://identi.ca/api/statuses/user_timeline/184603.atom" class="atom" type="application/atom+xml" title="Notice feed for otakukuma (Atom)">Atom</a>
+          </li>
+          <li>
+           <a href="http://identi.ca/otakukuma/foaf" class="foaf" type="application/rdf+xml" title="FOAF for otakukuma">FOAF</a>
+          </li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div id="footer">
+    <ul class="nav" id="site_nav_global_secondary">
+     <li>
+      <a href="http://identi.ca/doc/help">Help</a>
+     </li>
+     <li>
+      <a href="http://identi.ca/doc/about">About</a>
+     </li>
+     <li>
+      <a href="http://identi.ca/doc/faq">FAQ</a>
+     </li>
+     <li>
+      <a href="http://identi.ca/doc/tos">TOS</a>
+     </li>
+     <li>
+      <a href="http://identi.ca/doc/privacy">Privacy</a>
+     </li>
+     <li>
+      <a href="http://identi.ca/doc/source">Source</a>
+     </li>
+     <li>
+      <a href="http://identi.ca/main/version">Version</a>
+     </li>
+     <li>
+      <a href="http://identi.ca/doc/contact">Contact</a>
+     </li>
+    </ul>
+<p><strong>Identi.ca</strong> is a microblogging service brought to you by <a href="http://status.net/">Status.net</a>. It runs the <a href="http://status.net/">StatusNet</a> microblogging software, version 1.1.0-release, available under the <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">GNU Affero General Public License</a>.</p>
+    <p>
+     <img id="license_cc" src="https://i.creativecommons.org/l/by/3.0/80x15.png" alt="Creative Commons Attribution 3.0" width="80" height="15"/>
+ All Identi.ca content and data are available under the <a class="license" rel="external license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a> license.</p>
+    <p>
+     <a href="#" id="mobile-toggle-enable">Switch to mobile site layout.</a>
+    </p>
+    <div>
+     <a href="http://builtinmtl.com/">Built in Montreal</a>
+    </div>
+   </div>
+  </div>
+  <script type="text/javascript" src="https://js2.status.net/jquery.min.js?version=1.1.0-release"> </script>
+  <script type="text/javascript" src="https://js2.status.net/jquery.form.min.js?version=1.1.0-release"> </script>
+  <script type="text/javascript" src="https://js2.status.net/jquery-ui.min.js?version=1.1.0-release"> </script>
+  <script type="text/javascript" src="https://js2.status.net/jquery.cookie.min.js?version=1.1.0-release"> </script>
+  <script type="text/javascript">/*<![CDATA[*/ if (typeof window.JSON !== "object") { $.getScript("https://identi.ca/js/json2.min.js"); } /*]]>*/</script>
+  <script type="text/javascript" src="https://js2.status.net/jquery.joverlay.min.js?version=1.1.0-release"> </script>
+  <script type="text/javascript" src="https://js2.status.net/jquery.infieldlabel.min.js?version=1.1.0-release"> </script>
+  <script type="text/javascript" src="https://js2.status.net/util.min.js?version=1.1.0-release"> </script>
+  <script type="text/javascript">/*<![CDATA[*/ var _peopletagAC = "http://identi.ca/main/peopletagautocomplete"; /*]]>*/</script>
+  <script type="text/javascript">/*<![CDATA[*/ SN.messages={"showmore_tooltip":"Show more","reply_submit":"Reply","reply_placeholder":"Write a reply...","realtime_play":"Play","realtime_play_tooltip":"Play","realtime_pause":"Pause","realtime_pause_tooltip":"Pause","realtime_popup":"Pop up","realtime_popup_tooltip":"Pop up in a window"} /*]]>*/</script>
+  <script type="text/javascript">/*<![CDATA[*/ if (window.top !== window.self) { document.write = ""; window.top.location = window.self.location; setTimeout(function () { document.body.innerHTML = ""; }, 1); window.self.onload = function () { document.body.innerHTML = ""; }; } /*]]>*/</script>
+  <script type="text/javascript" src="https://plugins2.status.net/OStatus/js/ostatus.js"> </script>
+  <script type="text/javascript">/*<![CDATA[*/
+            $(function() {
+                $("#mobile-toggle-disable").click(function() {
+                    $.cookie("MobileOverride", "0", {path: "/"});
+                    window.location.reload();
+                    return false;
+                });
+                $("#mobile-toggle-enable").click(function() {
+                    $.cookie("MobileOverride", "1", {path: "/"});
+                    window.location.reload();
+                    return false;
+                });
+                $("#navtoggle").click(function () {
+                          $("#site_nav_local_views").fadeToggle();
+                          var text = $("#navtoggle").text();
+                          $("#navtoggle").text(
+                          text == "Show Navigation" ? "Hide Navigation" : "Show Navigation");
+                });
+            }); /*]]>*/</script>
+  <script type="text/javascript" src="https://plugins2.status.net/Realtime/realtimeupdate.min.js"> </script>
+  <script type="text/javascript" src="https://d3ds63zw57jt09.cloudfront.net/1.9/pusher.min.js"> </script>
+  <script type="text/javascript" src="https://identi.ca//local/plugins/Pusher/pusherupdater.js"> </script>
+  <script type="text/javascript">/*<![CDATA[*/  $(document).ready(function() {  RealtimeUpdate.initActions("http:\/\/identi.ca\/otakukuma?realtime=1", "identica-58c2cc7b5546100b7ec82cb77f546312", "http:\/\/identi.ca\/plugins\/Realtime\/", "http:\/\/identi.ca\/main\/channel\/58c2cc7b5546100b7ec82cb77f546312\/keepalive", "http:\/\/identi.ca\/main\/channel\/58c2cc7b5546100b7ec82cb77f546312\/close"); RealtimeUpdate.init(0, "http://identi.ca/notice/0000000000");  PusherUpdater.init("630df9daf3ac2d981076", "identica-58c2cc7b5546100b7ec82cb77f546312", true);});  /*]]>*/</script>
+  <script type="text/javascript" src="https://plugins2.status.net/Bookmark/js/bookmark.js"> </script>
+  <script type="text/javascript" src="https://plugins2.status.net/Event/event.js"> </script>
+  <script type="text/javascript" src="https://plugins2.status.net/QnA/js/qna.js"> </script>
+ </body>
+<!-- 4717ms --></html>
