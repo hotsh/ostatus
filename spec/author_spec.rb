@@ -1,6 +1,5 @@
-require_relative '../lib/ostatus/feed.rb'
+require_relative 'helper'
 require_relative '../lib/ostatus/author.rb'
-require_relative '../lib/ostatus/portable_contacts.rb'
 
 describe OStatus::Author do
   before(:each) do
@@ -12,51 +11,51 @@ describe OStatus::Author do
 
   describe "#activity" do
     it "should return an Activity instance" do
-      @author.activity.class.should eql(OStatus::Activity)
+      @author.activity.class.must_equal(OStatus::Activity)
     end
 
     it "should give an Activity instance that is relevant to the author subtree" do
-      @author.activity.object_type.should eql(:person)
+      @author.activity.object_type.must_equal(:person)
     end
   end
 
   describe "#portable_contacts" do
     it "should return an PortableContacts instance" do
-      @author.portable_contacts.class.should eql(OStatus::PortableContacts)
+      @author.portable_contacts.class.must_equal(OStatus::PortableContacts)
     end
 
     it "should give an PortableContacts instance that is relevant to the author subtree" do
-      @author.portable_contacts.preferred_username.should eql('greenmanspirit')
+      @author.portable_contacts.preferred_username.must_equal('greenmanspirit')
     end
   end
 
   describe "#uri" do
     it "should give a String containing the content of the uri tag" do
-      @author.uri.should eql('http://identi.ca/user/141464')
+      @author.uri.must_equal('http://identi.ca/user/141464')
     end
 
     it "should give nil when no uri is given" do
-      @author_empty.uri.should eql(nil)
+      @author_empty.uri.must_equal(nil)
     end
   end
 
   describe "#name" do
     it "should give a String containing the content of the name tag" do
-      @author.name.should eql('greenmanspirit')
+      @author.name.must_equal('greenmanspirit')
     end
 
     it "should give nil when no name is given" do
-      @author_empty.name.should eql(nil)
+      @author_empty.name.must_equal(nil)
     end
   end
 
   describe "email" do
     it "should give a String containing the content of the email tag" do
-      @author.email.should eql('foo@example.com')
+      @author.email.must_equal('foo@example.com')
     end
 
     it "should give nil when no email is given" do
-      @author_empty.email.should eql(nil)
+      @author_empty.email.must_equal(nil)
     end
   end
 end

@@ -1,3 +1,4 @@
+require_relative 'helper'
 require_relative '../lib/ostatus/feed.rb'
 
 describe 'XML builder' do
@@ -22,30 +23,30 @@ describe 'XML builder' do
   end
 
   it 'should generate the title' do
-    @feed.atom.should match("<title>Dean's Updates")
+    @feed.atom.must_match("<title>Dean's Updates")
   end
 
   it 'should generate the id' do
-    @feed.atom.should match("<id>#{@feed_url}")
+    @feed.atom.must_match("<id>#{@feed_url}")
   end
 
   it 'should generate a self link' do
     # depending on this attribute order is a really terrible idea, but oh well.
-    @feed.atom.should match("<link rel=\"self\" href=\"#{@feed_url}\"/>")
+    @feed.atom.must_match("<link rel=\"self\" href=\"#{@feed_url}\"/>")
   end
 
   it 'should generate the hub link' do
     # depending on this attribute order is a really terrible idea, but oh well.
-    @feed.atom.should match('<link rel="hub" href="http://example.org/hub"/>')
+    @feed.atom.must_match('<link rel="hub" href="http://example.org/hub"/>')
   end
 
   describe 'when generating the author' do
-    specify { @feed.atom.should match('<name>Dean Venture') }
-    specify { @feed.atom.should match('<email>dean@venture.com') }
-    specify { @feed.atom.should match('<uri>http://geocities.com/~dean') }
-    specify { @feed.atom.should match("<poco:id>#{@poco_id}") }
-    specify { @feed.atom.should match('<poco:displayName>Dean Venture') }
-    specify { @feed.atom.should match('<poco:preferredUsername>dean') }
+    specify { @feed.atom.must_match('<name>Dean Venture') }
+    specify { @feed.atom.must_match('<email>dean@venture.com') }
+    specify { @feed.atom.must_match('<uri>http://geocities.com/~dean') }
+    specify { @feed.atom.must_match("<poco:id>#{@poco_id}") }
+    specify { @feed.atom.must_match('<poco:displayName>Dean Venture') }
+    specify { @feed.atom.must_match('<poco:preferredUsername>dean') }
   end
 
   describe 'when generating a feed with entries' do
@@ -62,11 +63,11 @@ describe 'XML builder' do
       )
     end
 
-    specify { @feed.atom.should match('<title>atom powered robots') }
-    specify { @feed.atom.should match('<content>atom powered robots') }
-    specify { @feed.atom.should match(Regexp.escape("<updated>#{@now.iso8601}")) }
-    specify { @feed.atom.should match(Regexp.escape("<published>#{@now.iso8601}")) }
-    specify { @feed.atom.should match('<id>http://example.org/feed/1') }
-    specify { @feed.atom.should match('<link href="http://example.org/feed/1"/>') }
+    specify { @feed.atom.must_match('<title>atom powered robots') }
+    specify { @feed.atom.must_match('<content>atom powered robots') }
+    specify { @feed.atom.must_match(/#{Regexp.escape("<updated>#{@now.iso8601}")}/) }
+    specify { @feed.atom.must_match(/#{Regexp.escape("<published>#{@now.iso8601}")}/) }
+    specify { @feed.atom.must_match('<id>http://example.org/feed/1') }
+    specify { @feed.atom.must_match('<link href="http://example.org/feed/1"/>') }
   end
 end
