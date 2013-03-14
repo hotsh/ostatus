@@ -1,5 +1,9 @@
 language: ruby
+script: bundle exec rake test
 rvm:
   - 1.9.2
   - 1.9.3
-script: "bundle exec rake spec"
+  - 2.0.0
+  - ruby-head
+  - rbx-19mode
+script: "bundle exec rake test"
