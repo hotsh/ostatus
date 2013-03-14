@@ -1,13 +1,13 @@
-require 'open-uri'
-require 'atom'
-
-require_relative 'entry'
-require_relative 'author'
+require 'entry'
+require 'author'
 
 module OStatus
+  require 'atom'
 
   # This class represents an OStatus Feed object.
   class Feed < ::Atom::Feed
+    require 'open-uri'
+
     include ::Atom::SimpleExtensions
 
     namespace ::Atom::NAMESPACE

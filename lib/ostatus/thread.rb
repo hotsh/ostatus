@@ -1,9 +1,9 @@
-require 'xml/libxml'
-require 'atom/xml/parser.rb'
-
 module OStatus
   # This will parse the Thread Atom extension
   class Thread
+    require 'xml/libxml'
+    require 'atom/xml/parser.rb'
+
     NAMESPACE = 'http://purl.org/syndication/thread/1.0'
 
     include Atom::Xml::Parseable

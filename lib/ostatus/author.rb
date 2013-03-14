@@ -1,23 +1,23 @@
-require_relative 'activity'
-require_relative 'portable_contacts'
+require 'ostatus/activity'
+require 'ostatus/portable_contacts'
 
 module OStatus
   require 'atom'
 
   # Holds information about the author of the Feed.
-  class Author < Atom::Person
+  class Author < ::Atom::Person
     require 'date'
 
-    include Atom::SimpleExtensions
+    include ::Atom::SimpleExtensions
 
     add_extension_namespace :activity, OStatus::Activity::NAMESPACE
     element 'activity:object-type'
 
-    namespace Atom::NAMESPACE
+    namespace ::Atom::NAMESPACE
     element :email
     element :uri
 
-    elements :links, :class => Atom::Link
+    elements :links, :class => ::Atom::Link
 
     add_extension_namespace :poco, POCO_NS
     element 'poco:id'
@@ -42,7 +42,7 @@ module OStatus
     attr_writer :name, :poco_name
 
     def name
-      @name or self[Atom::NAMESPACE, 'name'].first
+      @name or self[::Atom::NAMESPACE, 'name'].first
     end
 
     def poco_name

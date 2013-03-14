@@ -1,7 +1,7 @@
-require_relative 'activity'
-require_relative 'author'
-require_relative 'thread'
-require_relative 'link'
+require 'ostatus/activity'
+require 'ostatus/author'
+require 'ostatus/thread'
+require 'ostatus/link'
 
 require 'ostatus/atom/entry'
 

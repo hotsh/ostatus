@@ -1,4 +1,6 @@
 module OStatus
+  require 'atom'
+
   class Link < Atom::Link
     include Atom::Xml::Parseable
     attribute :rel, :type, :length, :hreflang, :title, :text

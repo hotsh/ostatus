@@ -34,7 +34,7 @@ module OStatus
     def display_name;         get_prop(:display_name, 'displayName'); end
     def display_name= value;  set_prop(:display_name, value, 'displayName'); end
 
-    def preferred_username         
+    def preferred_username
       get_prop(:preferred_username, 'preferredUsername')
     end
 

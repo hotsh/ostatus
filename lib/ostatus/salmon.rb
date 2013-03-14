@@ -1,9 +1,9 @@
-require 'xml'
-require 'atom'
-require 'digest/sha2'
-
 module OStatus
   class Salmon
+    require 'xml'
+    require 'atom'
+    require 'digest/sha2'
+
     attr_accessor :entry
 
     # Create a Salmon instance for a particular OStatus::Entry
