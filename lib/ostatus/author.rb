@@ -1,11 +1,13 @@
 require_relative 'activity'
 require_relative 'portable_contacts'
-require 'date'
 
 module OStatus
+  require 'atom'
 
   # Holds information about the author of the Feed.
   class Author < Atom::Person
+    require 'date'
+
     include Atom::SimpleExtensions
 
     add_extension_namespace :activity, ACTIVITY_NS

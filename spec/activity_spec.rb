@@ -1,10 +1,8 @@
-require_relative '../lib/ostatus/feed.rb'
-require_relative '../lib/ostatus/entry.rb'
+require_relative 'helper'
 require_relative '../lib/ostatus/activity.rb'
-require_relative '../lib/ostatus/author.rb'
 
 describe OStatus::Activity do
-  before(:each) do
+  before do
     feed = OStatus::Feed.from_url('test/example_feed.atom')
     entry = feed.entries[0]
     @activity = entry.activity
@@ -14,41 +12,41 @@ describe OStatus::Activity do
 
   describe "#object" do
     it "should give an Author containing the content of the activity:object tag" do
-      @activity.object.class.should eql(OStatus::Author)
+      @activity.object.class.must_equal(OStatus::Author)
     end
 
     it "should give nil when no activity:object was given" do
-      @activity_empty.object.should eql(nil)
+      @activity_empty.object.must_equal(nil)
     end
   end
 
   describe "#object-type" do
     it "should give a String containing the content of the activity:object-type tag" do
-      @activity.object_type.should eql(:note)
+      @activity.object_type.must_equal(:note)
     end
 
     it "should give nil when no activity:object-type was given" do
-      @activity_empty.object_type.should eql(nil)
+      @activity_empty.object_type.must_equal(nil)
     end
   end
 
   describe "#verb" do
     it "should give a String containing the content of the activity:verb tag" do
-      @activity.verb.should eql(:post)
+      @activity.verb.must_equal(:post)
     end
 
     it "should give nil when no activity:verb was given" do
-      @activity_empty.verb.should eql(nil)
+      @activity_empty.verb.must_equal(nil)
     end
   end
 
   describe "#target" do
     it "should give a String containing the content of the activity:target tag" do
-      @activity.target.should eql('Barbaz')
+      @activity.target.must_equal('Barbaz')
     end
 
     it "should give nil when no activity:target was given" do
-      @activity_empty.target.should eql(nil)
+      @activity_empty.target.must_equal(nil)
     end
   end
 end
