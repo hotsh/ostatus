@@ -2,9 +2,10 @@ require 'xml/libxml'
 require 'atom/xml/parser.rb'
 
 module OStatus
-
   # This will parse the Thread Atom extension
   class Thread
+    NAMESPACE = 'http://purl.org/syndication/thread/1.0'
+
     include Atom::Xml::Parseable
     attribute :ref, :type, :source
     uri_attribute :href
@@ -29,7 +30,7 @@ module OStatus
     def length=(v)
       @length = v.to_i
     end
-     
+
     def to_s
       self.href
     end

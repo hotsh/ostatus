@@ -41,6 +41,19 @@ module OStatus
       OStatus::Salmon.new(entry)
     end
 
+    # Creates an entry for a profile update.
+    def Salmon.from_profile_update(user_author)
+      entry = OStatus::Entry.new(
+        :author => user_author,
+        :title => "#{user_author.name} changed their profile information.",
+        :content => Atom::Content::Html.new("#{user_author.name} changed their profile information.")
+      )
+
+      entry.activity_verb = "http://ostatus.org/schema/1.0/update-profile"
+
+      OStatus::Salmon.new(entry)
+    end
+
     # Will pull a OStatus::Entry from a magic envelope described by the xml.
     def Salmon.from_xml source
       if source.is_a?(String)

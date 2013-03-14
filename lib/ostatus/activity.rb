@@ -1,8 +1,7 @@
 module OStatus
-  ACTIVITY_NS = 'http://activitystrea.ms/spec/1.0/'
-
   # This class represents an Activity object for an OStatus entry.
   class Activity
+    NAMESPACE = 'http://activitystrea.ms/spec/1.0/'
     SCHEMA_ROOT = 'http://activitystrea.ms/schema/1.0/'
 
     def initialize(entry)
@@ -28,7 +27,7 @@ module OStatus
     end
 
     # Returns the verb field or nil if it does not exist.
-    # :favorite, :follow, :like, :"make-friend", :join, :play, 
+    # :favorite, :follow, :like, :"make-friend", :join, :play,
     # :post, :save, :share, :tag, :update
     def verb
       if @entry.is_a? Hash
@@ -59,8 +58,8 @@ module OStatus
     end
 
     # Returns the object-type field or nil if it does not exist.
-    # :article, :audio, :bookmark, :comment, :file, :folder, :group, 
-    # :list, :note, :person, :photo, :"photo-album", :place, :playlist, 
+    # :article, :audio, :bookmark, :comment, :file, :folder, :group,
+    # :list, :note, :person, :photo, :"photo-album", :place, :playlist,
     # :product, :review, :service, :status, :video
     def object_type
       if @entry.is_a? Hash

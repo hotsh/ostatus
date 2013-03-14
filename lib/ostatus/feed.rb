@@ -7,20 +7,20 @@ require_relative 'author'
 module OStatus
 
   # This class represents an OStatus Feed object.
-  class Feed < Atom::Feed
-    include Atom::SimpleExtensions
+  class Feed < ::Atom::Feed
+    include ::Atom::SimpleExtensions
 
-    namespace Atom::NAMESPACE
+    namespace ::Atom::NAMESPACE
 
     add_extension_namespace :poco, POCO_NS
-    add_extension_namespace :poco, ACTIVITY_NS
+    add_extension_namespace :poco, Activity::NAMESPACE
     element :id, :rights, :icon, :logo
-    element :generator, :class => Atom::Generator
-    element :title, :subtitle, :class => Atom::Content
+    element :generator, :class => ::Atom::Generator
+    element :title, :subtitle, :class => ::Atom::Content
     element :updated, :class => Time, :content_only => true
-    elements :links, :class => Atom::Link
+    elements :links, :class => ::Atom::Link
     elements :authors, :class => OStatus::Author
-    elements :categories, :class => Atom::Category
+    elements :categories, :class => ::Atom::Category
     elements :entries, :class => OStatus::Entry
 
     attr_reader :url
@@ -96,7 +96,7 @@ module OStatus
       Feed.new(str, nil, nil, nil)
     end
 
-    # Returns an array of Atom::Link instances for all link tags
+    # Returns an array of ::Atom::Link instances for all link tags
     # that have a rel equal to that given by attribute.
     #
     # For example:
@@ -111,7 +111,7 @@ module OStatus
       self.links.clear
       given.each do |rel,links|
         links.each do |l|
-          self.links << Atom::Link.new(l.merge({:rel => rel}))
+          self.links << ::Atom::Link.new(l.merge({:rel => rel}))
         end
       end
     end
@@ -139,8 +139,8 @@ module OStatus
         # open the url through OAuth
         @access_token.get(@url).body
       else
-        self.links << Atom::Link.new(:rel => 'self', :href => @url) if @url
-        self.links << Atom::Link.new(:rel => 'edit', :href => @url) if @url
+        self.links << ::Atom::Link.new(:rel => 'self', :href => @url) if @url
+        self.links << ::Atom::Link.new(:rel => 'edit', :href => @url) if @url
         self.to_xml
       end
     end
@@ -157,7 +157,7 @@ module OStatus
 
     def hubs= hubs
       hubs.each do |hub|
-        links << Atom::Link.new(:rel => 'hub', :href => hub)
+        links << ::Atom::Link.new(:rel => 'hub', :href => hub)
       end
     end
   end

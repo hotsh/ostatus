@@ -10,7 +10,7 @@ module OStatus
 
     include Atom::SimpleExtensions
 
-    add_extension_namespace :activity, ACTIVITY_NS
+    add_extension_namespace :activity, OStatus::Activity::NAMESPACE
     element 'activity:object-type'
 
     namespace Atom::NAMESPACE
