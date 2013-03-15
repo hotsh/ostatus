@@ -47,51 +47,51 @@ describe OStatus::Entry do
   describe "#info" do
     it "should return a Hash containing the title" do
       OStatus::Entry.new(:title => "My Title")
-        .info[:title].must_equal "My Title"
+        .to_hash[:title].must_equal "My Title"
     end
 
     it "should return a Hash containing the author" do
       author = mock('author')
       OStatus::Entry.new(:author => author)
-        .info[:author].must_equal author
+        .to_hash[:author].must_equal author
     end
 
     it "should return a Hash containing the content" do
       OStatus::Entry.new(:content => "Hello")
-        .info[:content].must_equal "Hello"
+        .to_hash[:content].must_equal "Hello"
     end
 
     it "should return a Hash containing the content-type" do
       OStatus::Entry.new(:content_type => "txt")
-        .info[:content_type].must_equal "txt"
+        .to_hash[:content_type].must_equal "txt"
     end
 
     it "should return a Hash containing the published date" do
       time = mock('date')
       OStatus::Entry.new(:published => time)
-        .info[:published].must_equal time
+        .to_hash[:published].must_equal time
     end
 
     it "should return a Hash containing the updated date" do
       time = mock('date')
       OStatus::Entry.new(:updated => time)
-        .info[:updated].must_equal time
+        .to_hash[:updated].must_equal time
     end
 
     it "should return a Hash containing the url" do
       OStatus::Entry.new(:url => "url")
-        .info[:url].must_equal "url"
+        .to_hash[:url].must_equal "url"
     end
 
     it "should return a Hash containing the id" do
       OStatus::Entry.new(:id => "id")
-        .info[:id].must_equal "id"
+        .to_hash[:id].must_equal "id"
     end
 
     it "should return a Hash containing the activity" do
       activity = mock('activity')
       OStatus::Entry.new(:activity => activity)
-        .info[:activity].must_equal activity
+        .to_hash[:activity].must_equal activity
     end
   end
 

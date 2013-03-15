@@ -60,7 +60,7 @@ module OStatus
 
 
     # Returns a Hash of all fields.
-    def info
+    def to_hash
       {
         :title => self.title,
         :author => self.author,
@@ -78,7 +78,7 @@ module OStatus
     def to_atom
       require 'ostatus/atom/entry'
 
-      OStatus::Atom::Entry.new(self.info).to_xml
+      OStatus::Atom::Entry.new(self.to_hash).to_xml
     end
   end
 end
