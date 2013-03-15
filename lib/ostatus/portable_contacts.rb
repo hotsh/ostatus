@@ -14,24 +14,24 @@ module OStatus
     # Holds a hash representing information about the name of this contact.
     #
     # contains one or more of the following:
-    #   :formatted       => The full name of the contact
-    #   :familyName      => The family name. "Last name" in Western contexts.
-    #   :givenName       => The given name. "First name" in Western contexts.
-    #   :middleName      => The middle name.
-    #   :honorificPrefix => "Title" in Western contexts. (e.g. "Mr." "Mrs.")
-    #   :honorificSuffix => "Suffix" in Western contexts. (e.g. "Esq.")
+    #   :formatted         => The full name of the contact
+    #   :family_name       => The family name. "Last name" in Western contexts.
+    #   :given_name        => The given name. "First name" in Western contexts.
+    #   :middle_name       => The middle name.
+    #   :honorific_prefix  => "Title" in Western contexts. (e.g. "Mr." "Mrs.")
+    #   :honorific_suffix  => "Suffix" in Western contexts. (e.g. "Esq.")
     attr_reader :name
 
     # Holds a hash representing the address of the contact.
     #
     # contains one or more of the following:
-    #   :formatted     => A formatted representating of the address. May
+    #   :formatted      => A formatted representating of the address. May
     #                     contain newlines.
-    #   :streetAddress => The full street address. May contain newlines.
-    #   :locality      => The city or locality component.
-    #   :region        => The state or region component.
-    #   :postalCode    => The zipcode or postal code component.
-    #   :country       => The country name component.
+    #   :street_address => The full street address. May contain newlines.
+    #   :locality       => The city or locality component.
+    #   :region         => The state or region component.
+    #   :postal_code    => The zipcode or postal code component.
+    #   :country        => The country name component.
     attr_reader :address
 
     # Holds a hash representing an organization for this contact.
@@ -118,6 +118,7 @@ module OStatus
       @name = options[:name]
       @gender = options[:gender]
       @note = options[:note]
+      @nickname = options[:nickname]
       @display_name = options[:display_name]
       @preferred_username = options[:preferred_username]
       @updated = options[:updated]
