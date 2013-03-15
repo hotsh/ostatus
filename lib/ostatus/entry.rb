@@ -3,8 +3,6 @@ require 'ostatus/author'
 require 'ostatus/thread'
 require 'ostatus/link'
 
-require 'ostatus/atom/entry'
-
 module OStatus
   # Holds information about an individual entry in the Feed.
   class Entry
@@ -70,10 +68,6 @@ module OStatus
         :published => self.published,
         :updated => self.updated
       }
-    end
-
-    def to_atom
-      OStatus::Atom::Entry.new(self)
     end
   end
 end
