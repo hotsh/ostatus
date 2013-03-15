@@ -30,6 +30,9 @@ module OStatus
     # Holds the DateTime of when the entry was last modified.
     attr_reader :updated
 
+    # Holds the OStatus::Activity associated with this entry.
+    attr_reader :activity
+
     # Create a new entry with the given content.
     #
     # options:
@@ -42,6 +45,7 @@ module OStatus
     #   :updated      => The DateTime depicting when the entry was modified.
     #   :url          => The canonical url of the entry.
     #   :id           => The unique id that identifies this entry.
+    #   :activity     => The activity this entry represents.
     def initialize(options = {})
       @title = options[:title] || "Untitled"
       @content = options[:content] || ""
@@ -50,24 +54,29 @@ module OStatus
       @updated = options[:updated]
       @url = options[:url]
       @id = options[:id]
+      @activity = options[:activity]
     end
 
-    # Yield the OStatus::Activity associated with this entry.
-    def activity
-      @activity ||= Activity.new(self)
-    end
 
     # Returns a Hash of all fields.
     def info
       {
-        :activity => self.activity.info,
-        :id => self.id,
         :title => self.title,
         :content => self.content,
-        :link => self.link,
+        :content_type => self.content,
         :published => self.published,
-        :updated => self.updated
+        :updated => self.updated,
+        :url => self.url,
+        :id => self.id,
+        :activity => self.activity
       }
+    end
+
+    # Returns an Atom representation.
+    def to_atom
+      require 'ostatus/atom/entry'
+
+      OStatus::Atom::Entry.new(self.info).to_xml
     end
   end
 end

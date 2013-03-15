@@ -36,10 +36,10 @@ module OStatus
     #   :target      => The target of this activity.
     #   :verb        => The action of the activity.
     def initialize(options = {})
-      @object = options[:object]
+      @object      = options[:object]
       @object_type = options[:object_type]
-      @target = options[:target]
-      @verb = options[:verb]
+      @target      = options[:target]
+      @verb        = options[:verb]
     end
 
     # Returns a hash of all relevant fields.
