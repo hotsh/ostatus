@@ -47,14 +47,15 @@ module OStatus
     #   :id           => The unique id that identifies this entry.
     #   :activity     => The activity this entry represents.
     def initialize(options = {})
-      @title = options[:title] || "Untitled"
-      @content = options[:content] || ""
+      @title        = options[:title] || "Untitled"
+      @author       = options[:author]
+      @content      = options[:content] || ""
       @content_type = options[:content_type]
-      @published = options[:published] || DateTime.now
-      @updated = options[:updated]
-      @url = options[:url]
-      @id = options[:id]
-      @activity = options[:activity]
+      @published    = options[:published] || DateTime.now
+      @updated      = options[:updated]
+      @url          = options[:url]
+      @id           = options[:id]
+      @activity     = options[:activity]
     end
 
 
@@ -62,8 +63,9 @@ module OStatus
     def info
       {
         :title => self.title,
+        :author => self.author,
         :content => self.content,
-        :content_type => self.content,
+        :content_type => self.content_type,
         :published => self.published,
         :updated => self.updated,
         :url => self.url,
