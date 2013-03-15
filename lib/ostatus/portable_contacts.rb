@@ -1,9 +1,9 @@
 module OStatus
-  POCO_NS = 'http://portablecontacts.net/spec/1.0'
-
   # Holds information about the extended contact information
   # in the Feed given in the Portable Contacts specification.
   class PortableContacts
+    # The XML namespace the specifies this content.
+    NAMESPACE = 'http://portablecontacts.net/spec/1.0'
 
     # Instantiates a OStatus::PortableContacts object from either
     # a given root that contains all <poco:*> tags as an ratom Person
