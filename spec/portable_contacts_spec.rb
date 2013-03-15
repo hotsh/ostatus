@@ -68,4 +68,71 @@ describe OStatus::PortableContacts do
       OStatus::PortableContacts.new(:account => account).account.must_equal account
     end
   end
+
+  describe "#to_hash" do
+    it "should return a Hash containing the id" do
+      OStatus::PortableContacts.new(:id => "1").to_hash[:id].must_equal "1"
+    end
+
+    it "should return a Hash containing the gender" do
+      OStatus::PortableContacts.new(:gender => "androgynous").to_hash[:gender].must_equal "androgynous"
+    end
+
+    it "should return a Hash containing nickname" do
+      OStatus::PortableContacts.new(:nickname => "foobar").to_hash[:nickname].must_equal "foobar"
+    end
+
+    it "should return a Hash containing the display name" do
+      OStatus::PortableContacts.new(:display_name => "foobar").display_name.must_equal "foobar"
+    end
+
+    it "should return a Hash containing the preferred username" do
+      OStatus::PortableContacts.new(:preferred_username => "foobar")
+        .preferred_username.must_equal "foobar"
+    end
+
+    it "should return a Hash containing the birthday" do
+      time = mock('datetime')
+      OStatus::PortableContacts.new(:birthday => time).to_hash[:birthday].must_equal time
+    end
+
+    it "should return a Hash containing the anniversary" do
+      time = mock('datetime')
+      OStatus::PortableContacts.new(:anniversary => time).to_hash[:anniversary].must_equal time
+    end
+
+    it "should return a Hash containing the note" do
+      OStatus::PortableContacts.new(:note => "note").to_hash[:note].must_equal "note"
+    end
+
+    it "should return a Hash containing the published date" do
+      time = mock('datetime')
+      OStatus::PortableContacts.new(:published => time).to_hash[:published].must_equal time
+    end
+
+    it "should return a Hash containing the updated date" do
+      time = mock('datetime')
+      OStatus::PortableContacts.new(:updated => time).to_hash[:updated].must_equal time
+    end
+
+    it "should return a Hash containing the address hash" do
+      address = mock('hash')
+      OStatus::PortableContacts.new(:address => address).to_hash[:address].must_equal address
+    end
+
+    it "should return a Hash containing the organization hash" do
+      organization = mock('hash')
+      OStatus::PortableContacts.new(:organization => organization).to_hash[:organization].must_equal organization
+    end
+
+    it "should return a Hash containing the name hash" do
+      name = mock('hash')
+      OStatus::PortableContacts.new(:name => name).to_hash[:name].must_equal name
+    end
+
+    it "should return a Hash containing the account hash" do
+      account = mock('hash')
+      OStatus::PortableContacts.new(:account => account).to_hash[:account].must_equal account
+    end
+  end
 end
