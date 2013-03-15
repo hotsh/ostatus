@@ -75,6 +75,8 @@ module OStatus
 
     def to_atom
       require 'ostatus/atom/feed'
+      hash = self.to_hash
+      hash[:entries].map! {|e| OStatus::Atom::Entry.new(e.info) }
       OStatus::Atom::Feed.new(self.to_hash).to_xml
     end
   end
