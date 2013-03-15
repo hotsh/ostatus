@@ -68,6 +68,23 @@ describe OStatus::Feed do
       time = mock('date')
       OStatus::Feed.new(:updated => time).to_hash[:updated].must_equal time
     end
+
+    it "should default the authors to [] if not given" do
+      OStatus::Feed.new.authors.must_equal []
+    end
+
+    it "should default the entries to [] if not given" do
+      OStatus::Feed.new.entries.must_equal []
+    end
+
+    it "should default the title to 'Untitled' if not given" do
+      OStatus::Feed.new.title.must_equal "Untitled"
+    end
+
+    it "should default the published field to DateTime.now if not given" do
+      DateTime.stubs(:now).returns("NOW")
+      OStatus::Feed.new.published.must_equal "NOW"
+    end
   end
 
   describe "#to_atom" do

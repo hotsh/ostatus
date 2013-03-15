@@ -58,7 +58,6 @@ module OStatus
       @activity     = options[:activity]
     end
 
-
     # Returns a Hash of all fields.
     def to_hash
       {

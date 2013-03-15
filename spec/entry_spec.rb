@@ -42,6 +42,19 @@ describe OStatus::Entry do
       activity = mock('activity')
       OStatus::Entry.new(:activity => activity).activity.must_equal activity
     end
+
+    it "should default the content to '' if not given" do
+      OStatus::Entry.new.content.must_equal ''
+    end
+
+    it "should default the title to 'Untitled' if not given" do
+      OStatus::Entry.new.title.must_equal "Untitled"
+    end
+
+    it "should default the published field to DateTime.now if not given" do
+      DateTime.stubs(:now).returns("NOW")
+      OStatus::Entry.new.published.must_equal "NOW"
+    end
   end
 
   describe "#info" do
