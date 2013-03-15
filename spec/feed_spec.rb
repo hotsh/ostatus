@@ -3,41 +3,70 @@ require_relative '../lib/ostatus/feed.rb'
 
 describe OStatus::Feed do
   describe "#initialize" do
-    it "should detect a feed URI in an HTML page" do
-      @feed = OStatus::Feed.from_url('test/example_page.html')
-      @feed.url.must_equal 'test/example_feed.atom'
+    it "should store a title" do
+      OStatus::Feed.new(:title => "My Title").title.must_equal "My Title"
+    end
+
+    it "should store a list of authors" do
+      author = mock('author')
+      OStatus::Feed.new(:authors => [author]).authors.must_equal [author]
+    end
+
+    it "should store a list of entries" do
+      entry = mock('entry')
+      OStatus::Feed.new(:entries => [entry]).entries.must_equal [entry]
+    end
+
+    it "should store the id of the feed" do
+      OStatus::Feed.new(:id => "id").id.must_equal "id"
+    end
+
+    it "should store the url for the feed" do
+      OStatus::Feed.new(:url => "url").url.must_equal "url"
+    end
+
+    it "should store the published date" do
+      time = mock('date')
+      OStatus::Feed.new(:published => time).published.must_equal time
+    end
+
+    it "should store the updated date" do
+      time = mock('date')
+      OStatus::Feed.new(:updated => time).updated.must_equal time
     end
   end
 
-  describe "with example_feed.atom" do
-    before(:each) do
-      @feed = OStatus::Feed.from_url('test/example_feed.atom')
+  describe "#to_hash" do
+    it "should return a Hash containing the title" do
+      OStatus::Feed.new(:title => "My Title").to_hash[:title].must_equal "My Title"
     end
 
-    describe "#atom" do
-      it "should return a String containing the atom information" do
-        @feed.atom.start_with?("<?xml").must_equal(true)
-      end
+    it "should return a Hash containing a list of authors" do
+      author = mock('author')
+      OStatus::Feed.new(:authors => [author]).to_hash[:authors].must_equal [author]
     end
 
-    describe "#hubs" do
-      it "should return a String containing the hub url given in the link tag" do
-        @feed.hubs.must_equal(['http://identi.ca/main/push/hub', 'http://identi.ca/main/push/hub2'])
-      end
+    it "should return a Hash containing a list of entries" do
+      entry = mock('entry')
+      OStatus::Feed.new(:entries => [entry]).to_hash[:entries].must_equal [entry]
     end
 
-    describe "#salmon" do
-      it "should return a String containing the salmon url given in the link tag" do
-        @feed.salmon.must_equal('http://identi.ca/main/salmon/user/141464')
-      end
+    it "should return a Hash containing the id of the feed" do
+      OStatus::Feed.new(:id => "id").to_hash[:id].must_equal "id"
     end
 
-    describe "#entries" do
-      it "should return an Array of Entry instances" do
-        @feed.entries.each do |entry|
-          entry.instance_of?(OStatus::Entry).must_equal(true)
-        end
-      end
+    it "should return a Hash containing the url for the feed" do
+      OStatus::Feed.new(:url => "url").to_hash[:url].must_equal "url"
+    end
+
+    it "should return a Hash containing the published date" do
+      time = mock('date')
+      OStatus::Feed.new(:published => time).to_hash[:published].must_equal time
+    end
+
+    it "should return a Hash containing the updated date" do
+      time = mock('date')
+      OStatus::Feed.new(:updated => time).to_hash[:updated].must_equal time
     end
   end
 end

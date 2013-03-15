@@ -60,5 +60,17 @@ module OStatus
       @updated = options[:updated]
       @published = options[:published] || DateTime.now
     end
+
+    def to_hash
+      {
+        :id => self.id,
+        :url => self.url,
+        :title => self.title,
+        :authors => self.authors,
+        :entries => self.entries,
+        :updated => self.updated,
+        :published => self.published
+      }
+    end
   end
 end
