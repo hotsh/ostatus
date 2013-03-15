@@ -72,5 +72,10 @@ module OStatus
         :published => self.published
       }
     end
+
+    def to_atom
+      require 'ostatus/atom/feed'
+      OStatus::Atom::Feed.new(self.to_hash).to_xml
+    end
   end
 end

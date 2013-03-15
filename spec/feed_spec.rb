@@ -69,4 +69,17 @@ describe OStatus::Feed do
       OStatus::Feed.new(:updated => time).to_hash[:updated].must_equal time
     end
   end
+
+  describe "#to_atom" do
+    it "should relegate Atom generation to OStatus::Atom::Feed" do
+      atom_entry = mock('atom')
+      atom_entry.expects(:to_xml).returns("ATOM")
+
+      require_relative '../lib/ostatus/atom/feed.rb'
+
+      OStatus::Atom::Feed.stubs(:new).returns(atom_entry)
+
+      OStatus::Feed.new(:title => "foo").to_atom.must_equal "ATOM"
+    end
+  end
 end
