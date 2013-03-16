@@ -4,7 +4,7 @@ require_relative '../lib/ostatus/activity.rb'
 describe OStatus::Activity do
   describe "#initialize" do
     it "should store an object" do
-      OStatus::Activity.new(:object => "object").title.must_equal "object"
+      OStatus::Activity.new(:object => "object").object.must_equal "object"
     end
 
     it "should store an object type" do
