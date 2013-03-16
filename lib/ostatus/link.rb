@@ -1,67 +1,56 @@
 module OStatus
   require 'atom'
 
-  class Link < Atom::Link
-    include Atom::Xml::Parseable
-    attribute :rel, :type, :length, :hreflang, :title, :text
-    uri_attribute :href
+  class Link
+    # The URL for the related resource.
+    attr_reader :href
 
-    # Create a link.
+    # A string indicating the relationship type with the current
+    # document.
     #
-    # +o+:: An XML::Reader containing a link element or a Hash of attributes.
-    #
-    def initialize(o)
-      case o
-      when XML::Reader
-        if current_node_is?(o, 'link')
-          self.text = o.read_string
-          parse(o, :once => true)
-        else
-          raise ArgumentError, "Link created with node other than atom:link: #{o.name}"
-        end
-      when Hash
-        [:href, :rel, :type, :length, :hreflang, :title].each do |attr|
-          self.send("#{attr}=", o[attr])
-        end
-      else
-        raise ArgumentError, "Don't know how to handle #{o}"
-      end
-    end
+    # Standard:
+    #   "alternate" = Signifies that the URL in href identifies an alternative
+    #                 version of the resource described by the containing
+    #                 element.
+    #   "related"   = Signifies that the URL in href identifies a resource that
+    #                 is related to the contained resource. For example, the
+    #                 feed for a site that discusses the performance of the
+    #                 search engine at "http://search.example.com" might
+    #                 contain, as a link of Feed, a related link to that
+    #                 "http://search.example.com".
+    #   "self"      = Signifies that href contains a URL to the containing
+    #                 resource.
+    #   "enclosure" = Signifies that the URL in href identifies a related
+    #                 resource that is potentially large in size and
+    #                 require special handling. SHOULD use the length field.
+    #   "via"       = Signifies that the URL in href identifies a resource that
+    #                 is the source of the information provided in the
+    #                 containing element.
+    attr_reader :rel
 
-    remove_method :length=
-    def length=(v)
-      @length = v.to_i
-    end
+    # Advises to the content MIME type of the linked resource.
+    attr_reader :type
 
-    def href
-      @href || self.text
-    end
+    # Advises to the language of the linked resource. When used with
+    # rel="alternate" it depicts a translated version of the entry.
+    # Use with a RFC3066 language tag.
+    attr_reader :hreflang
 
-    def to_s
-      self.href
-    end
+    # Conveys human-readable information about the linked resource.
+    attr_reader :title
 
-    def ==(o)
-      o.respond_to?(:href) && o.href == self.href
-    end
+    # Advises the length of the linked content in number of bytes. It is simply
+    # a hint about the length based upon prior information. It may change, and
+    # cannot override the actual content length.
+    attr_reader :length
 
-    # This will fetch the URL referenced by the link.
-    #
-    # If the URL contains a valid feed, a Feed will be returned, otherwise,
-    # the body of the response will be returned.
-    #
-    # TODO: Handle redirects.
-    #
-    def fetch(options = {})
-      begin
-        Atom::Feed.load_feed(URI.parse(self.href), options)
-      rescue ArgumentError
-        Net::HTTP.get_response(URI.parse(self.href)).body
-      end
-    end
-
-    def inspect
-      "<OStatus::Link href:'#{href}' type:'#{type}'>"
+    def initialize(options = {})
+      @href     = options[:href]
+      @rel      = options[:rel]
+      @type     = options[:type]
+      @hreflang = options[:hreflang]
+      @title    = options[:title]
+      @length   = options[:length]
     end
   end
 end
