@@ -2,51 +2,21 @@ require_relative 'helper'
 require_relative '../lib/ostatus/activity.rb'
 
 describe OStatus::Activity do
-  before do
-    feed = OStatus::Feed.from_url('test/example_feed.atom')
-    entry = feed.entries[0]
-    @activity = entry.activity
-    entry = feed.entries[1]
-    @activity_empty = entry.activity
-  end
-
-  describe "#object" do
-    it "should give an Author containing the content of the activity:object tag" do
-      @activity.object.class.must_equal(OStatus::Author)
+  describe "#initialize" do
+    it "should store an object" do
+      OStatus::Activity.new(:object => "object").title.must_equal "object"
     end
 
-    it "should give nil when no activity:object was given" do
-      @activity_empty.object.must_equal(nil)
-    end
-  end
-
-  describe "#object-type" do
-    it "should give a String containing the content of the activity:object-type tag" do
-      @activity.object_type.must_equal(:note)
+    it "should store an object type" do
+      OStatus::Activity.new(:object_type => :audio).object_type.must_equal :audio
     end
 
-    it "should give nil when no activity:object-type was given" do
-      @activity_empty.object_type.must_equal(nil)
-    end
-  end
-
-  describe "#verb" do
-    it "should give a String containing the content of the activity:verb tag" do
-      @activity.verb.must_equal(:post)
+    it "should store a verb" do
+      OStatus::Activity.new(:verb => :follow).verb.must_equal :follow
     end
 
-    it "should give nil when no activity:verb was given" do
-      @activity_empty.verb.must_equal(nil)
-    end
-  end
-
-  describe "#target" do
-    it "should give a String containing the content of the activity:target tag" do
-      @activity.target.must_equal('Barbaz')
-    end
-
-    it "should give nil when no activity:target was given" do
-      @activity_empty.target.must_equal(nil)
+    it "should store a target" do
+      OStatus::Activity.new(:target => "target").target.must_equal "target"
     end
   end
 end
