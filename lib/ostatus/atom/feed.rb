@@ -109,6 +109,7 @@ module OStatus
         OStatus::Feed.new(:title        => self.title,
                           :id           => self.id,
                           :url          => self.url,
+                          :icon         => self.icon,
                           :published    => self.published,
                           :updated      => self.updated,
                           :entries      => self.entries.map(&:to_canonical),

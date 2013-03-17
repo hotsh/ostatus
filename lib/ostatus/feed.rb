@@ -18,6 +18,9 @@ module OStatus
     # Holds the title for this feed.
     attr_reader :title
 
+    # Holds the URL for the icon representing this feed.
+    attr_reader :icon
+
     # Holds the hash identifying the agent responsible for this feed.
     #
     # contains one or more of the following:
@@ -58,6 +61,7 @@ module OStatus
     # options:
     #   id           => The unique identifier for this feed.
     #   url          => The url that represents this feed.
+    #   icon         => The url of the icon that represents this feed.
     #   title        => The title for this feed. Defaults: "Untitled"
     #   authors      => The list of OStatus::Author's for this feed. Defaults: []
     #   contributors => The list of OStatus::Author's that contributed to this
@@ -85,6 +89,7 @@ module OStatus
     def initialize(options = {})
       @id = options[:id]
       @url = options[:url]
+      @icon = options[:icon]
       @title = options[:title] || "Untitled"
       @authors = options[:authors] || []
       @contributors = options[:contributors] || []
@@ -119,6 +124,7 @@ module OStatus
       {
         :id => self.id,
         :url => self.url,
+        :icon => self.icon,
         :title => self.title,
         :authors => self.authors,
         :contributors => self.contributors,
