@@ -55,11 +55,6 @@ describe OStatus::Entry do
     it "should default the title to 'Untitled' if not given" do
       OStatus::Entry.new.title.must_equal "Untitled"
     end
-
-    it "should default the published field to DateTime.now if not given" do
-      DateTime.stubs(:now).returns("NOW")
-      OStatus::Entry.new.published.must_equal "NOW"
-    end
   end
 
   describe "#to_link" do

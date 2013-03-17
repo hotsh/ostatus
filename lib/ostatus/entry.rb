@@ -44,7 +44,7 @@ module OStatus
     #   :content      => The content of the entry. Defaults: ""
     #   :content_type => The MIME type of the content.
     #   :published    => The DateTime depicting when the entry was originally
-    #                    published. Defaults: DateTime.now
+    #                    published.
     #   :updated      => The DateTime depicting when the entry was modified.
     #   :url          => The canonical url of the entry.
     #   :id           => The unique id that identifies this entry.
@@ -57,7 +57,7 @@ module OStatus
       @author       = options[:author]
       @content      = options[:content] || ""
       @content_type = options[:content_type]
-      @published    = options[:published] || DateTime.now
+      @published    = options[:published]
       @updated      = options[:updated]
       @url          = options[:url]
       @id           = options[:id]

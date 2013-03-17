@@ -59,11 +59,6 @@ describe OStatus::Feed do
     it "should yield a title of 'Untitled' by default" do
       OStatus::Feed.new.title.must_equal "Untitled"
     end
-
-    it "should default the published field to DateTime.now by default" do
-      DateTime.stubs(:now).returns("NOW")
-      OStatus::Feed.new.published.must_equal "NOW"
-    end
   end
 
   describe "#to_link" do

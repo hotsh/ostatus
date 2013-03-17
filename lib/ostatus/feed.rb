@@ -51,7 +51,7 @@ module OStatus
     #   updated    => The DateTime representing when this feed was last
     #                 modified.
     #   published  => The DateTime representing when this feed was originally
-    #                 published. Defaults: DateTime.now
+    #                 published.
     #   salmon_url => The url of the salmon endpoint, if one exists, for this
     #                 feed.
     #   links      => An array of OStatus::Link that adds relations to other
@@ -72,7 +72,7 @@ module OStatus
       @authors = options[:authors] || []
       @entries = options[:entries] || []
       @updated = options[:updated]
-      @published = options[:published] || DateTime.now
+      @published = options[:published]
       @salmon_url = options[:salmon_url]
       @hubs = options[:hubs] || []
     end
