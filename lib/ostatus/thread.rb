@@ -47,5 +47,14 @@ module OStatus
       @href   = options[:href]
       @type   = options[:type]
     end
+
+    def to_hash
+      {
+        :ref => self.ref,
+        :source => self.source,
+        :href => self.href,
+        :type => self.type
+      }
+    end
   end
 end

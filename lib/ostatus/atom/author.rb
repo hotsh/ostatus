@@ -31,7 +31,6 @@ module OStatus
       element 'poco:gender'
       element 'poco:note'
       element 'poco:preferredUsername'
-      element 'poco:connected'
 
       def initialize *args
         self.activity_object_type = "http://activitystrea.ms/schema/1.0/person"
@@ -90,6 +89,10 @@ module OStatus
                                       :anniversary => self.poco_anniversary)
       end
 
+      def self.from_canonical(obj)
+        self.new(obj.to_hash)
+      end
+
       def to_canonical
         OStatus::Author.new(:portable_contacts => self.portable_contacts,
                             :uri => self.uri,
@@ -99,7 +102,7 @@ module OStatus
 
       def portable_contacts= poco
         [ 'id', 'name', 'nickname', 'updated', 'published', 'birthday',
-          'anniversary', 'gender', 'note', 'connected'].each do |p|
+          'anniversary', 'gender', 'note'].each do |p|
           v = poco.send(p)
           self.send("poco_#{p}=", v) if v
           end

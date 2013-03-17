@@ -94,26 +94,14 @@ module OStatus
         :updated => self.updated,
         :url => self.url,
         :id => self.id,
-        :activity => self.activity
+        :activity => self.activity,
+        :in_reply_to => self.in_reply_to
       }
     end
 
     # Returns an Atom representation.
     def to_atom
-      require 'ostatus/atom/entry'
-      entry_hash = self.to_hash
-
-      # Form an Atom::Content and add content type as an attribute
-      node = XML::Node.new("content")
-      node['type'] = entry_hash[:content_type] if entry_hash[:content_type]
-      node << entry_hash[:content]
-
-      xml = XML::Reader.string(node.to_s)
-      xml.read
-      entry_hash[:content] = ::Atom::Content.parse(xml)
-      entry_hash.delete :content_type
-
-      OStatus::Atom::Entry.new(entry_hash).to_xml
+      OStatus::Atom::Entry.from_canonical(self).to_xml
     end
   end
 end

@@ -23,7 +23,7 @@ module OStatus
       element 'activity:target'
 
       add_extension_namespace :thr, OStatus::Thread::NAMESPACE
-      element 'thr:in-reply-to', :class => OStatus::Atom::Thread
+      elements 'thr:in-reply-to', :class => OStatus::Atom::Thread
 
       # This is for backwards compatibility with some implementations of Activity
       # Streams. It should not be used, and in fact is obscured as it is not a
@@ -79,6 +79,32 @@ module OStatus
         links.clear << ::Atom::Link.new(options)
       end
 
+      def self.from_canonical(obj)
+        entry_hash = obj.to_hash
+
+        # Ensure that the content type is encoded.
+        # The most annoying way I've found to do it :/
+        node = XML::Node.new("content")
+        node['type'] = entry_hash[:content_type] if entry_hash[:content_type]
+        node << entry_hash[:content]
+
+        xml = XML::Reader.string(node.to_s)
+        xml.read
+        entry_hash[:content] = ::Atom::Content.parse(xml)
+        entry_hash.delete :content_type
+
+        if entry_hash[:author]
+          entry_hash[:author] = OStatus::Atom::Author.from_canonical(entry_hash[:author])
+        end
+
+        if entry_hash[:in_reply_to]
+          entry_hash[:thr_in_reply_to] = entry_hash[:in_reply_to].map {|t| OStatus::Atom::Thread.from_canonical(t)}
+        end
+        entry_hash.delete :in_reply_to
+
+        self.new(entry_hash)
+      end
+
       def to_canonical
         OStatus::Entry.new(self.info.merge({:author => self.author.to_canonical}))
       end
@@ -89,6 +115,7 @@ module OStatus
           :activity => self.activity,
           :id => self.id,
           :title => self.title,
+          :in_reply_to => self.thr_in_reply_to.map(&:to_canonical),
           :content => self.content,
           :content_type => self.content.type,
           :link => self.link,

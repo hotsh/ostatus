@@ -112,23 +112,7 @@ module OStatus
     def to_atom
       require 'ostatus/atom/feed'
 
-      hash = self.to_hash
-      hash[:entries].map! {|e|
-        entry_hash = e.to_hash
-
-        node = XML::Node.new("content")
-        node['type'] = entry_hash[:content_type] if entry_hash[:content_type]
-        node << entry_hash[:content]
-
-        xml = XML::Reader.string(node.to_s)
-        xml.read
-        entry_hash[:content] = ::Atom::Content.parse(xml)
-        entry_hash.delete :content_type
-
-        OStatus::Atom::Entry.new(entry_hash)
-      }
-
-      OStatus::Atom::Feed.new(self.to_hash).to_xml
+      OStatus::Atom::Feed.from_canonical(self).to_xml
     end
   end
 end

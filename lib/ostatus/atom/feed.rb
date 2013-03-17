@@ -57,6 +57,14 @@ module OStatus
         Feed.new(nil, url, nil, options)
       end
 
+      def self.from_canonical(obj)
+        hash = obj.to_hash
+        hash[:entries].map! {|e|
+          OStatus::Atom::Entry.from_canonical(e)
+        }
+        self.new(hash)
+      end
+
       def to_canonical
         OStatus::Feed.new(:title     => self.title,
                           :id        => self.id,

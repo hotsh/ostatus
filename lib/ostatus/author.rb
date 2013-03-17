@@ -34,5 +34,14 @@ module OStatus
       @email = options[:email]
       @portable_contacts = options[:portable_contacts]
     end
+
+    def to_hash
+      {
+        :uri => self.uri,
+        :email => self.email,
+        :portable_contacts => self.portable_contacts,
+        :name => self.name
+      }
+    end
   end
 end

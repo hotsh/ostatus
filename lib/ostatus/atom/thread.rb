@@ -38,6 +38,23 @@ module OStatus
         o.respond_to?(:href) && o.href == self.href
       end
 
+      def self.from_canonical(obj)
+        self.new(obj.to_hash)
+      end
+
+      def to_canonical
+        OStatus::Thread.new(self.info)
+      end
+
+      def info
+        {
+          :ref    => self.ref,
+          :type   => self.type,
+          :source => self.source,
+          :href   => self.href
+        }
+      end
+
       def inspect
         "<OStatus::Thread href:'#{href}' type:'#{type}'>"
       end
