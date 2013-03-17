@@ -33,6 +33,9 @@ module OStatus
     # Holds the OStatus::Activity associated with this entry.
     attr_reader :activity
 
+    # Holds an array of related resources that this entry is a response to.
+    attr_reader :in_reply_to
+
     # Create a new entry with the given content.
     #
     # options:
@@ -46,6 +49,9 @@ module OStatus
     #   :url          => The canonical url of the entry.
     #   :id           => The unique id that identifies this entry.
     #   :activity     => The activity this entry represents.
+    #   :in_reply_to  => An array of OStatus::Thread that this entry is a
+    #                    response to. Use this when this Entry is a reply
+    #                    to an existing Entry.
     def initialize(options = {})
       @title        = options[:title] || "Untitled"
       @author       = options[:author]
@@ -56,6 +62,7 @@ module OStatus
       @url          = options[:url]
       @id           = options[:id]
       @activity     = options[:activity]
+      @in_reply_to  = options[:in_reply_to]
     end
 
     # Returns a Hash of all fields.

@@ -43,6 +43,11 @@ describe OStatus::Entry do
       OStatus::Entry.new(:activity => activity).activity.must_equal activity
     end
 
+    it "should store an array of threads" do
+      thread = mock('thread')
+      OStatus::Entry.new(:in_reply_to => [thread]).in_reply_to.must_equal [thread]
+    end
+
     it "should default the content to '' if not given" do
       OStatus::Entry.new.content.must_equal ''
     end
