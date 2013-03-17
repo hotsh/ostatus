@@ -12,6 +12,11 @@ describe OStatus::Feed do
       OStatus::Feed.new(:authors => [author]).authors.must_equal [author]
     end
 
+    it "should store a list of contributors" do
+      author = mock('author')
+      OStatus::Feed.new(:contributors => [author]).contributors.must_equal [author]
+    end
+
     it "should store a list of entries" do
       entry = mock('entry')
       OStatus::Feed.new(:entries => [entry]).entries.must_equal [entry]
@@ -50,6 +55,10 @@ describe OStatus::Feed do
 
     it "should yield an empty array for authors by default" do
       OStatus::Feed.new.authors.must_equal []
+    end
+
+    it "should yield an empty array for contributors by default" do
+      OStatus::Feed.new.contributors.must_equal []
     end
 
     it "should yield an empty array for entries by default" do
@@ -122,6 +131,11 @@ describe OStatus::Feed do
     it "should return a Hash containing a list of authors" do
       author = mock('author')
       OStatus::Feed.new(:authors => [author]).to_hash[:authors].must_equal [author]
+    end
+
+    it "should return a Hash containing a list of contributors" do
+      author = mock('author')
+      OStatus::Feed.new(:contributors => [author]).to_hash[:contributors].must_equal [author]
     end
 
     it "should return a Hash containing a list of entries" do

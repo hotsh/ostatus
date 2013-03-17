@@ -27,6 +27,10 @@ module OStatus
     #   :version => The version of the generating agent.
     attr_reader :generator
 
+    # Holds the list of contributors, if any, that are involved in this feed
+    # as OStatus::Author.
+    attr_reader :contributors
+
     # Holds the DateTime when this feed was originally created.
     attr_reader :published
 
@@ -52,21 +56,23 @@ module OStatus
     # Creates a new representation of a feed.
     #
     # options:
-    #   id         => The unique identifier for this feed.
-    #   url        => The url that represents this feed.
-    #   title      => The title for this feed. Defaults: "Untitled"
-    #   authors    => The list of OStatus::Author's for this feed. Defaults: []
-    #   entries    => The list of OStatus::Entry's for this feed. Defaults: []
-    #   updated    => The DateTime representing when this feed was last
-    #                 modified.
-    #   published  => The DateTime representing when this feed was originally
-    #                 published.
-    #   salmon_url => The url of the salmon endpoint, if one exists, for this
-    #                 feed.
-    #   links      => An array of OStatus::Link that adds relations to other
-    #                 resources.
-    #   generator  => A Hash representing the agent responsible for generating
-    #                 this feed.
+    #   id           => The unique identifier for this feed.
+    #   url          => The url that represents this feed.
+    #   title        => The title for this feed. Defaults: "Untitled"
+    #   authors      => The list of OStatus::Author's for this feed. Defaults: []
+    #   contributors => The list of OStatus::Author's that contributed to this
+    #                   feed. Defaults: []
+    #   entries      => The list of OStatus::Entry's for this feed. Defaults: []
+    #   updated      => The DateTime representing when this feed was last
+    #                   modified.
+    #   published    => The DateTime representing when this feed was originally
+    #                   published.
+    #   salmon_url   => The url of the salmon endpoint, if one exists, for this
+    #                   feed.
+    #   links        => An array of OStatus::Link that adds relations to other
+    #                   resources.
+    #   generator    => A Hash representing the agent responsible for generating
+    #                   this feed.
     #
     # Usage:
     #
@@ -81,6 +87,7 @@ module OStatus
       @url = options[:url]
       @title = options[:title] || "Untitled"
       @authors = options[:authors] || []
+      @contributors = options[:contributors] || []
       @entries = options[:entries] || []
       @updated = options[:updated]
       @published = options[:published]
@@ -114,6 +121,7 @@ module OStatus
         :url => self.url,
         :title => self.title,
         :authors => self.authors,
+        :contributors => self.contributors,
         :entries => self.entries,
         :updated => self.updated,
         :salmon_url => self.salmon_url,

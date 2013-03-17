@@ -27,6 +27,7 @@ module OStatus
       element :updated, :class => Time, :content_only => true
       elements :links, :class => ::Atom::Link
       elements :authors, :class => OStatus::Atom::Author
+      elements :contributors, :class => OStatus::Atom::Author
       elements :categories, :class => ::Atom::Category
       elements :entries, :class => OStatus::Atom::Entry
 
@@ -81,6 +82,14 @@ module OStatus
         end
         hash.delete :salmon_url
 
+        hash[:authors].map! {|a|
+          OStatus::Atom::Author.from_canonical(a)
+        }
+
+        hash[:contributors].map! {|a|
+          OStatus::Atom::Author.from_canonical(a)
+        }
+
         self.new(hash)
       end
 
@@ -97,16 +106,17 @@ module OStatus
           salmon_url = self.link('salmon').first.href
         end
 
-        OStatus::Feed.new(:title      => self.title,
-                          :id         => self.id,
-                          :url        => self.url,
-                          :published  => self.published,
-                          :updated    => self.updated,
-                          :entries    => self.entries.map(&:to_canonical),
-                          :authors    => self.authors.map(&:to_canonical),
-                          :hubs       => self.hubs,
-                          :salmon_url => salmon_url,
-                          :generator  => generator)
+        OStatus::Feed.new(:title        => self.title,
+                          :id           => self.id,
+                          :url          => self.url,
+                          :published    => self.published,
+                          :updated      => self.updated,
+                          :entries      => self.entries.map(&:to_canonical),
+                          :authors      => self.authors.map(&:to_canonical),
+                          :contributors => self.contributors.map(&:to_canonical),
+                          :hubs         => self.hubs,
+                          :salmon_url   => salmon_url,
+                          :generator    => generator)
       end
 
       def Feed.from_string(str)
