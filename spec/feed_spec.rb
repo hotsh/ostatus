@@ -7,6 +7,11 @@ describe OStatus::Feed do
       OStatus::Feed.new(:title => "My Title").title.must_equal "My Title"
     end
 
+    it "should store a list of categories" do
+      category = mock('category')
+      OStatus::Feed.new(:categories => [category]).categories.must_equal [category]
+    end
+
     it "should store a list of authors" do
       author = mock('author')
       OStatus::Feed.new(:authors => [author]).authors.must_equal [author]
@@ -39,6 +44,10 @@ describe OStatus::Feed do
       OStatus::Feed.new(:logo => "url").logo.must_equal "url"
     end
 
+    it "should store the rights for the feed" do
+      OStatus::Feed.new(:rights => "url").rights.must_equal "url"
+    end
+
     it "should store the url for the feed" do
       OStatus::Feed.new(:url => "url").url.must_equal "url"
     end
@@ -59,6 +68,10 @@ describe OStatus::Feed do
 
     it "should store the generator for the feed" do
       OStatus::Feed.new(:generator => "feedmaker").generator.must_equal "feedmaker"
+    end
+
+    it "should yield an empty array for categories by default" do
+      OStatus::Feed.new.categories.must_equal []
     end
 
     it "should yield an empty array for authors by default" do
@@ -136,6 +149,11 @@ describe OStatus::Feed do
       OStatus::Feed.new(:title => "My Title").to_hash[:title].must_equal "My Title"
     end
 
+    it "should return a Hash containing a list of categories" do
+      category = mock('category')
+      OStatus::Feed.new(:categories => [category]).to_hash[:categories].must_equal [category]
+    end
+
     it "should return a Hash containing a list of authors" do
       author = mock('author')
       OStatus::Feed.new(:authors => [author]).to_hash[:authors].must_equal [author]
@@ -161,6 +179,10 @@ describe OStatus::Feed do
 
     it "should return a Hash containing the logo for the feed" do
       OStatus::Feed.new(:logo => "url").to_hash[:logo].must_equal "url"
+    end
+
+    it "should return a Hash containing the rights for the feed" do
+      OStatus::Feed.new(:rights => "CC0").to_hash[:rights].must_equal "CC0"
     end
 
     it "should return a Hash containing the url for the feed" do

@@ -15,6 +15,14 @@ module OStatus
     # Holds the url that represents this feed.
     attr_reader :url
 
+    # Holds the list of categories for this feed as OStatus::Category.
+    attr_reader :categories
+
+    # Holds human-readable information about the content rights of the entries
+    # in the feed without an explicit rights field of their own. SHOULD NOT be
+    # machine interpreted.
+    attr_reader :rights
+
     # Holds the title for this feed.
     attr_reader :title
 
@@ -64,6 +72,11 @@ module OStatus
     # options:
     #   id           => The unique identifier for this feed.
     #   url          => The url that represents this feed.
+    #   title        => The title for this feed. Defaults: "Untitled"
+    #   authors      => The list of OStatus::Author's for this feed. Defaults: []
+    #   contributors => The list of OStatus::Author's that contributed to this
+    #                   feed. Defaults: []
+    #   entries      => The list of OStatus::Entry's for this feed. Defaults: []
     #   icon         => The url of the icon that represents this feed. It
     #                   should have an aspect ratio of 1 horizontal to 1
     #                   vertical and optimized for presentation at a
@@ -71,11 +84,12 @@ module OStatus
     #   logo         => The url of the logo that represents this feed. It
     #                   should have an aspect ratio of 2 horizontal to 1
     #                   vertical.
-    #   title        => The title for this feed. Defaults: "Untitled"
-    #   authors      => The list of OStatus::Author's for this feed. Defaults: []
-    #   contributors => The list of OStatus::Author's that contributed to this
-    #                   feed. Defaults: []
-    #   entries      => The list of OStatus::Entry's for this feed. Defaults: []
+    #   categories   => An array of OStatus::Category's that describe how to
+    #                   categorize and describe the content of the feed.
+    #                   Defaults: []
+    #   rights       => A String depicting the rights of entries without
+    #                   explicit rights of their own. SHOULD NOT be machine
+    #                   interpreted.
     #   updated      => The DateTime representing when this feed was last
     #                   modified.
     #   published    => The DateTime representing when this feed was originally
@@ -100,8 +114,10 @@ module OStatus
       @url = options[:url]
       @icon = options[:icon]
       @logo = options[:logo]
+      @rights = options[:rights]
       @title = options[:title] || "Untitled"
       @authors = options[:authors] || []
+      @categories = options[:categories] || []
       @contributors = options[:contributors] || []
       @entries = options[:entries] || []
       @updated = options[:updated]
@@ -136,8 +152,10 @@ module OStatus
         :url => self.url,
         :icon => self.icon,
         :logo => self.logo,
+        :rights => self.rights,
         :title => self.title,
         :authors => self.authors,
+        :categories => self.categories,
         :contributors => self.contributors,
         :entries => self.entries,
         :updated => self.updated,

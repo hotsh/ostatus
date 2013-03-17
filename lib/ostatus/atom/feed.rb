@@ -1,5 +1,6 @@
 require 'ostatus/entry'
 require 'ostatus/author'
+require 'ostatus/category'
 require 'ostatus/portable_contacts'
 
 require 'ostatus/atom/entry'
@@ -90,6 +91,21 @@ module OStatus
           OStatus::Atom::Author.from_canonical(a)
         }
 
+        hash[:categories].map! {|c|
+          c_hash = c.to_hash
+          if c_hash[:base]
+            c_hash[:xml_base] = c_hash[:base]
+          end
+
+          if c_hash[:lang]
+            c_hash[:xml_lang] = c_hash[:lang]
+          end
+
+          c_hash.delete :base
+          c_hash.delete :lang
+          ::Atom::Category.new(c_hash)
+        }
+
         self.new(hash)
       end
 
@@ -106,11 +122,19 @@ module OStatus
           salmon_url = self.link('salmon').first.href
         end
 
+        categories = self.categories.map {|c|
+          OStatus::Category.new(:term   => c.term,
+                                :scheme => c.scheme,
+                                :label  => c.label)
+        }
+
         OStatus::Feed.new(:title        => self.title,
                           :id           => self.id,
                           :url          => self.url,
+                          :categories   => categories,
                           :icon         => self.icon,
                           :logo         => self.logo,
+                          :rights       => self.rights,
                           :published    => self.published,
                           :updated      => self.updated,
                           :entries      => self.entries.map(&:to_canonical),

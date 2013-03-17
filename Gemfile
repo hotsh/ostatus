@@ -9,4 +9,5 @@ group :test do
   gem "ansi"
   gem "turn"
   gem "mocha" # stubs
+  gem "awesome_print"
 end
