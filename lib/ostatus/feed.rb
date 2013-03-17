@@ -18,6 +18,15 @@ module OStatus
     # Holds the title for this feed.
     attr_reader :title
 
+    # Holds the hash identifying the agent responsible for this feed.
+    #
+    # contains one or more of the following:
+    #   :name    => The human-readable name of the generator.
+    #   :uri     => A URL that represents the generator that, when
+    #               dereferenced, is related to that agent.
+    #   :version => The version of the generating agent.
+    attr_reader :generator
+
     # Holds the DateTime when this feed was originally created.
     attr_reader :published
 
@@ -56,6 +65,8 @@ module OStatus
     #                 feed.
     #   links      => An array of OStatus::Link that adds relations to other
     #                 resources.
+    #   generator  => A Hash representing the agent responsible for generating
+    #                 this feed.
     #
     # Usage:
     #
@@ -75,6 +86,7 @@ module OStatus
       @published = options[:published]
       @salmon_url = options[:salmon_url]
       @hubs = options[:hubs] || []
+      @generator = options[:generator]
     end
 
     # Yields a OStatus::Link to this feed.
@@ -104,7 +116,8 @@ module OStatus
         :authors => self.authors,
         :entries => self.entries,
         :updated => self.updated,
-        :published => self.published
+        :published => self.published,
+        :generator => self.generator
       }
     end
 

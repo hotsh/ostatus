@@ -62,10 +62,29 @@ module OStatus
         hash[:entries].map! {|e|
           OStatus::Atom::Entry.from_canonical(e)
         }
+
+        # Ensure that the generator is encoded.
+        if hash[:generator]
+          node = XML::Node.new("generator")
+          node['uri'] = hash[:generator][:uri] if hash[:generator][:uri]
+          node['version'] = hash[:generator][:version] if hash[:generator][:version]
+          node << hash[:generator][:name].to_s
+
+          xml = XML::Reader.string(node.to_s)
+          xml.read
+          hash[:generator] = ::Atom::Generator.parse(xml)
+        end
+
         self.new(hash)
       end
 
       def to_canonical
+        generator = nil
+        if self.generator
+          generator = {:name => self.generator.name,
+                       :uri => self.generator.uri,
+                       :version => self.generator.version}
+        end
         OStatus::Feed.new(:title     => self.title,
                           :id        => self.id,
                           :url       => self.url,
@@ -73,7 +92,8 @@ module OStatus
                           :updated   => self.updated,
                           :entries   => self.entries.map(&:to_canonical),
                           :authors   => self.authors.map(&:to_canonical),
-                          :hubs      => self.hubs)
+                          :hubs      => self.hubs,
+                          :generator => generator)
       end
 
       def Feed.from_string(str)

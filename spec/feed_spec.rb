@@ -44,6 +44,10 @@ describe OStatus::Feed do
       OStatus::Feed.new(:salmon_url => "url").salmon_url.must_equal "url"
     end
 
+    it "should store the generator for the feed" do
+      OStatus::Feed.new(:generator => "feedmaker").generator.must_equal "feedmaker"
+    end
+
     it "should yield an empty array for authors by default" do
       OStatus::Feed.new.authors.must_equal []
     end
@@ -141,6 +145,10 @@ describe OStatus::Feed do
     it "should return a Hash containing the updated date" do
       time = mock('date')
       OStatus::Feed.new(:updated => time).to_hash[:updated].must_equal time
+    end
+
+    it "should return a Hash containing the generator" do
+      OStatus::Feed.new(:generator => "feedmaker").to_hash[:generator].must_equal "feedmaker"
     end
   end
 
