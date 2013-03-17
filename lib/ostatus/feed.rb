@@ -37,6 +37,9 @@ module OStatus
     # Holds the salmon url that handles notifications for this feed.
     attr_reader :salmon_url
 
+    # Holds links to other resources as an array of OStatus::Link
+    attr_reader :links
+
     # Creates a new representation of a feed.
     #
     # options:
@@ -51,6 +54,17 @@ module OStatus
     #                 published. Defaults: DateTime.now
     #   salmon_url => The url of the salmon endpoint, if one exists, for this
     #                 feed.
+    #   links      => An array of OStatus::Link that adds relations to other
+    #                 resources.
+    #
+    # Usage:
+    #
+    #   author = OStatus::Author.new(:name => "Kelly")
+    #
+    #   feed = OStatus::Feed.new(:title   => "My Feed",
+    #                            :id      => "1",
+    #                            :url     => "http://example.com/feeds/1",
+    #                            :authors => [author])
     def initialize(options = {})
       @id = options[:id]
       @url = options[:url]
@@ -59,8 +73,29 @@ module OStatus
       @entries = options[:entries] || []
       @updated = options[:updated]
       @published = options[:published] || DateTime.now
+      @salmon_url = options[:salmon_url]
+      @hubs = options[:hubs] || []
     end
 
+    # Yields a OStatus::Link to this feed.
+    #
+    # options: Can override OStatus::Link properties, such as rel.
+    #
+    # Usage:
+    #
+    #   feed = OStatus::Feed.new(:title => "Foo", :url => "http://example.com")
+    #   feed.to_link(:rel => "alternate", :title => "Foo's Feed")
+    #
+    # Generates a link with:
+    #   <OStatus::Link rel="alternate" title="Foo's Feed" url="http://example.com">
+    def to_link(options = {})
+      options = { :title => self.title,
+                  :href  => self.url }.merge(options)
+
+      OStatus::Link.new(options)
+    end
+
+    # Returns a hash of the properties of the feed.
     def to_hash
       {
         :id => self.id,
@@ -73,6 +108,7 @@ module OStatus
       }
     end
 
+    # Returns a string containing an Atom representation of the feed.
     def to_atom
       require 'ostatus/atom/feed'
       hash = self.to_hash
