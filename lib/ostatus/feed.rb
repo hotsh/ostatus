@@ -116,6 +116,7 @@ module OStatus
         :authors => self.authors,
         :entries => self.entries,
         :updated => self.updated,
+        :salmon_url => self.salmon_url,
         :published => self.published,
         :generator => self.generator
       }

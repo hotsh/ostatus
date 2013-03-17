@@ -75,6 +75,12 @@ module OStatus
           hash[:generator] = ::Atom::Generator.parse(xml)
         end
 
+        if hash[:salmon_url]
+          hash[:links] ||= []
+          hash[:links] << ::Atom::Link.new(:rel => "salmon", :href => hash[:salmon_url])
+        end
+        hash.delete :salmon_url
+
         self.new(hash)
       end
 
@@ -85,15 +91,22 @@ module OStatus
                        :uri => self.generator.uri,
                        :version => self.generator.version}
         end
-        OStatus::Feed.new(:title     => self.title,
-                          :id        => self.id,
-                          :url       => self.url,
-                          :published => self.published,
-                          :updated   => self.updated,
-                          :entries   => self.entries.map(&:to_canonical),
-                          :authors   => self.authors.map(&:to_canonical),
-                          :hubs      => self.hubs,
-                          :generator => generator)
+
+        salmon_url = nil
+        if self.link('salmon').any?
+          salmon_url = self.link('salmon').first.href
+        end
+
+        OStatus::Feed.new(:title      => self.title,
+                          :id         => self.id,
+                          :url        => self.url,
+                          :published  => self.published,
+                          :updated    => self.updated,
+                          :entries    => self.entries.map(&:to_canonical),
+                          :authors    => self.authors.map(&:to_canonical),
+                          :hubs       => self.hubs,
+                          :salmon_url => salmon_url,
+                          :generator  => generator)
       end
 
       def Feed.from_string(str)
@@ -109,15 +122,6 @@ module OStatus
       #
       def link(attribute)
         links.find_all { |l| l.rel == attribute.to_s }
-      end
-
-      def links=(given)
-        self.links.clear
-        given.each do |rel,links|
-          links.each do |l|
-            self.links << ::Atom::Link.new(l.merge({:rel => rel}))
-          end
-        end
       end
 
       # Returns an array of URLs for each hub link tag.

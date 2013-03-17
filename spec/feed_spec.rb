@@ -137,6 +137,10 @@ describe OStatus::Feed do
       OStatus::Feed.new(:url => "url").to_hash[:url].must_equal "url"
     end
 
+    it "should return a Hash containing the salmon url for the feed" do
+      OStatus::Feed.new(:salmon_url => "url").to_hash[:salmon_url].must_equal "url"
+    end
+
     it "should return a Hash containing the published date" do
       time = mock('date')
       OStatus::Feed.new(:published => time).to_hash[:published].must_equal time
