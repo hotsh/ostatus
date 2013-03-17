@@ -110,6 +110,7 @@ module OStatus
                           :id           => self.id,
                           :url          => self.url,
                           :icon         => self.icon,
+                          :logo         => self.logo,
                           :published    => self.published,
                           :updated      => self.updated,
                           :entries      => self.entries.map(&:to_canonical),

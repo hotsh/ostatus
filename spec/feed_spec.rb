@@ -35,6 +35,10 @@ describe OStatus::Feed do
       OStatus::Feed.new(:icon => "url").icon.must_equal "url"
     end
 
+    it "should store the logo for the feed" do
+      OStatus::Feed.new(:logo => "url").logo.must_equal "url"
+    end
+
     it "should store the url for the feed" do
       OStatus::Feed.new(:url => "url").url.must_equal "url"
     end
@@ -153,6 +157,10 @@ describe OStatus::Feed do
 
     it "should return a Hash containing the icon for the feed" do
       OStatus::Feed.new(:icon => "url").to_hash[:icon].must_equal "url"
+    end
+
+    it "should return a Hash containing the logo for the feed" do
+      OStatus::Feed.new(:logo => "url").to_hash[:logo].must_equal "url"
     end
 
     it "should return a Hash containing the url for the feed" do

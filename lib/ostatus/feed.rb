@@ -21,6 +21,9 @@ module OStatus
     # Holds the URL for the icon representing this feed.
     attr_reader :icon
 
+    # Holds the URL for the logo representing this feed.
+    attr_reader :logo
+
     # Holds the hash identifying the agent responsible for this feed.
     #
     # contains one or more of the following:
@@ -61,7 +64,13 @@ module OStatus
     # options:
     #   id           => The unique identifier for this feed.
     #   url          => The url that represents this feed.
-    #   icon         => The url of the icon that represents this feed.
+    #   icon         => The url of the icon that represents this feed. It
+    #                   should have an aspect ratio of 1 horizontal to 1
+    #                   vertical and optimized for presentation at a
+    #                   small size.
+    #   logo         => The url of the logo that represents this feed. It
+    #                   should have an aspect ratio of 2 horizontal to 1
+    #                   vertical.
     #   title        => The title for this feed. Defaults: "Untitled"
     #   authors      => The list of OStatus::Author's for this feed. Defaults: []
     #   contributors => The list of OStatus::Author's that contributed to this
@@ -90,6 +99,7 @@ module OStatus
       @id = options[:id]
       @url = options[:url]
       @icon = options[:icon]
+      @logo = options[:logo]
       @title = options[:title] || "Untitled"
       @authors = options[:authors] || []
       @contributors = options[:contributors] || []
@@ -125,6 +135,7 @@ module OStatus
         :id => self.id,
         :url => self.url,
         :icon => self.icon,
+        :logo => self.logo,
         :title => self.title,
         :authors => self.authors,
         :contributors => self.contributors,
