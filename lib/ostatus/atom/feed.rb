@@ -2,6 +2,10 @@ require 'ostatus/entry'
 require 'ostatus/author'
 require 'ostatus/portable_contacts'
 
+require 'ostatus/atom/entry'
+require 'ostatus/atom/author'
+require 'ostatus/atom/link'
+
 module OStatus
   require 'atom'
 
@@ -22,7 +26,7 @@ module OStatus
       element :published, :class => Time, :content_only => true
       element :updated, :class => Time, :content_only => true
       elements :links, :class => ::Atom::Link
-      elements :authors, :class => OStatus::Author
+      elements :authors, :class => OStatus::Atom::Author
       elements :categories, :class => ::Atom::Category
       elements :entries, :class => OStatus::Atom::Entry
 
@@ -51,6 +55,17 @@ module OStatus
       # the various instances of author and entries.
       def Feed.from_data(url, options)
         Feed.new(nil, url, nil, options)
+      end
+
+      def to_canonical
+        OStatus::Feed.new(:title     => self.title,
+                          :id        => self.id,
+                          :url       => self.url,
+                          :published => self.published,
+                          :updated   => self.updated,
+                          :entries   => self.entries.map(&:to_canonical),
+                          :authors   => self.authors.map(&:to_canonical),
+                          :hubs      => self.hubs)
       end
 
       def Feed.from_string(str)
@@ -82,9 +97,22 @@ module OStatus
         link(:hub).map { |link| link.href }
       end
 
+      # Returns a string of the url for this feed.
+      def url
+        if links.alternate
+          links.alternate.href
+        elsif links.self
+          links.self.href
+        else
+          links.map.each do |l|
+            l.href
+          end.compact.first
+        end
+      end
+
       # Returns the salmon URL from the link tag.
       def salmon
-        link(:salmon).first.href
+        link(:salmon).first.href if link(:salmon)
       end
 
       # This method will return a String containing the actual content of

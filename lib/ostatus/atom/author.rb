@@ -47,7 +47,7 @@ module OStatus
       end
 
       def poco_name
-        @poco_name or self[POCO_NS, 'name'].first
+        @poco_name or self[OStatus::PortableContacts::NAMESPACE, 'name'].first
       end
 
       def to_xml(*args)
@@ -77,7 +77,24 @@ module OStatus
       # Returns an instance of a PortableContacts that further describe the
       # author's contact information, if it exists.
       def portable_contacts
-        PortableContacts.new(self)
+        OStatus::PortableContacts.new(:id => self.poco_id,
+                                      :name => self.poco_name,
+                                      :gender => self.poco_gender,
+                                      :note => self.poco_note,
+                                      :nickname => self.poco_nickname,
+                                      :display_name => self.poco_displayName,
+                                      :preferred_username => self.poco_preferredUsername,
+                                      :updated => self.poco_updated,
+                                      :published => self.poco_published,
+                                      :birthday => self.poco_birthday,
+                                      :anniversary => self.poco_anniversary)
+      end
+
+      def to_canonical
+        OStatus::Author.new(:portable_contacts => self.portable_contacts,
+                            :uri => self.uri,
+                            :email => self.email,
+                            :name => self.name)
       end
 
       def portable_contacts= poco

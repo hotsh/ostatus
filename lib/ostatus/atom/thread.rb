@@ -5,7 +5,7 @@ module OStatus
       require 'xml/libxml'
       require 'atom/xml/parser.rb'
 
-      include Atom::Xml::Parseable
+      include ::Atom::Xml::Parseable
       attribute :ref, :type, :source
       uri_attribute :href
 

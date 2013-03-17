@@ -4,8 +4,8 @@ module OStatus
   module Atom
 
     # This represents an Atom parser/generator for <link> tags.
-    class Link < Atom::Link
-      include Atom::Xml::Parseable
+    class Link < ::Atom::Link
+      include ::Atom::Xml::Parseable
 
       attribute :rel, :type, :length, :hreflang, :title, :text
 

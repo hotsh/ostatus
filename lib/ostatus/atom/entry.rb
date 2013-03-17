@@ -8,32 +8,37 @@ module OStatus
       require 'ostatus/thread'
       require 'ostatus/link'
 
+      require 'ostatus/atom/author'
+      require 'ostatus/atom/thread'
+      require 'ostatus/atom/link'
+
+      require 'libxml'
+
       include ::Atom::SimpleExtensions
 
       add_extension_namespace :activity, OStatus::Activity::NAMESPACE
       element 'activity:object-type'
-      element 'activity:object', :class => OStatus::Author
+      element 'activity:object', :class => OStatus::Atom::Author
       element 'activity:verb'
       element 'activity:target'
 
       add_extension_namespace :thr, OStatus::Thread::NAMESPACE
-      element 'thr:in-reply-to', :class => OStatus::Thread
+      element 'thr:in-reply-to', :class => OStatus::Atom::Thread
 
       # This is for backwards compatibility with some implementations of Activity
       # Streams. It should not be used, and in fact is obscured as it is not a
       # method in OStatus::Activity.
-      element 'activity:actor', :class => OStatus::Author
+      element 'activity:actor', :class => OStatus::Atom::Author
 
       namespace ::Atom::NAMESPACE
       element :title, :id, :summary
       element :updated, :published, :class => DateTime, :content_only => true
       element :source, :class => ::Atom::Source
-      elements :links, :class => OStatus::Link
+      elements :links, :class => OStatus::Atom::Link
 
       elements :categories, :class => ::Atom::Category
       element :content, :class => ::Atom::Content
-      element 'content-type'
-      element :author, :class => OStatus::Author
+      element :author, :class => OStatus::Atom::Author
 
       def activity
         Activity.new(self)
@@ -67,11 +72,15 @@ module OStatus
       end
 
       def link
-        links.group_by { |l| l.rel.intern }
+        links.group_by { |l| l.rel.intern if l.rel }
       end
 
       def link= options
-        links.clear << Atom::Link.new(options)
+        links.clear << ::Atom::Link.new(options)
+      end
+
+      def to_canonical
+        OStatus::Entry.new(self.info.merge({:author => self.author.to_canonical}))
       end
 
       # Returns a Hash of all fields.
@@ -81,6 +90,7 @@ module OStatus
           :id => self.id,
           :title => self.title,
           :content => self.content,
+          :content_type => self.content.type,
           :link => self.link,
           :published => self.published,
           :updated => self.updated
