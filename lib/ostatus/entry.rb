@@ -65,6 +65,24 @@ module OStatus
       @in_reply_to  = options[:in_reply_to]
     end
 
+    # Yields a OStatus::Link to this entry.
+    #
+    # options: Can override OStatus::Link properties, such as rel.
+    #
+    # Usage:
+    #
+    #   entry = OStatus::Entry.new(:title => "Foo", :url => "http://example.com")
+    #   entry.to_link(:rel => "alternate", :title => "Foo's Post")
+    #
+    # Generates a link with:
+    #   <OStatus::Link rel="alternate" title="Foo's Post" url="http://example.com">
+    def to_link(options = {})
+      options = { :title => self.title,
+                  :href  => self.url }.merge(options)
+
+      OStatus::Link.new(options)
+    end
+
     # Returns a Hash of all fields.
     def to_hash
       {

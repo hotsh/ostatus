@@ -62,6 +62,55 @@ describe OStatus::Entry do
     end
   end
 
+  describe "#to_link" do
+    it "should return a OStatus::Link" do
+      link = mock('link')
+      OStatus::Link.stubs(:new).returns(link)
+      OStatus::Entry.new.to_link.must_equal link
+    end
+
+    it "should by default use the title of the feed" do
+      OStatus::Link.expects(:new).with(has_entry(:title, "title"))
+      OStatus::Entry.new(:title => "title").to_link
+    end
+
+    it "should by default use the url of the feed as the href" do
+      OStatus::Link.expects(:new).with(has_entry(:href, "http://example.com"))
+      OStatus::Entry.new(:url => "http://example.com").to_link
+    end
+
+    it "should override the title of the feed when given" do
+      OStatus::Link.expects(:new).with(has_entry(:title, "new title"))
+      OStatus::Entry.new(:title => "title").to_link(:title => "new title")
+    end
+
+    it "should override the url of the feed when given" do
+      OStatus::Link.expects(:new).with(has_entry(:url, "http://feeds.example.com"))
+      OStatus::Entry.new(:url => "http://example.com")
+        .to_link(:url => "http://feeds.example.com")
+    end
+
+    it "should pass through the rel option" do
+      OStatus::Link.expects(:new).with(has_entry(:rel, "alternate"))
+      OStatus::Entry.new.to_link(:rel => "alternate")
+    end
+
+    it "should pass through the hreflang option" do
+      OStatus::Link.expects(:new).with(has_entry(:hreflang, "en_us"))
+      OStatus::Entry.new.to_link(:hreflang => "en_us")
+    end
+
+    it "should pass through the length option" do
+      OStatus::Link.expects(:new).with(has_entry(:length, 12345))
+      OStatus::Entry.new.to_link(:length => 12345)
+    end
+
+    it "should pass through the type option" do
+      OStatus::Link.expects(:new).with(has_entry(:type, "html"))
+      OStatus::Entry.new.to_link(:type => "html")
+    end
+  end
+
   describe "#info" do
     it "should return a Hash containing the title" do
       OStatus::Entry.new(:title => "My Title")
