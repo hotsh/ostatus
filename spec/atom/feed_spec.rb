@@ -393,6 +393,92 @@ describe OStatus::Atom do
             end
           end
         end
+
+        describe "<poco:address>" do
+          before do
+            @poco_address = @author.find_first('poco:address',
+                                               'http://portablecontacts.net/spec/1.0')
+          end
+
+          describe "<formatted>" do
+            it "should list the author's portable contact formatted address" do
+              @poco_address.find_first('xmlns:formatted',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.address[:formatted]
+            end
+          end
+
+          describe "<streetAddress>" do
+            it "should list the author's portable contact address streetAddress" do
+              @poco_address.find_first('xmlns:streetAddress',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.address[:street_address]
+            end
+          end
+
+          describe "<locality>" do
+            it "should list the author's portable contact address locality" do
+              @poco_address.find_first('xmlns:locality',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.address[:locality]
+            end
+          end
+
+          describe "<region>" do
+            it "should list the author's portable contact address region" do
+              @poco_address.find_first('xmlns:region',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.address[:region]
+            end
+          end
+
+          describe "<postalCode>" do
+            it "should list the author's portable contact address postalCode" do
+              @poco_address.find_first('xmlns:postalCode',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.address[:postal_code]
+            end
+          end
+
+          describe "<country>" do
+            it "should list the author's portable contact address country" do
+              @poco_address.find_first('xmlns:country',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.address[:country]
+            end
+          end
+        end
+
+        describe "<poco:account>" do
+          before do
+            @poco_account = @author.find_first('poco:account',
+                                               'http://portablecontacts.net/spec/1.0')
+          end
+
+          describe "<domain>" do
+            it "should list the author's portable contact account domain" do
+              @poco_account.find_first('xmlns:domain',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.account[:domain]
+            end
+          end
+
+          describe "<username>" do
+            it "should list the author's portable contact account username" do
+              @poco_account.find_first('xmlns:username',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.account[:username]
+            end
+          end
+
+          describe "<userid>" do
+            it "should list the author's portable contact account userid" do
+              @poco_account.find_first('xmlns:userid',
+                                       'xmlns:http://www.w3.org/2005/Atom')
+                .content.must_equal @master.authors.first.portable_contacts.account[:userid]
+            end
+          end
+        end
       end
     end
   end

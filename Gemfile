@@ -9,7 +9,6 @@ group :test do
   gem "ansi"     # minitest colors
   gem "turn"     # minitest output
   gem "mocha"    # stubs
-  gem "nokogiri" # vanilla libxml sucks for testing things apparently
 
   gem "awesome_print"
 end
