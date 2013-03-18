@@ -23,10 +23,11 @@ module OStatus
       namespace ::Atom::NAMESPACE
 
       add_extension_namespace :poco, PortableContacts::NAMESPACE
-      add_extension_namespace :poco, Activity::NAMESPACE
+      add_extension_namespace :activity, Activity::NAMESPACE
       element :id, :rights, :icon, :logo
       element :generator, :class => OStatus::Atom::Generator
-      element :title, :subtitle, :class => ::Atom::Content
+      element :title, :class => ::Atom::Content
+      element :subtitle, :class => ::Atom::Content
       element :published, :class => Time, :content_only => true
       element :updated, :class => Time, :content_only => true
       elements :links, :class => ::Atom::Link
@@ -86,13 +87,17 @@ module OStatus
         hash[:title] = ::Atom::Content.parse(xml)
         hash.delete :title_type
 
-        node = XML::Node.new("subtitle")
-        node['type'] = hash[:subtitle_type] if hash[:subtitle_type]
-        node << hash[:subtitle]
+        if hash[:subtitle]
+          node = XML::Node.new("subtitle")
+          node['type'] = hash[:subtitle_type] if hash[:subtitle_type]
+          node << hash[:subtitle]
 
-        xml = XML::Reader.string(node.to_s)
-        xml.read
-        hash[:subtitle] = ::Atom::Content.parse(xml)
+          xml = XML::Reader.string(node.to_s)
+          xml.read
+          hash[:subtitle] = ::Atom::Content.parse(xml)
+        else
+          hash.delete :subtitle
+        end
         hash.delete :subtitle_type
 
         self.new(hash)
@@ -112,9 +117,9 @@ module OStatus
         categories = self.categories.map(&:to_canonical)
 
         OStatus::Feed.new(:title         => self.title,
-                          :title_type    => self.title.type,
+                          :title_type    => self.title ? self.title.type : nil,
                           :subtitle      => self.subtitle,
-                          :subtitle_type => self.subtitle.type,
+                          :subtitle_type => self.subtitle ? self.subtitle.type : nil,
                           :id            => self.id,
                           :url           => url,
                           :categories    => categories,
