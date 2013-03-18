@@ -83,7 +83,6 @@ module OStatus
         entry_hash = obj.to_hash
 
         # Ensure that the content type is encoded.
-        # The most annoying way I've found to do it :/
         node = XML::Node.new("content")
         node['type'] = entry_hash[:content_type] if entry_hash[:content_type]
         node << entry_hash[:content]

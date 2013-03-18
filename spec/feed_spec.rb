@@ -7,6 +7,18 @@ describe OStatus::Feed do
       OStatus::Feed.new(:title => "My Title").title.must_equal "My Title"
     end
 
+    it "should store a title type" do
+      OStatus::Feed.new(:title_type => "html").title_type.must_equal "html"
+    end
+
+    it "should store a subtitle" do
+      OStatus::Feed.new(:subtitle => "My Title").subtitle.must_equal "My Title"
+    end
+
+    it "should store a subtitle type" do
+      OStatus::Feed.new(:subtitle_type => "html").subtitle_type.must_equal "html"
+    end
+
     it "should store a list of categories" do
       category = mock('category')
       OStatus::Feed.new(:categories => [category]).categories.must_equal [category]
@@ -149,6 +161,18 @@ describe OStatus::Feed do
       OStatus::Feed.new(:title => "My Title").to_hash[:title].must_equal "My Title"
     end
 
+    it "should return a Hash containing the title type" do
+      OStatus::Feed.new(:title_type => "html").to_hash[:title_type].must_equal "html"
+    end
+
+    it "should return a Hash containing the subtitle" do
+      OStatus::Feed.new(:subtitle => "My Title").to_hash[:subtitle].must_equal "My Title"
+    end
+
+    it "should return a Hash containing the subtitle type" do
+      OStatus::Feed.new(:subtitle_type => "html").to_hash[:subtitle_type].must_equal "html"
+    end
+
     it "should return a Hash containing a list of categories" do
       category = mock('category')
       OStatus::Feed.new(:categories => [category]).to_hash[:categories].must_equal [category]
@@ -167,6 +191,11 @@ describe OStatus::Feed do
     it "should return a Hash containing a list of entries" do
       entry = mock('entry')
       OStatus::Feed.new(:entries => [entry]).to_hash[:entries].must_equal [entry]
+    end
+
+    it "should return a Hash containing a list of hubs" do
+      OStatus::Feed.new(:hubs => ["hub1", "hub2"]).to_hash[:hubs]
+        .must_equal ["hub1", "hub2"]
     end
 
     it "should return a Hash containing the id of the feed" do

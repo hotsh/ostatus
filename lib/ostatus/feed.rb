@@ -26,6 +26,15 @@ module OStatus
     # Holds the title for this feed.
     attr_reader :title
 
+    # Holds the content-type for the title.
+    attr_reader :title_type
+
+    # Holds the subtitle for this feed.
+    attr_reader :subtitle
+
+    # Holds the content-type for the subtitle.
+    attr_reader :subtitle_type
+
     # Holds the URL for the icon representing this feed.
     attr_reader :icon
 
@@ -64,36 +73,41 @@ module OStatus
     # Creates a new representation of a feed.
     #
     # options:
-    #   id           => The unique identifier for this feed.
-    #   url          => The url that represents this feed.
-    #   title        => The title for this feed. Defaults: "Untitled"
-    #   authors      => The list of OStatus::Author's for this feed. Defaults: []
-    #   contributors => The list of OStatus::Author's that contributed to this
-    #                   feed. Defaults: []
-    #   entries      => The list of OStatus::Entry's for this feed. Defaults: []
-    #   icon         => The url of the icon that represents this feed. It
-    #                   should have an aspect ratio of 1 horizontal to 1
-    #                   vertical and optimized for presentation at a
-    #                   small size.
-    #   logo         => The url of the logo that represents this feed. It
-    #                   should have an aspect ratio of 2 horizontal to 1
-    #                   vertical.
-    #   categories   => An array of OStatus::Category's that describe how to
-    #                   categorize and describe the content of the feed.
-    #                   Defaults: []
-    #   rights       => A String depicting the rights of entries without
-    #                   explicit rights of their own. SHOULD NOT be machine
-    #                   interpreted.
-    #   updated      => The DateTime representing when this feed was last
-    #                   modified.
-    #   published    => The DateTime representing when this feed was originally
-    #                   published.
-    #   salmon_url   => The url of the salmon endpoint, if one exists, for this
-    #                   feed.
-    #   links        => An array of OStatus::Link that adds relations to other
-    #                   resources.
-    #   generator    => An OStatus::Generator representing the agent responsible
-    #                   for generating this feed.
+    #   id            => The unique identifier for this feed.
+    #   url           => The url that represents this feed.
+    #   title         => The title for this feed. Defaults: "Untitled"
+    #   title_type    => The content type for the title.
+    #   subtitle      => The subtitle for this feed.
+    #   subtitle_type => The content type for the subtitle.
+    #   authors       => The list of OStatus::Author's for this feed.
+    #                    Defaults: []
+    #   contributors  => The list of OStatus::Author's that contributed to this
+    #                    feed. Defaults: []
+    #   entries       => The list of OStatus::Entry's for this feed.
+    #                    Defaults: []
+    #   icon          => The url of the icon that represents this feed. It
+    #                    should have an aspect ratio of 1 horizontal to 1
+    #                    vertical and optimized for presentation at a
+    #                    small size.
+    #   logo          => The url of the logo that represents this feed. It
+    #                    should have an aspect ratio of 2 horizontal to 1
+    #                    vertical.
+    #   categories    => An array of OStatus::Category's that describe how to
+    #                    categorize and describe the content of the feed.
+    #                    Defaults: []
+    #   rights        => A String depicting the rights of entries without
+    #                    explicit rights of their own. SHOULD NOT be machine
+    #                    interpreted.
+    #   updated       => The DateTime representing when this feed was last
+    #                    modified.
+    #   published     => The DateTime representing when this feed was originally
+    #                    published.
+    #   salmon_url    => The url of the salmon endpoint, if one exists, for this
+    #                    feed.
+    #   links         => An array of OStatus::Link that adds relations to other
+    #                    resources.
+    #   generator     => An OStatus::Generator representing the agent
+    #                    responsible for generating this feed.
     #
     # Usage:
     #
@@ -110,6 +124,9 @@ module OStatus
       @logo = options[:logo]
       @rights = options[:rights]
       @title = options[:title] || "Untitled"
+      @title_type = options[:title_type]
+      @subtitle = options[:subtitle]
+      @subtitle_type = options[:subtitle_type]
       @authors = options[:authors] || []
       @categories = options[:categories] || []
       @contributors = options[:contributors] || []
@@ -144,10 +161,14 @@ module OStatus
       {
         :id => self.id,
         :url => self.url,
+        :hubs => self.hubs,
         :icon => self.icon,
         :logo => self.logo,
         :rights => self.rights,
         :title => self.title,
+        :title_type => self.title_type,
+        :subtitle => self.subtitle,
+        :subtitle_type => self.subtitle_type,
         :authors => self.authors,
         :categories => self.categories,
         :contributors => self.contributors,
