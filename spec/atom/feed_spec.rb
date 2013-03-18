@@ -259,6 +259,13 @@ describe OStatus::Atom do
           end
         end
 
+        describe "<name>" do
+          it "should list the author's name" do
+            @author.find_first('xmlns:name',
+                               'xmlns:http://www.w3.org/2005/Atom').content.must_equal @master.authors.first.name
+          end
+        end
+
         describe "<poco:id>" do
           it "should list the author's portable contact id" do
             @author.find_first('poco:id',
@@ -477,6 +484,82 @@ describe OStatus::Atom do
                                        'xmlns:http://www.w3.org/2005/Atom')
                 .content.must_equal @master.authors.first.portable_contacts.account[:userid]
             end
+          end
+        end
+
+        describe "<poco:displayName>" do
+          it "should list the author's portable contact display name" do
+            @author.find_first('poco:displayName',
+                               'http://portablecontacts.net/spec/1.0')
+              .content.must_equal @master.authors.first.portable_contacts.display_name
+          end
+        end
+
+        describe "<poco:nickname>" do
+          it "should list the author's portable contact nickname" do
+            @author.find_first('poco:nickname',
+                               'http://portablecontacts.net/spec/1.0')
+              .content.must_equal @master.authors.first.portable_contacts.nickname
+          end
+        end
+
+        describe "<poco:gender>" do
+          it "should list the author's portable contact gender" do
+            @author.find_first('poco:gender',
+                               'http://portablecontacts.net/spec/1.0')
+              .content.must_equal @master.authors.first.portable_contacts.gender
+          end
+        end
+
+        describe "<poco:note>" do
+          it "should list the author's portable contact note" do
+            @author.find_first('poco:note',
+                               'http://portablecontacts.net/spec/1.0')
+              .content.must_equal @master.authors.first.portable_contacts.note
+          end
+        end
+
+        describe "<poco:preferredUsername>" do
+          it "should list the author's portable contact preferred username" do
+            @author.find_first('poco:preferredUsername',
+                               'http://portablecontacts.net/spec/1.0')
+              .content.must_equal @master.authors.first.portable_contacts.preferred_username
+          end
+        end
+
+        describe "<poco:birthday>" do
+          it "should list the author's portable contact birthday" do
+            time = @author.find_first('poco:birthday',
+                                      'http://portablecontacts.net/spec/1.0').content
+            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+                                                       .birthday.to_datetime.to_s
+          end
+        end
+
+        describe "<poco:anniversary>" do
+          it "should list the author's portable contact anniversary" do
+            time = @author.find_first('poco:anniversary',
+                                      'http://portablecontacts.net/spec/1.0').content
+            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+                                                       .anniversary.to_datetime.to_s
+          end
+        end
+
+        describe "<poco:published>" do
+          it "should list the author's portable contact published date" do
+            time = @author.find_first('poco:published',
+                                      'http://portablecontacts.net/spec/1.0').content
+            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+                                                       .published.to_datetime.to_s
+          end
+        end
+
+        describe "<poco:updated>" do
+          it "should list the author's portable contact updated date" do
+            time = @author.find_first('poco:updated',
+                                      'http://portablecontacts.net/spec/1.0').content
+            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+                                                       .updated.to_datetime.to_s
           end
         end
       end
