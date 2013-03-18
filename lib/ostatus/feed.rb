@@ -32,13 +32,7 @@ module OStatus
     # Holds the URL for the logo representing this feed.
     attr_reader :logo
 
-    # Holds the hash identifying the agent responsible for this feed.
-    #
-    # contains one or more of the following:
-    #   :name    => The human-readable name of the generator.
-    #   :uri     => A URL that represents the generator that, when
-    #               dereferenced, is related to that agent.
-    #   :version => The version of the generating agent.
+    # Holds the generator for this content as an OStatus::Generator.
     attr_reader :generator
 
     # Holds the list of contributors, if any, that are involved in this feed
@@ -98,8 +92,8 @@ module OStatus
     #                   feed.
     #   links        => An array of OStatus::Link that adds relations to other
     #                   resources.
-    #   generator    => A Hash representing the agent responsible for generating
-    #                   this feed.
+    #   generator    => An OStatus::Generator representing the agent responsible
+    #                   for generating this feed.
     #
     # Usage:
     #

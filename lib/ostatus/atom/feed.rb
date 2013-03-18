@@ -1,9 +1,12 @@
 require 'ostatus/entry'
 require 'ostatus/author'
 require 'ostatus/category'
+require 'ostatus/generator'
 require 'ostatus/portable_contacts'
 
 require 'ostatus/atom/entry'
+require 'ostatus/atom/generator'
+require 'ostatus/atom/category'
 require 'ostatus/atom/author'
 require 'ostatus/atom/link'
 
@@ -22,14 +25,14 @@ module OStatus
       add_extension_namespace :poco, PortableContacts::NAMESPACE
       add_extension_namespace :poco, Activity::NAMESPACE
       element :id, :rights, :icon, :logo
-      element :generator, :class => ::Atom::Generator
+      element :generator, :class => OStatus::Atom::Generator
       element :title, :subtitle, :class => ::Atom::Content
       element :published, :class => Time, :content_only => true
       element :updated, :class => Time, :content_only => true
       elements :links, :class => ::Atom::Link
       elements :authors, :class => OStatus::Atom::Author
       elements :contributors, :class => OStatus::Atom::Author
-      elements :categories, :class => ::Atom::Category
+      elements :categories, :class => OStatus::Atom::Category
       elements :entries, :class => OStatus::Atom::Entry
 
       attr_accessor :url
@@ -67,21 +70,20 @@ module OStatus
 
         # Ensure that the generator is encoded.
         if hash[:generator]
-          node = XML::Node.new("generator")
-          node['uri'] = hash[:generator][:uri] if hash[:generator][:uri]
-          node['version'] = hash[:generator][:version] if hash[:generator][:version]
-          node << hash[:generator][:name].to_s
-
-          xml = XML::Reader.string(node.to_s)
-          xml.read
-          hash[:generator] = ::Atom::Generator.parse(xml)
+          hash[:generator] = OStatus::Atom::Generator.from_canonical(hash[:generator])
         end
 
+        hash[:links] ||= []
+
         if hash[:salmon_url]
-          hash[:links] ||= []
           hash[:links] << ::Atom::Link.new(:rel => "salmon", :href => hash[:salmon_url])
         end
         hash.delete :salmon_url
+
+        if hash[:url]
+          hash[:links] << ::Atom::Link.new(:rel => "self", :href => hash[:url])
+        end
+        hash.delete :url
 
         hash[:authors].map! {|a|
           OStatus::Atom::Author.from_canonical(a)
@@ -92,18 +94,7 @@ module OStatus
         }
 
         hash[:categories].map! {|c|
-          c_hash = c.to_hash
-          if c_hash[:base]
-            c_hash[:xml_base] = c_hash[:base]
-          end
-
-          if c_hash[:lang]
-            c_hash[:xml_lang] = c_hash[:lang]
-          end
-
-          c_hash.delete :base
-          c_hash.delete :lang
-          ::Atom::Category.new(c_hash)
+          OStatus::Atom::Category.from_canonical(c)
         }
 
         self.new(hash)
@@ -111,26 +102,23 @@ module OStatus
 
       def to_canonical
         generator = nil
-        if self.generator
-          generator = {:name => self.generator.name,
-                       :uri => self.generator.uri,
-                       :version => self.generator.version}
-        end
+        generator = self.generator.to_canonical if self.generator
 
         salmon_url = nil
         if self.link('salmon').any?
           salmon_url = self.link('salmon').first.href
         end
 
-        categories = self.categories.map {|c|
-          OStatus::Category.new(:term   => c.term,
-                                :scheme => c.scheme,
-                                :label  => c.label)
-        }
+        url = nil
+        if self.link('self').any?
+          url = self.link('self').first.href
+        end
+
+        categories = self.categories.map(&:to_canonical)
 
         OStatus::Feed.new(:title        => self.title,
                           :id           => self.id,
-                          :url          => self.url,
+                          :url          => url,
                           :categories   => categories,
                           :icon         => self.icon,
                           :logo         => self.logo,

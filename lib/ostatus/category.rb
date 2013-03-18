@@ -1,4 +1,7 @@
 module OStatus
+  # This element conveys information about a category associated with an entry
+  # or feed. There is no defined meaning to the content according to the Atom
+  # specification.
   class Category
     # Holds the base URI for relative URIs contained in scheme.
     attr_reader :base
@@ -28,6 +31,7 @@ module OStatus
       @label = options[:label]
     end
 
+    # Yields a Hash that represents this category.
     def to_hash
       {
         :base => @base,
