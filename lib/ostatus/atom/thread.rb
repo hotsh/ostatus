@@ -43,7 +43,8 @@ module OStatus
       end
 
       def to_canonical
-        OStatus::Thread.new(self.info)
+        OStatus::Entry.new(:url => self.href,
+                           :id  => self.ref)
       end
 
       def info
@@ -53,10 +54,6 @@ module OStatus
           :source => self.source,
           :href   => self.href
         }
-      end
-
-      def inspect
-        "<OStatus::Thread href:'#{href}' type:'#{type}'>"
       end
     end
   end

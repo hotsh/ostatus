@@ -131,7 +131,8 @@ entry = OStatus::Entry.new(:activity => :note,
                  denoting what type of object this entry represents, or an
                  entire OStatus::Activity when a more detailed description is
                  appropriate.
-:in_reply_to  => An array of OStatus::Thread that this entry is a
+:in_reply_to  => An OStatus::Entry for which this entry is a response.
+                 Or an array of OStatus::Entry's that this entry is a
                  response to. Use this when this Entry is a reply
                  to an existing Entry.
 ```

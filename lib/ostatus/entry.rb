@@ -1,11 +1,14 @@
 require 'ostatus/activity'
 require 'ostatus/author'
-require 'ostatus/thread'
 require 'ostatus/link'
 
 module OStatus
   # Holds information about an individual entry in the Feed.
   class Entry
+    # The XML namespace that identifies the conforming specification of 'thr'
+    # elements.
+    THREAD_NAMESPACE = "http://purl.org/syndication/thread/1.0"
+
     # Holds a String containing the title of the entry.
     attr_reader :title
 
@@ -33,7 +36,8 @@ module OStatus
     # Holds the OStatus::Activity associated with this entry.
     attr_reader :activity
 
-    # Holds an array of related resources that this entry is a response to.
+    # Holds an array of related OStatus::Entry's that this entry is a response
+    # to.
     attr_reader :in_reply_to
 
     # Create a new entry with the given content.
@@ -52,7 +56,8 @@ module OStatus
     #                    denoting what type of object this entry represents, or an
     #                    entire OStatus::Activity when a more detailed description is
     #                    appropriate.
-    #   :in_reply_to  => An array of OStatus::Thread that this entry is a
+    #   :in_reply_to  => An OStatus::Entry for which this entry is a response.
+    #                    Or an array of OStatus::Entry's that this entry is a
     #                    response to. Use this when this Entry is a reply
     #                    to an existing Entry.
     def initialize(options = {})
@@ -64,10 +69,13 @@ module OStatus
       @updated      = options[:updated]
       @url          = options[:url]
       @id           = options[:id]
-      if options[:activity].is_a? String
-        @activity = OStatus::Activity.new(:object_type => options[:activity])
+      if options[:activity].is_a?(String) or options[:activity].is_a? Symbol
+        options[:activity] = OStatus::Activity.new(:object_type => options[:activity])
       end
       @activity     = options[:activity]
+      unless options[:in_reply_to].nil? or options[:in_reply_to].is_a?(Array)
+        options[:in_reply_to] = [options[:in_reply_to]]
+      end
       @in_reply_to  = options[:in_reply_to] || []
     end
 
@@ -101,7 +109,7 @@ module OStatus
         :url => self.url,
         :id => self.id,
         :activity => self.activity,
-        :in_reply_to => self.in_reply_to
+        :in_reply_to => self.in_reply_to.dup
       }
     end
 

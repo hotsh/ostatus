@@ -38,14 +38,31 @@ describe OStatus::Entry do
       OStatus::Entry.new(:id => "id").id.must_equal "id"
     end
 
+    it "should store an activity when given a string" do
+      activity = mock('activity')
+      OStatus::Activity.expects(:new).with(has_entry(:object_type => "note")).returns(activity)
+      OStatus::Entry.new(:activity => "note").activity.must_equal activity
+    end
+
+    it "should store an activity when given a symbol" do
+      activity = mock('activity')
+      OStatus::Activity.expects(:new).with(has_entry(:object_type => :note)).returns(activity)
+      OStatus::Entry.new(:activity => :note).activity.must_equal activity
+    end
+
     it "should store an activity" do
       activity = mock('activity')
       OStatus::Entry.new(:activity => activity).activity.must_equal activity
     end
 
     it "should store an array of threads" do
-      thread = mock('thread')
+      thread = mock('entry')
       OStatus::Entry.new(:in_reply_to => [thread]).in_reply_to.must_equal [thread]
+    end
+
+    it "should store an array of threads when only given one entry" do
+      thread = mock('entry')
+      OStatus::Entry.new(:in_reply_to => thread).in_reply_to.must_equal [thread]
     end
 
     it "should store an empty array of threads by default" do

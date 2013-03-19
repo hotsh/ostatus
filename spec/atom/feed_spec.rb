@@ -50,6 +50,16 @@ describe OStatus::Atom do
 
     activity = OStatus::Activity.new(:object_type => :note)
 
+    reply_to = OStatus::Entry.new(:title => "My First Entry",
+                                  :author => author,
+                                  :content => "Hello",
+                                  :content_type => "html",
+                                  :id => "54321",
+                                  :url => "http://example.com/entries/1",
+                                  :activity => activity,
+                                  :published => Time.now,
+                                  :updated => Time.now)
+
     entry = OStatus::Entry.new(:title => "My Entry",
                                :author => author,
                                :content => "Hello",
@@ -58,6 +68,7 @@ describe OStatus::Atom do
                                :url => "http://example.com/entries/1",
                                :activity => activity,
                                :published => Time.now,
+                               :in_reply_to => reply_to,
                                :updated => Time.now)
 
     @master = OStatus::Feed.new(:title => "My Feed",

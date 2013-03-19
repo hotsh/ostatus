@@ -22,7 +22,7 @@ module OStatus
       element 'activity:verb'
       element 'activity:target'
 
-      add_extension_namespace :thr, OStatus::Thread::NAMESPACE
+      add_extension_namespace :thr, OStatus::Entry::THREAD_NAMESPACE
       elements 'thr:in-reply-to', :class => OStatus::Atom::Thread
 
       # This is for backwards compatibility with some implementations of Activity
@@ -105,8 +105,11 @@ module OStatus
           entry_hash[:author] = OStatus::Atom::Author.from_canonical(entry_hash[:author])
         end
 
-        if entry_hash[:in_reply_to]
-          entry_hash[:thr_in_reply_to] = entry_hash[:in_reply_to].map {|t| OStatus::Atom::Thread.from_canonical(t)}
+        # Encode in-reply-to fields
+        entry_hash[:thr_in_reply_to] = entry_hash[:in_reply_to].map do |t|
+          puts t.class
+          OStatus::Atom::Thread.new(:href => t.url,
+                                    :ref  => t.id)
         end
         entry_hash.delete :in_reply_to
 
@@ -121,23 +124,17 @@ module OStatus
       end
 
       def to_canonical
-        OStatus::Entry.new(self.info.merge({:author => self.author.to_canonical}))
-      end
-
-      # Returns a Hash of all fields.
-      def info
-        {
-          :activity => self.activity,
-          :id => self.id,
-          :url => self.url,
-          :title => self.title,
-          :in_reply_to => self.thr_in_reply_to.map(&:to_canonical),
-          :content => self.content,
-          :content_type => self.content.type,
-          :link => self.link,
-          :published => self.published,
-          :updated => self.updated
-        }
+        OStatus::Entry.new(:author => self.author ? self.author.to_canonical : nil,
+                           :activity => self.activity,
+                           :id => self.id,
+                           :url => self.url,
+                           :title => self.title,
+                           :in_reply_to => self.thr_in_reply_to.map(&:to_canonical),
+                           :content => self.content,
+                           :content_type => self.content.type,
+                           :link => self.link,
+                           :published => self.published,
+                           :updated => self.updated)
       end
     end
   end
