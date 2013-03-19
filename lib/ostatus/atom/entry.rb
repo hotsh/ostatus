@@ -5,7 +5,6 @@ module OStatus
     class Entry < ::Atom::Entry
       require 'ostatus/activity'
       require 'ostatus/author'
-      require 'ostatus/thread'
       require 'ostatus/link'
 
       require 'ostatus/atom/author'
