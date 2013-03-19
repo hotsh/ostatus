@@ -62,7 +62,7 @@ module OStatus
       @url          = options[:url]
       @id           = options[:id]
       @activity     = options[:activity]
-      @in_reply_to  = options[:in_reply_to]
+      @in_reply_to  = options[:in_reply_to] || []
     end
 
     # Yields a OStatus::Link to this entry.

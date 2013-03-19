@@ -41,10 +41,23 @@ module OStatus
       element :author, :class => OStatus::Atom::Author
 
       def activity
-        Activity.new(self)
+        # Reform the Activity object type
+        object_type = self.activity_object_type
+        if object_type.start_with? OStatus::Activity::SCHEMA_ROOT
+          object_type.gsub!(/^#{Regexp.escape(OStatus::Activity::SCHEMA_ROOT)}/, "")
+        end
+
+        object = nil
+        object = self.activity_object.to_canonical if self.activity_object
+
+        Activity.new(:object_type => object_type,
+                     :object => object,
+                     :target => self.activity_target,
+                     :verb => self.activity_verb)
       end
 
       def activity= value
+        return if value.nil?
         if value.object_type
           self.activity_object_type = OStatus::Activity::SCHEMA_ROOT + value.object_type.to_s
         end
@@ -65,10 +78,6 @@ module OStatus
             l.href
           end.compact.first
         end
-      end
-
-      def url= value
-        links << ::Atom::Link.new(:rel => "alternate", :href => value)
       end
 
       def link
@@ -101,6 +110,13 @@ module OStatus
         end
         entry_hash.delete :in_reply_to
 
+        entry_hash[:links] ||= []
+
+        if entry_hash[:url]
+          entry_hash[:links] << ::Atom::Link.new(:rel => "self", :href => entry_hash[:url])
+        end
+        entry_hash.delete :url
+
         self.new(entry_hash)
       end
 
@@ -113,6 +129,7 @@ module OStatus
         {
           :activity => self.activity,
           :id => self.id,
+          :url => self.url,
           :title => self.title,
           :in_reply_to => self.thr_in_reply_to.map(&:to_canonical),
           :content => self.content,

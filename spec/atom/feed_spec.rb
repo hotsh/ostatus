@@ -3,7 +3,10 @@ require_relative '../../lib/ostatus/feed.rb'
 require_relative '../../lib/ostatus/atom/feed.rb'
 
 # Sanity checks on atom generation because I don't trust ratom completely.
-
+#
+# Since I can't be completely sure how to test the implementations since they
+# are patchy inheritance, I'll just do big acceptance tests and overtest.
+# Somehow, these are still really fast.
 describe OStatus::Atom do
   before do
     poco = OStatus::PortableContacts.new(:id => "1",
@@ -45,6 +48,18 @@ describe OStatus::Atom do
                                  :portable_contacts => poco,
                                  :name              => "wilkie")
 
+    activity = OStatus::Activity.new(:object_type => :note)
+
+    entry = OStatus::Entry.new(:title => "My Entry",
+                               :author => author,
+                               :content => "Hello",
+                               :content_type => "html",
+                               :id => "54321",
+                               :url => "http://example.com/entries/1",
+                               :activity => activity,
+                               :published => Time.now,
+                               :updated => Time.now)
+
     @master = OStatus::Feed.new(:title => "My Feed",
                                 :title_type => "html",
                                 :subtitle => "Subtitle",
@@ -58,6 +73,7 @@ describe OStatus::Atom do
                                 :published => Time.now,
                                 :updated => Time.now,
                                 :authors => [author],
+                                :entries => [entry],
                                 :id => "12345")
   end
 
@@ -71,8 +87,20 @@ describe OStatus::Atom do
     old_hash[:authors] = old_hash[:authors].map(&:to_hash)
     new_hash[:authors] = new_hash[:authors].map(&:to_hash)
 
+    old_hash[:entries] = old_hash[:entries].map(&:to_hash)
+    new_hash[:entries] = new_hash[:entries].map(&:to_hash)
+
+    old_hash[:entries][0][:author] = old_hash[:entries][0][:author].to_hash
+    new_hash[:entries][0][:author] = new_hash[:entries][0][:author].to_hash
+
+    old_hash[:entries][0][:author][:portable_contacts] = old_hash[:entries][0][:author][:portable_contacts].to_hash
+    new_hash[:entries][0][:author][:portable_contacts] = new_hash[:entries][0][:author][:portable_contacts].to_hash
+
     old_hash[:authors].each {|a| a[:portable_contacts] = a[:portable_contacts].to_hash}
     new_hash[:authors].each {|a| a[:portable_contacts] = a[:portable_contacts].to_hash}
+
+    old_hash[:entries] = old_hash[:entries].map{|e| e[:activity] = e[:activity].info}
+    new_hash[:entries] = new_hash[:entries].map{|e| e[:activity] = e[:activity].info}
 
     # Flatten all keys to their to_s
     # We want to compare the to_s for all keys
@@ -560,6 +588,79 @@ describe OStatus::Atom do
                                       'http://portablecontacts.net/spec/1.0').content
             DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
                                                        .updated.to_datetime.to_s
+          end
+        end
+      end
+
+      describe "<entry>" do
+        before do
+          @entry = @feed.find_first('xmlns:entry', 'xmlns:http://www.w3.org/2005/Atom')
+        end
+
+        it "should have the thread namespace" do
+          @entry.namespaces.find_by_prefix('thr').to_s
+            .must_equal "thr:http://purl.org/syndication/thread/1.0"
+        end
+
+        it "should have the activity streams namespace" do
+          @entry.namespaces.find_by_prefix('activity').to_s
+            .must_equal "activity:http://activitystrea.ms/spec/1.0/"
+        end
+
+        describe "<title>" do
+          it "should contain the entry title" do
+            @entry.find_first('xmlns:title', 'xmlns:http://www.w3.org/2005/Atom')
+              .content.must_equal @master.entries.first.title
+          end
+        end
+
+        describe "<id>" do
+          it "should contain the entry id" do
+            @entry.find_first('xmlns:id', 'xmlns:http://www.w3.org/2005/Atom')
+              .content.must_equal @master.entries.first.id
+          end
+        end
+
+        describe "<link>" do
+          it "should contain a link for self" do
+            @entry.find_first('xmlns:link[@rel="self"]',
+                              'xmlns:http://www.w3.org/2005/Atom').attributes
+               .get_attribute('href').value.must_equal(@master.entries.first.url)
+          end
+        end
+
+        describe "<updated>" do
+          it "should contain the entry updated date" do
+            time = @entry.find_first('xmlns:updated',
+                                     'xmlns:http://www.w3.org/2005/Atom').content
+            DateTime.parse(time).to_s.must_equal @master.entries.first.updated.to_datetime.to_s
+          end
+        end
+
+        describe "<published>" do
+          it "should contain the entry published date" do
+            time = @entry.find_first('xmlns:published',
+                                     'xmlns:http://www.w3.org/2005/Atom').content
+            DateTime.parse(time).to_s.must_equal @master.entries.first.published.to_datetime.to_s
+          end
+        end
+
+        describe "<activity:object-type>" do
+          it "should reflect the activity for this entry" do
+            @entry.find_first('activity:object-type').content
+              .must_equal "http://activitystrea.ms/schema/1.0/note"
+          end
+        end
+
+        describe "<content>" do
+          it "should contain the entry content" do
+            @entry.find_first('xmlns:content', 'xmlns:http://www.w3.org/2005/Atom')
+              .content.must_equal @master.entries.first.content
+          end
+
+          it "should have the corresponding type attribute" do
+            @entry.find_first('xmlns:content', 'xmlns:http://www.w3.org/2005/Atom')
+              .attributes.get_attribute('type').value.must_equal @master.entries.first.content_type
           end
         end
       end
