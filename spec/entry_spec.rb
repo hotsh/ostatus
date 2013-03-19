@@ -48,6 +48,10 @@ describe OStatus::Entry do
       OStatus::Entry.new(:in_reply_to => [thread]).in_reply_to.must_equal [thread]
     end
 
+    it "should store an empty array of threads by default" do
+      OStatus::Entry.new.in_reply_to.must_equal []
+    end
+
     it "should default the content to '' if not given" do
       OStatus::Entry.new.content.must_equal ''
     end
