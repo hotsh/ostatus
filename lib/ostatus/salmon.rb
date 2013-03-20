@@ -1,12 +1,16 @@
 module OStatus
-  class Salmon
+  # This represents a notification that can be sent to a server when you wish
+  # to send information to a server that has not yet subscribed to you. Since
+  # this implies a lack of trust, a notification adds a layer so that the
+  # recipiant can verify the message contents.
+  class Notification
     require 'xml'
     require 'atom'
     require 'digest/sha2'
 
     attr_accessor :entry
 
-    # Create a Salmon instance for a particular OStatus::Entry
+    # Create an instance for a particular OStatus::Entry.
     def initialize entry, signature = nil, plaintext = nil
       @entry = entry
       @signature = signature
@@ -14,48 +18,54 @@ module OStatus
     end
 
     # Creates an entry for following a particular Author.
-    def Salmon.from_follow(user_author, followed_author)
+    def self.from_follow(user_author, followed_author)
+      activity = OStatus::Activity.new(:verb => :follow,
+                                       :object => followed_author)
+
       entry = OStatus::Entry.new(
-        :author => user_author,
-        :title => "Now following #{followed_author.name}",
-        :content => Atom::Content::Html.new("Now following #{followed_author.name}")
+        :author   => user_author,
+        :activity => activity,
+        :title    => "Now following #{followed_author.name}",
+        :content  => "Now following #{followed_author.name}",
+        :content_type => "html"
       )
 
-      entry.activity.verb = :follow
-      entry.activity_object = followed_author
-
-      OStatus::Salmon.new(entry)
+      self.new(entry)
     end
 
     # Creates an entry for unfollowing a particular Author.
-    def Salmon.from_unfollow(user_author, followed_author)
+    def self.from_unfollow(user_author, followed_author)
+      activity = OStatus::Activity.new(:verb => "http://ostatus.org/schema/1.0/unfollow",
+                                       :object => followed_author)
+
       entry = OStatus::Entry.new(
-        :author => user_author,
+        :author   => user_author,
+        :activity => activity,
         :title => "Stopped following #{followed_author.name}",
-        :content => Atom::Content::Html.new("Stopped following #{followed_author.name}")
+        :content => "Stopped following #{followed_author.name}",
+        :content_type => "html"
       )
 
-      entry.activity_verb = "http://ostatus.org/schema/1.0/unfollow"
-      entry.activity_object = followed_author
-
-      OStatus::Salmon.new(entry)
+      self.new(entry)
     end
 
     # Creates an entry for a profile update.
-    def Salmon.from_profile_update(user_author)
+    def self.from_profile_update(user_author)
+      activity = OStatus::Activity.new(:verb => "http://ostatus.org/schema/1.0/update-profile")
+
       entry = OStatus::Entry.new(
-        :author => user_author,
+        :author   => user_author,
+        :activity => activity,
         :title => "#{user_author.name} changed their profile information.",
-        :content => Atom::Content::Html.new("#{user_author.name} changed their profile information.")
+        :content => "#{user_author.name} changed their profile information.",
+        :content_type => "html"
       )
 
-      entry.activity_verb = "http://ostatus.org/schema/1.0/update-profile"
-
-      OStatus::Salmon.new(entry)
+      self.new(entry)
     end
 
     # Will pull a OStatus::Entry from a magic envelope described by the xml.
-    def Salmon.from_xml source
+    def self.from_xml source
       if source.is_a?(String)
         if source.length == 0
           return nil
@@ -67,7 +77,7 @@ module OStatus
 
       # Retrieve the envelope
       envelope = source.find('/me:env',
-                          'me:http://salmon-protocol.org/ns/magic-env').first
+                             'me:http://salmon-protocol.org/ns/magic-env').first
 
       if envelope.nil?
         return nil
@@ -146,10 +156,10 @@ module OStatus
 
       # Interpret data payload
       payload = XML::Reader.string(data)
-      Salmon.new OStatus::Entry.new(payload), signature, plaintext
+      self.new OStatus::Entry.new(payload), signature, plaintext
     end
 
-    # Generate the xml for this Salmon notice and sign with the given private
+    # Generate the xml for this notice and sign with the given private
     # key.
     def to_xml key
       # Generate magic envelope
@@ -191,7 +201,7 @@ module OStatus
       magic_envelope.to_s :indent => true, :encoding => XML::Encoding::UTF_8
     end
 
-    # Return the EMSA string for this Salmon instance given the size of the
+    # Return the EMSA string for this instance given the size of the
     # public key modulus.
     def signature modulus_byte_length
       plaintext = Digest::SHA2.new(256).digest(@plaintext)
