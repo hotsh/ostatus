@@ -97,6 +97,13 @@ module OStatus
       OStatus::Link.new(options)
     end
 
+    # Retrieve the Entry at the url in this Entry. This will pull a new,
+    # possibly more up-to-date version of the Entry. Or fill in fields
+    # when the Entry is empty.
+    def retrieve
+      OStatus::entry_from_url(self.url)
+    end
+
     # Returns a Hash of all fields.
     def to_hash
       {
