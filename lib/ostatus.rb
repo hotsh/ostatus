@@ -2,7 +2,6 @@ require 'ostatus/feed'
 require 'ostatus/entry'
 require 'ostatus/author'
 require 'ostatus/activity'
-require 'ostatus/portable_contacts'
 require 'ostatus/salmon'
 require 'ostatus/link'
 

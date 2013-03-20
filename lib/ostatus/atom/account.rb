@@ -6,7 +6,7 @@ module OStatus
     class Account
       include ::Atom::Xml::Parseable
 
-      namespace OStatus::PortableContacts::NAMESPACE
+      namespace OStatus::Author::NAMESPACE
 
       element :domain
       element :username

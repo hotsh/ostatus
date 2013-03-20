@@ -6,7 +6,7 @@ module OStatus
     class Address
       include ::Atom::Xml::Parseable
 
-      namespace OStatus::PortableContacts::NAMESPACE
+      namespace OStatus::Author::NAMESPACE
 
       element :formatted
       element :streetAddress

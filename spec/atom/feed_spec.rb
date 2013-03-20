@@ -9,44 +9,43 @@ require_relative '../../lib/ostatus/atom/feed.rb'
 # Somehow, these are still really fast.
 describe OStatus::Atom do
   before do
-    poco = OStatus::PortableContacts.new(:id => "1",
-                                         :nickname    => "wilkie",
-                                         :name        => {:formatted => "Dave Wilkinson",
-                                                          :family_name => "Wilkinson",
-                                                          :given_name => "Dave",
-                                                          :middle_name => "William",
-                                                          :honorific_prefix => "Mr.",
-                                                          :honorific_suffix => "II"},
-                                         :address => {:formatted => "123 Cherry Lane\nFoobar, PA, USA\n15206",
-                                                      :street_address => "123 Cherry Lane",
-                                                      :locality => "Foobar",
-                                                      :region => "PA",
-                                                      :postal_code => "15206",
-                                                      :country => "USA"},
-                                         :organization => {:name => "Hackers of the Severed Hand",
-                                                           :department => "Making Shit",
-                                                           :title => "Founder",
-                                                           :type => "open source",
-                                                           :start_date => Date.today,
-                                                           :end_date => Date.today,
-                                                           :location => "everywhere",
-                                                           :description => "I make ostatus work"},
-                                         :account     => {:domain => "example.com",
-                                                         :username => "wilkie",
-                                                         :userid => "1"},
-                                         :gender      => "androgynous",
-                                         :note        => "cool dude",
-                                         :display_name => "Dave Wilkinson",
-                                         :preferred_username => "wilkie",
-                                         :updated     => Time.now,
-                                         :published   => Time.now,
-                                         :birthday    => Date.today,
-                                         :anniversary => Date.today)
-
     author = OStatus::Author.new(:uri               => "http://example.com/users/1",
                                  :email             => "user@example.com",
-                                 :portable_contacts => poco,
-                                 :name              => "wilkie")
+                                 :name              => "wilkie",
+                                 :id => "1",
+                                 :nickname    => "wilkie",
+                                 :extended_name     => {:formatted => "Dave Wilkinson",
+                                   :family_name => "Wilkinson",
+                                   :given_name => "Dave",
+                                   :middle_name => "William",
+                                   :honorific_prefix => "Mr.",
+                                   :honorific_suffix => "II"},
+                                 :address => {:formatted => "123 Cherry Lane\nFoobar, PA, USA\n15206",
+                                   :street_address => "123 Cherry Lane",
+                                   :locality => "Foobar",
+                                   :region => "PA",
+                                   :postal_code => "15206",
+                                   :country => "USA"},
+                                 :organization => {:name => "Hackers of the Severed Hand",
+                                   :department => "Making Shit",
+                                   :title => "Founder",
+                                   :type => "open source",
+                                   :start_date => Date.today,
+                                   :end_date => Date.today,
+                                   :location => "everywhere",
+                                   :description => "I make ostatus work"},
+                                 :account     => {:domain => "example.com",
+                                   :username => "wilkie",
+                                   :userid => "1"},
+                                   :gender      => "androgynous",
+                                   :note        => "cool dude",
+                                   :display_name => "Dave Wilkinson",
+                                   :preferred_username => "wilkie",
+                                   :updated     => Time.now,
+                                   :published   => Time.now,
+                                   :birthday    => Date.today,
+                                   :anniversary => Date.today)
+
 
     activity = OStatus::Activity.new(:object_type => :note)
 
@@ -95,7 +94,6 @@ describe OStatus::Atom do
 
   it "should be able to reform canonical structure using Atom" do
     xml = OStatus::Atom::Feed.from_canonical(@master).to_xml
-    puts xml
     new_feed = OStatus::Atom::Feed.new(XML::Reader.string(xml)).to_canonical
 
     old_hash = @master.to_hash
@@ -115,12 +113,6 @@ describe OStatus::Atom do
 
     old_hash[:entries][0][:source][:authors] = old_hash[:entries][0][:source][:authors].map(&:to_hash)
     new_hash[:entries][0][:source][:authors] = new_hash[:entries][0][:source][:authors].map(&:to_hash)
-
-    old_hash[:entries][0][:author][:portable_contacts] = old_hash[:entries][0][:author][:portable_contacts].to_hash
-    new_hash[:entries][0][:author][:portable_contacts] = new_hash[:entries][0][:author][:portable_contacts].to_hash
-
-    old_hash[:authors].each {|a| a[:portable_contacts] = a[:portable_contacts].to_hash}
-    new_hash[:authors].each {|a| a[:portable_contacts] = a[:portable_contacts].to_hash}
 
     old_hash[:entries] = old_hash[:entries].map{|e| e[:activity] = e[:activity].info}
     new_hash[:entries] = new_hash[:entries].map{|e| e[:activity] = e[:activity].info}
@@ -320,7 +312,7 @@ describe OStatus::Atom do
         describe "<poco:id>" do
           it "should list the author's portable contact id" do
             @author.find_first('poco:id',
-                               'http://portablecontacts.net/spec/1.0').content.must_equal @master.authors.first.portable_contacts.id
+                               'http://portablecontacts.net/spec/1.0').content.must_equal @master.authors.first.id
           end
         end
 
@@ -334,7 +326,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact formatted name" do
               @poco_name.find_first('xmlns:formatted',
                                     'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.name[:formatted]
+                .content.must_equal @master.authors.first.extended_name[:formatted]
             end
           end
 
@@ -342,7 +334,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact family name" do
               @poco_name.find_first('xmlns:familyName',
                                     'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.name[:family_name]
+                .content.must_equal @master.authors.first.extended_name[:family_name]
             end
           end
 
@@ -350,7 +342,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact given name" do
               @poco_name.find_first('xmlns:givenName',
                                     'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.name[:given_name]
+                .content.must_equal @master.authors.first.extended_name[:given_name]
             end
           end
 
@@ -358,7 +350,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact middle name" do
               @poco_name.find_first('xmlns:middleName',
                                     'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.name[:middle_name]
+                .content.must_equal @master.authors.first.extended_name[:middle_name]
             end
           end
 
@@ -366,7 +358,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact honorific prefix" do
               @poco_name.find_first('xmlns:honorificPrefix',
                                     'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.name[:honorific_prefix]
+                .content.must_equal @master.authors.first.extended_name[:honorific_prefix]
             end
           end
 
@@ -374,7 +366,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact honorific suffix" do
               @poco_name.find_first('xmlns:honorificSuffix',
                                     'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.name[:honorific_suffix]
+                .content.must_equal @master.authors.first.extended_name[:honorific_suffix]
             end
           end
         end
@@ -389,7 +381,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact organization name" do
               @poco_org.find_first('xmlns:name',
                                    'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.organization[:name]
+                .content.must_equal @master.authors.first.organization[:name]
             end
           end
 
@@ -397,7 +389,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact organization department" do
               @poco_org.find_first('xmlns:department',
                                    'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.organization[:department]
+                .content.must_equal @master.authors.first.organization[:department]
             end
           end
 
@@ -405,7 +397,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact organization title" do
               @poco_org.find_first('xmlns:title',
                                    'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.organization[:title]
+                .content.must_equal @master.authors.first.organization[:title]
             end
           end
 
@@ -413,7 +405,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact organization type" do
               @poco_org.find_first('xmlns:type',
                                    'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.organization[:type]
+                .content.must_equal @master.authors.first.organization[:type]
             end
           end
 
@@ -422,7 +414,7 @@ describe OStatus::Atom do
               time = @poco_org.find_first('xmlns:startDate',
                                           'xmlns:http://www.w3.org/2005/Atom').content
               DateTime::parse(time).to_s
-                .must_equal @master.authors.first.portable_contacts.organization[:start_date].to_datetime.to_s
+                .must_equal @master.authors.first.organization[:start_date].to_datetime.to_s
             end
           end
 
@@ -431,7 +423,7 @@ describe OStatus::Atom do
               time = @poco_org.find_first('xmlns:endDate',
                                           'xmlns:http://www.w3.org/2005/Atom').content
               DateTime::parse(time).to_s
-                .must_equal @master.authors.first.portable_contacts.organization[:end_date].to_datetime.to_s
+                .must_equal @master.authors.first.organization[:end_date].to_datetime.to_s
             end
           end
 
@@ -439,7 +431,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact organization location" do
               @poco_org.find_first('xmlns:location',
                                    'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.organization[:location]
+                .content.must_equal @master.authors.first.organization[:location]
             end
           end
 
@@ -447,7 +439,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact organization description" do
               @poco_org.find_first('xmlns:description',
                                    'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.organization[:description]
+                .content.must_equal @master.authors.first.organization[:description]
             end
           end
         end
@@ -462,7 +454,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact formatted address" do
               @poco_address.find_first('xmlns:formatted',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.address[:formatted]
+                .content.must_equal @master.authors.first.address[:formatted]
             end
           end
 
@@ -470,7 +462,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact address streetAddress" do
               @poco_address.find_first('xmlns:streetAddress',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.address[:street_address]
+                .content.must_equal @master.authors.first.address[:street_address]
             end
           end
 
@@ -478,7 +470,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact address locality" do
               @poco_address.find_first('xmlns:locality',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.address[:locality]
+                .content.must_equal @master.authors.first.address[:locality]
             end
           end
 
@@ -486,7 +478,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact address region" do
               @poco_address.find_first('xmlns:region',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.address[:region]
+                .content.must_equal @master.authors.first.address[:region]
             end
           end
 
@@ -494,7 +486,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact address postalCode" do
               @poco_address.find_first('xmlns:postalCode',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.address[:postal_code]
+                .content.must_equal @master.authors.first.address[:postal_code]
             end
           end
 
@@ -502,7 +494,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact address country" do
               @poco_address.find_first('xmlns:country',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.address[:country]
+                .content.must_equal @master.authors.first.address[:country]
             end
           end
         end
@@ -517,7 +509,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact account domain" do
               @poco_account.find_first('xmlns:domain',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.account[:domain]
+                .content.must_equal @master.authors.first.account[:domain]
             end
           end
 
@@ -525,7 +517,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact account username" do
               @poco_account.find_first('xmlns:username',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.account[:username]
+                .content.must_equal @master.authors.first.account[:username]
             end
           end
 
@@ -533,7 +525,7 @@ describe OStatus::Atom do
             it "should list the author's portable contact account userid" do
               @poco_account.find_first('xmlns:userid',
                                        'xmlns:http://www.w3.org/2005/Atom')
-                .content.must_equal @master.authors.first.portable_contacts.account[:userid]
+                .content.must_equal @master.authors.first.account[:userid]
             end
           end
         end
@@ -542,7 +534,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact display name" do
             @author.find_first('poco:displayName',
                                'http://portablecontacts.net/spec/1.0')
-              .content.must_equal @master.authors.first.portable_contacts.display_name
+              .content.must_equal @master.authors.first.display_name
           end
         end
 
@@ -550,7 +542,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact nickname" do
             @author.find_first('poco:nickname',
                                'http://portablecontacts.net/spec/1.0')
-              .content.must_equal @master.authors.first.portable_contacts.nickname
+              .content.must_equal @master.authors.first.nickname
           end
         end
 
@@ -558,7 +550,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact gender" do
             @author.find_first('poco:gender',
                                'http://portablecontacts.net/spec/1.0')
-              .content.must_equal @master.authors.first.portable_contacts.gender
+              .content.must_equal @master.authors.first.gender
           end
         end
 
@@ -566,7 +558,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact note" do
             @author.find_first('poco:note',
                                'http://portablecontacts.net/spec/1.0')
-              .content.must_equal @master.authors.first.portable_contacts.note
+              .content.must_equal @master.authors.first.note
           end
         end
 
@@ -574,7 +566,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact preferred username" do
             @author.find_first('poco:preferredUsername',
                                'http://portablecontacts.net/spec/1.0')
-              .content.must_equal @master.authors.first.portable_contacts.preferred_username
+              .content.must_equal @master.authors.first.preferred_username
           end
         end
 
@@ -582,7 +574,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact birthday" do
             time = @author.find_first('poco:birthday',
                                       'http://portablecontacts.net/spec/1.0').content
-            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+            DateTime::parse(time).to_s.must_equal @master.authors.first
                                                        .birthday.to_datetime.to_s
           end
         end
@@ -591,7 +583,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact anniversary" do
             time = @author.find_first('poco:anniversary',
                                       'http://portablecontacts.net/spec/1.0').content
-            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+            DateTime::parse(time).to_s.must_equal @master.authors.first
                                                        .anniversary.to_datetime.to_s
           end
         end
@@ -600,7 +592,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact published date" do
             time = @author.find_first('poco:published',
                                       'http://portablecontacts.net/spec/1.0').content
-            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+            DateTime::parse(time).to_s.must_equal @master.authors.first
                                                        .published.to_datetime.to_s
           end
         end
@@ -609,7 +601,7 @@ describe OStatus::Atom do
           it "should list the author's portable contact updated date" do
             time = @author.find_first('poco:updated',
                                       'http://portablecontacts.net/spec/1.0').content
-            DateTime::parse(time).to_s.must_equal @master.authors.first.portable_contacts
+            DateTime::parse(time).to_s.must_equal @master.authors.first
                                                        .updated.to_datetime.to_s
           end
         end

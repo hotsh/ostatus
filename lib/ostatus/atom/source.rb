@@ -1,7 +1,6 @@
 require 'ostatus/author'
 require 'ostatus/category'
 require 'ostatus/generator'
-require 'ostatus/portable_contacts'
 
 require 'ostatus/atom/generator'
 require 'ostatus/atom/category'
@@ -20,8 +19,8 @@ module OStatus
 
       namespace ::Atom::NAMESPACE
 
-      add_extension_namespace :poco, PortableContacts::NAMESPACE
-      add_extension_namespace :activity, Activity::NAMESPACE
+      add_extension_namespace :poco, OStatus::Author::NAMESPACE
+      add_extension_namespace :activity, OStatus::Activity::NAMESPACE
       element :id, :rights, :icon, :logo
       element :generator, :class => OStatus::Atom::Generator
       element :title, :class => ::Atom::Content

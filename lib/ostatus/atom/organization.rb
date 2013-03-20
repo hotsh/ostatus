@@ -6,7 +6,7 @@ module OStatus
     class Organization
       include ::Atom::Xml::Parseable
 
-      namespace OStatus::PortableContacts::NAMESPACE
+      namespace OStatus::Author::NAMESPACE
 
       element :name
       element :department

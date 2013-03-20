@@ -1,5 +1,4 @@
 require 'ostatus/activity'
-require 'ostatus/portable_contacts'
 require 'ostatus/atom/name'
 require 'ostatus/atom/address'
 require 'ostatus/atom/account'
@@ -24,7 +23,7 @@ module OStatus
 
       elements :links, :class => ::Atom::Link
 
-      add_extension_namespace :poco, OStatus::PortableContacts::NAMESPACE
+      add_extension_namespace :poco, OStatus::Author::NAMESPACE
       element 'poco:id'
       element 'poco:organization', :class => OStatus::Atom::Organization
       element 'poco:address',      :class => OStatus::Atom::Address
@@ -49,7 +48,7 @@ module OStatus
 
       def poco_name
         return @poco_name if @poco_name
-        name = self[OStatus::PortableContacts::NAMESPACE, 'name'].first
+        name = self[OStatus::Author::NAMESPACE, 'name'].first
         if name
           name = "<name>#{name}</name>"
           reader = XML::Reader.string(name)
@@ -88,9 +87,46 @@ module OStatus
         OStatus::Activity.new(self)
       end
 
-      # Returns an instance of a PortableContacts that further describe the
-      # author's contact information, if it exists.
-      def portable_contacts
+      def self.from_canonical(obj)
+        hash = obj.to_hash
+        hash.keys.each do |k|
+          to_k = k
+          if k == :display_name
+            to_k = :displayName
+          elsif k == :preferred_username
+            to_k = :preferredUsername
+          end
+
+          if k == :extended_name
+            if hash[:extended_name]
+              hash[:"poco_name"] = OStatus::Atom::Name.new(hash[:extended_name])
+            end
+            hash.delete :extended_name
+          elsif k == :organization
+            if hash[:organization]
+              hash[:"poco_organization"] = OStatus::Atom::Organization.new(hash[:organization])
+            end
+            hash.delete :organization
+          elsif k == :address
+            if hash[:address]
+              hash[:"poco_address"] = OStatus::Atom::Address.new(hash[:address])
+            end
+            hash.delete :address
+          elsif k == :account
+            if hash[:account]
+              hash[:"poco_account"] = OStatus::Atom::Account.new(hash[:account])
+            end
+            hash.delete :account
+          elsif (k != :uri) && (k != :name) && (k != :email)
+            hash[:"poco_#{to_k}"] = hash[k]
+            hash.delete k
+          end
+        end
+
+        self.new(hash)
+      end
+
+      def to_canonical
         organization = self.poco_organization
         organization = organization.to_canonical if organization
 
@@ -100,58 +136,22 @@ module OStatus
         account = self.poco_account
         account = account.to_canonical if account
 
-        name = self.poco_name
-        name = name.to_canonical if name
-        OStatus::PortableContacts.new(:id => self.poco_id,
-                                      :name => name,
-                                      :organization => organization,
-                                      :address => address,
-                                      :account => account,
-                                      :gender => self.poco_gender,
-                                      :note => self.poco_note,
-                                      :nickname => self.poco_nickname,
-                                      :display_name => self.poco_displayName,
-                                      :preferred_username => self.poco_preferredUsername,
-                                      :updated => self.poco_updated,
-                                      :published => self.poco_published,
-                                      :birthday => self.poco_birthday,
-                                      :anniversary => self.poco_anniversary)
-      end
-
-      def self.from_canonical(obj)
-        hash = obj.to_hash
-        if hash[:portable_contacts]
-          poco_hash = hash[:portable_contacts].to_hash
-          poco_hash.keys.each do |k|
-            next if poco_hash[k].nil?
-
-            to_k = k
-            if k == :display_name
-              to_k = :displayName
-            elsif k == :preferred_username
-              to_k = :preferredUsername
-            end
-
-            if k == :name
-              hash[:"poco_name"] = OStatus::Atom::Name.new(poco_hash[:name])
-            elsif k == :organization
-              hash[:"poco_organization"] = OStatus::Atom::Organization.new(poco_hash[:organization])
-            elsif k == :address
-              hash[:"poco_address"] = OStatus::Atom::Address.new(poco_hash[:address])
-            elsif k == :account
-              hash[:"poco_account"] = OStatus::Atom::Account.new(poco_hash[:account])
-            else
-              hash[:"poco_#{to_k}"] = poco_hash[k]
-            end
-          end
-        end
-        hash.delete :portable_contacts
-
-        self.new(hash)
-      end
-
-      def to_canonical
-        OStatus::Author.new(:portable_contacts => self.portable_contacts,
+        ext_name = self.poco_name
+        ext_name = ext_name.to_canonical if ext_name
+        OStatus::Author.new(:id => self.poco_id,
+                            :extended_name => ext_name,
+                            :organization => organization,
+                            :address => address,
+                            :account => account,
+                            :gender => self.poco_gender,
+                            :note => self.poco_note,
+                            :nickname => self.poco_nickname,
+                            :display_name => self.poco_displayName,
+                            :preferred_username => self.poco_preferredUsername,
+                            :updated => self.poco_updated,
+                            :published => self.poco_published,
+                            :birthday => self.poco_birthday,
+                            :anniversary => self.poco_anniversary,
                             :uri => self.uri,
                             :email => self.email,
                             :name => self.name)
