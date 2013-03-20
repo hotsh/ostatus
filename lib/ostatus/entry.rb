@@ -27,6 +27,9 @@ module OStatus
     # Holds the url that represents the entry.
     attr_reader :url
 
+    # Holds the source of this entry as an OStatus::Feed.
+    attr_reader :source
+
     # Holds the DateTime of when the entry was published originally.
     attr_reader :published
 
@@ -47,6 +50,9 @@ module OStatus
     #   :author       => A OStatus::Author responsible for generating this entry.
     #   :content      => The content of the entry. Defaults: ""
     #   :content_type => The MIME type of the content.
+    #   :source       => An OStatus::Feed where this Entry originated. This
+    #                    should be used when an Entry is copied into this feed
+    #                    from another.
     #   :published    => The DateTime depicting when the entry was originally
     #                    published.
     #   :updated      => The DateTime depicting when the entry was modified.
@@ -65,14 +71,17 @@ module OStatus
       @author       = options[:author]
       @content      = options[:content] || ""
       @content_type = options[:content_type]
+      @source       = options[:source]
       @published    = options[:published]
       @updated      = options[:updated]
       @url          = options[:url]
       @id           = options[:id]
+
       if options[:activity].is_a?(String) or options[:activity].is_a? Symbol
         options[:activity] = OStatus::Activity.new(:object_type => options[:activity])
       end
       @activity     = options[:activity]
+
       unless options[:in_reply_to].nil? or options[:in_reply_to].is_a?(Array)
         options[:in_reply_to] = [options[:in_reply_to]]
       end
@@ -107,6 +116,7 @@ module OStatus
     # Returns a Hash of all fields.
     def to_hash
       {
+        :source => self.source,
         :title => self.title,
         :author => self.author,
         :content => self.content,

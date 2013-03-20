@@ -10,6 +10,7 @@ module OStatus
       require 'ostatus/atom/author'
       require 'ostatus/atom/thread'
       require 'ostatus/atom/link'
+      require 'ostatus/atom/source'
 
       require 'libxml'
 
@@ -29,10 +30,11 @@ module OStatus
       # method in OStatus::Activity.
       element 'activity:actor', :class => OStatus::Atom::Author
 
+      element :source, :class => OStatus::Atom::Source
+
       namespace ::Atom::NAMESPACE
       element :title, :id, :summary
       element :updated, :published, :class => DateTime, :content_only => true
-      element :source, :class => ::Atom::Source
       elements :links, :class => OStatus::Atom::Link
 
       elements :categories, :class => ::Atom::Category
@@ -42,7 +44,7 @@ module OStatus
       def activity
         # Reform the Activity object type
         object_type = self.activity_object_type
-        if object_type.start_with? OStatus::Activity::SCHEMA_ROOT
+        if object_type && object_type.start_with?(OStatus::Activity::SCHEMA_ROOT)
           object_type.gsub!(/^#{Regexp.escape(OStatus::Activity::SCHEMA_ROOT)}/, "")
         end
 
@@ -100,13 +102,16 @@ module OStatus
         entry_hash[:content] = ::Atom::Content.parse(xml)
         entry_hash.delete :content_type
 
+        if entry_hash[:source]
+          entry_hash[:source] = OStatus::Atom::Source.from_canonical(entry_hash[:source])
+        end
+
         if entry_hash[:author]
           entry_hash[:author] = OStatus::Atom::Author.from_canonical(entry_hash[:author])
         end
 
         # Encode in-reply-to fields
         entry_hash[:thr_in_reply_to] = entry_hash[:in_reply_to].map do |t|
-          puts t.class
           OStatus::Atom::Thread.new(:href => t.url,
                                     :ref  => t.id)
         end
@@ -123,17 +128,20 @@ module OStatus
       end
 
       def to_canonical
-        OStatus::Entry.new(:author => self.author ? self.author.to_canonical : nil,
-                           :activity => self.activity,
-                           :id => self.id,
-                           :url => self.url,
-                           :title => self.title,
-                           :in_reply_to => self.thr_in_reply_to.map(&:to_canonical),
-                           :content => self.content,
+        source = self.source
+        source = source.to_canonical if source
+        OStatus::Entry.new(:author       => self.author ? self.author.to_canonical : nil,
+                           :activity     => self.activity,
+                           :id           => self.id,
+                           :url          => self.url,
+                           :title        => self.title,
+                           :source       => source,
+                           :in_reply_to  => self.thr_in_reply_to.map(&:to_canonical),
+                           :content      => self.content,
                            :content_type => self.content.type,
-                           :link => self.link,
-                           :published => self.published,
-                           :updated => self.updated)
+                           :link         => self.link,
+                           :published    => self.published,
+                           :updated      => self.updated)
       end
     end
   end

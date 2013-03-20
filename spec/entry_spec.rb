@@ -30,6 +30,11 @@ describe OStatus::Entry do
       OStatus::Entry.new(:updated => time).updated.must_equal time
     end
 
+    it "should store a source feed" do
+      feed = mock('feed')
+      OStatus::Entry.new(:source => feed).source.must_equal feed
+    end
+
     it "should store a url" do
       OStatus::Entry.new(:url => "url").url.must_equal "url"
     end
@@ -164,6 +169,12 @@ describe OStatus::Entry do
     it "should return a Hash containing the url" do
       OStatus::Entry.new(:url => "url")
         .to_hash[:url].must_equal "url"
+    end
+
+    it "should return a Hash containing the source" do
+      feed = mock('feed')
+      OStatus::Entry.new(:source => feed)
+        .to_hash[:source].must_equal feed
     end
 
     it "should return a Hash containing the id" do

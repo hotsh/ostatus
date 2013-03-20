@@ -50,6 +50,10 @@ describe OStatus::Atom do
 
     activity = OStatus::Activity.new(:object_type => :note)
 
+    source_feed = OStatus::Feed.new(:title => "moo",
+                                    :authors => [author],
+                                    :rights => "CC")
+
     reply_to = OStatus::Entry.new(:title => "My First Entry",
                                   :author => author,
                                   :content => "Hello",
@@ -64,6 +68,7 @@ describe OStatus::Atom do
                                :author => author,
                                :content => "Hello",
                                :content_type => "html",
+                               :source => source_feed,
                                :id => "54321",
                                :url => "http://example.com/entries/1",
                                :activity => activity,
@@ -90,6 +95,7 @@ describe OStatus::Atom do
 
   it "should be able to reform canonical structure using Atom" do
     xml = OStatus::Atom::Feed.from_canonical(@master).to_xml
+    puts xml
     new_feed = OStatus::Atom::Feed.new(XML::Reader.string(xml)).to_canonical
 
     old_hash = @master.to_hash
@@ -103,6 +109,12 @@ describe OStatus::Atom do
 
     old_hash[:entries][0][:author] = old_hash[:entries][0][:author].to_hash
     new_hash[:entries][0][:author] = new_hash[:entries][0][:author].to_hash
+
+    old_hash[:entries][0][:source] = old_hash[:entries][0][:source].to_hash
+    new_hash[:entries][0][:source] = new_hash[:entries][0][:source].to_hash
+
+    old_hash[:entries][0][:source][:authors] = old_hash[:entries][0][:source][:authors].map(&:to_hash)
+    new_hash[:entries][0][:source][:authors] = new_hash[:entries][0][:source][:authors].map(&:to_hash)
 
     old_hash[:entries][0][:author][:portable_contacts] = old_hash[:entries][0][:author][:portable_contacts].to_hash
     new_hash[:entries][0][:author][:portable_contacts] = new_hash[:entries][0][:author][:portable_contacts].to_hash
