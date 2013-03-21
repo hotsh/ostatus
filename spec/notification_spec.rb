@@ -16,7 +16,7 @@ describe OStatus::Notification do
     end
 
     it "should create a new Notification representing the given user author" do
-      @salmon.entry.author.must_equal @user
+      @salmon.entry.actor.must_equal @user
     end
 
     it "should create a new Notification representing the given user author" do
@@ -32,7 +32,7 @@ describe OStatus::Notification do
     end
 
     it "should create a new Notification representing the given user author" do
-      @salmon.entry.author.must_equal @user
+      @salmon.entry.actor.must_equal @user
     end
 
     it "should create a new Notification representing the given user author" do
@@ -47,7 +47,7 @@ describe OStatus::Notification do
     end
 
     it "should create a new Notification representing the given user author" do
-      @salmon.entry.author.must_equal @user
+      @salmon.entry.actor.must_equal @user
     end
   end
 end

@@ -23,9 +23,9 @@ describe OStatus::Activity do
       OStatus::Activity.new(:title => "My Title").title.must_equal "My Title"
     end
 
-    it "should store an author" do
-      author = mock('author')
-      OStatus::Activity.new(:author => author).author.must_equal author
+    it "should store an actor" do
+      actor = mock('author')
+      OStatus::Activity.new(:actor => actor).actor.must_equal actor
     end
 
     it "should store content" do

@@ -52,7 +52,7 @@ describe OStatus::Atom do
 
     reply_to = OStatus::Activity.new(:title => "My First Entry",
                                      :type  => :note,
-                                     :author => author,
+                                     :actor => author,
                                      :content => "Hello",
                                      :content_type => "html",
                                      :id => "54321",
@@ -61,7 +61,7 @@ describe OStatus::Atom do
                                      :updated => Time.now)
 
     entry = OStatus::Activity.new(:title => "My Entry",
-                                  :author => author,
+                                  :actor => author,
                                   :type => :note,
                                   :content => "Hello",
                                   :content_type => "html",
@@ -91,6 +91,7 @@ describe OStatus::Atom do
 
   it "should be able to reform canonical structure using Atom" do
     xml = OStatus::Atom::Feed.from_canonical(@master).to_xml
+    puts xml
     new_feed = OStatus::Atom::Feed.new(XML::Reader.string(xml)).to_canonical
 
     old_hash = @master.to_hash
@@ -105,8 +106,8 @@ describe OStatus::Atom do
     old_hash[:entries][0][:in_reply_to] = []
     new_hash[:entries][0][:in_reply_to] = []
 
-    old_hash[:entries][0][:author] = old_hash[:entries][0][:author].to_hash
-    new_hash[:entries][0][:author] = new_hash[:entries][0][:author].to_hash
+    old_hash[:entries][0][:actor] = old_hash[:entries][0][:actor].to_hash
+    new_hash[:entries][0][:actor] = new_hash[:entries][0][:actor].to_hash
 
     old_hash[:entries][0][:source] = old_hash[:entries][0][:source].to_hash
     new_hash[:entries][0][:source] = new_hash[:entries][0][:source].to_hash

@@ -82,9 +82,10 @@ module OStatus
           entry_hash[:source] = OStatus::Atom::Source.from_canonical(entry_hash[:source])
         end
 
-        if entry_hash[:author]
-          entry_hash[:author] = OStatus::Atom::Author.from_canonical(entry_hash[:author])
+        if entry_hash[:actor]
+          entry_hash[:author] = OStatus::Atom::Author.from_canonical(entry_hash[:actor])
         end
+        entry_hash.delete :actor
 
         # Encode in-reply-to fields
         entry_hash[:thr_in_reply_to] = entry_hash[:in_reply_to].map do |t|
@@ -131,7 +132,7 @@ module OStatus
 
         source = self.source
         source = source.to_canonical if source
-        OStatus::Activity.new(:author       => self.author ? self.author.to_canonical : nil,
+        OStatus::Activity.new(:actor        => self.author ? self.author.to_canonical : nil,
                               :id           => self.id,
                               :url          => self.url,
                               :title        => self.title,

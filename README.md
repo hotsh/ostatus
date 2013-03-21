@@ -18,14 +18,14 @@ author = OStatus::Author.new(:uri   => "https://rstat.us/users/wilkie",
                              :email => "wilkie@xomb.org",
                              :name  => "wilkie")
 
-blog_post = OStatus::Entry.new(:activity => :post,
-                               :title => "OStatus gem",
-                               :author => author,
-                               :content => "Long blog post",
-                               :content_type => "text/html",
-                               :id => "1",
-                               :uri => "http://blog.davewilkinsonii.com/posts/ostatus_gem",
-                               :published => Time.now)
+blog_post = OStatus::Activity.new(:activity => :post,
+                                  :title => "OStatus gem",
+                                  :actor => author,
+                                  :content => "Long blog post",
+                                  :content_type => "text/html",
+                                  :id => "1",
+                                  :uri => "http://blog.davewilkinsonii.com/posts/ostatus_gem",
+                                  :published => Time.now)
 
 feed = OStatus::Feed.new(:title => "wilkie writes a thing",
                          :url => "http://blog.davewilkinsonii.com",
@@ -76,7 +76,7 @@ authors       => The list of OStatus::Author's for this feed.
                  Defaults: []
 contributors  => The list of OStatus::Author's that contributed to this
                  feed. Defaults: []
-entries       => The list of OStatus::Entry's for this feed.
+entries       => The list of OStatus::Activity's for this feed.
                  Defaults: []
 icon          => The url of the icon that represents this feed. It
                  should have an aspect ratio of 1 horizontal to 1
@@ -103,23 +103,26 @@ generator     => An OStatus::Generator representing the agent
                  responsible for generating this feed.
 ```
 
-### Entry
+### Activity
 
-The entry is the content. It typically has an author and it represents some type of object.
+Something that is done by a person. It has a verb, which suggests what was done
+(e.g. :follow, or :unfollow, or :post) and it has an object, which is the
+content. The content type is what the entity represents and governs how to
+interpret the object. It can be a :note or :post or :image, etc.
 
 #### Usage
 ```
-entry = OStatus::Entry.new(:activity => :note,
-                           :title => "wilkie's Daily Update",
-                           :content => "My day is going really well!",
-                           :id => "123",
-                           :url => "http://example.com/entries/123")
+entry = OStatus::Activity.new(:type => :note,
+                              :title => "wilkie's Daily Update",
+                              :content => "My day is going really well!",
+                              :id => "123",
+                              :url => "http://example.com/entries/123")
 ```
 
 #### Fields
 ```
 :title        => The title of the entry. Defaults: "Untitled"
-:author       => A OStatus::Author responsible for generating this entry.
+:actor        => An OStatus::Author responsible for generating this entry.
 :content      => The content of the entry. Defaults: ""
 :content_type => The MIME type of the content.
 :published    => The DateTime depicting when the entry was originally
@@ -131,16 +134,16 @@ entry = OStatus::Entry.new(:activity => :note,
                  denoting what type of object this entry represents, or an
                  entire OStatus::Activity when a more detailed description is
                  appropriate.
-:in_reply_to  => An OStatus::Entry for which this entry is a response.
-                 Or an array of OStatus::Entry's that this entry is a
-                 response to. Use this when this Entry is a reply
-                 to an existing Entry.
+:in_reply_to  => An OStatus::Activity for which this entry is a response.
+                 Or an array of OStatus::Activity's that this entry is a
+                 response to. Use this when this Activity is a reply
+                 to an existing Activity.
 ```
 
 ### Author
 
 This represents a person that creates or contributes content in the feed.
-Feed and Entry can both have one or more Authors or Contributors. One can
+Feed and Activity can both have one or more Authors or Contributors. One can
 represent a great deal of information about a person.
 
 #### Usage

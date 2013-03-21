@@ -32,7 +32,7 @@ module OStatus
     attr_reader :title
 
     # Holds an OStatus::Author.
-    attr_reader :author
+    attr_reader :actor
 
     # Holds the content.
     attr_reader :content
@@ -68,7 +68,7 @@ module OStatus
     #   :verb        => The action of the activity.
     #
     #   :title        => The title of the entry. Defaults: "Untitled"
-    #   :author       => A OStatus::Author responsible for generating this entry.
+    #   :actor        => An OStatus::Author responsible for generating this entry.
     #   :content      => The content of the entry. Defaults: ""
     #   :content_type => The MIME type of the content.
     #   :source       => An OStatus::Feed where this Entry originated. This
@@ -94,7 +94,7 @@ module OStatus
       @verb        = options[:verb]
 
       @title        = options[:title] || "Untitled"
-      @author       = options[:author]
+      @actor        = options[:actor]
       @content      = options[:content] || ""
       @content_type = options[:content_type]
       @source       = options[:source]
@@ -114,7 +114,6 @@ module OStatus
       {
         :source => self.source,
         :title => self.title,
-        :author => self.author,
         :content => self.content,
         :content_type => self.content_type,
         :published => self.published,
@@ -125,6 +124,7 @@ module OStatus
 
         :object => self.object,
         :target => self.target,
+        :actor => self.actor,
         :verb => self.verb,
         :type => self.type
       }
