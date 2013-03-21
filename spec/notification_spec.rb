@@ -1,17 +1,10 @@
 require_relative 'helper'
-require_relative '../lib/ostatus/salmon.rb'
+require_relative '../lib/ostatus/notification.rb'
 
 describe OStatus::Notification do
   describe "Notification.from_xml" do
     it "should return nil if source is empty string" do
       OStatus::Notification.from_xml("").must_equal(nil)
-    end
-
-    it "should be able to parse the output of to_xml" do
-      @user   = OStatus::Author.new(:name => "wilkie")
-      @follow = OStatus::Author.new(:name => "wilkie")
-
-      OStatus::Notification.from_xml(OStatus::Notification.from_follow(@user, @follow).to_xml)
     end
   end
 
@@ -27,7 +20,7 @@ describe OStatus::Notification do
     end
 
     it "should create a new Notification representing the given user author" do
-      @salmon.entry.activity.object.must_equal @follow
+      @salmon.entry.object.must_equal @follow
     end
   end
 
@@ -43,7 +36,7 @@ describe OStatus::Notification do
     end
 
     it "should create a new Notification representing the given user author" do
-      @salmon.entry.activity.object.must_equal @follow
+      @salmon.entry.object.must_equal @follow
     end
   end
 

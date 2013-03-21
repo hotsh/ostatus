@@ -1,4 +1,4 @@
-require 'ostatus/entry'
+require 'ostatus/activity'
 require 'ostatus/author'
 require 'ostatus/category'
 require 'ostatus/generator'

@@ -19,12 +19,10 @@ module OStatus
 
     # Creates an entry for following a particular Author.
     def self.from_follow(user_author, followed_author)
-      activity = OStatus::Activity.new(:verb => :follow,
-                                       :object => followed_author)
-
-      entry = OStatus::Entry.new(
+      entry = OStatus::Activity.new(
+        :verb => :follow,
+        :object => followed_author,
         :author   => user_author,
-        :activity => activity,
         :title    => "Now following #{followed_author.name}",
         :content  => "Now following #{followed_author.name}",
         :content_type => "html"
@@ -35,12 +33,10 @@ module OStatus
 
     # Creates an entry for unfollowing a particular Author.
     def self.from_unfollow(user_author, followed_author)
-      activity = OStatus::Activity.new(:verb => "http://ostatus.org/schema/1.0/unfollow",
-                                       :object => followed_author)
-
-      entry = OStatus::Entry.new(
+      entry = OStatus::Activity.new(
+        :verb => "http://ostatus.org/schema/1.0/unfollow",
+        :object => followed_author,
         :author   => user_author,
-        :activity => activity,
         :title => "Stopped following #{followed_author.name}",
         :content => "Stopped following #{followed_author.name}",
         :content_type => "html"
@@ -51,11 +47,9 @@ module OStatus
 
     # Creates an entry for a profile update.
     def self.from_profile_update(user_author)
-      activity = OStatus::Activity.new(:verb => "http://ostatus.org/schema/1.0/update-profile")
-
-      entry = OStatus::Entry.new(
+      entry = OStatus::Activity.new(
+        :verb => "http://ostatus.org/schema/1.0/update-profile",
         :author   => user_author,
-        :activity => activity,
         :title => "#{user_author.name} changed their profile information.",
         :content => "#{user_author.name} changed their profile information.",
         :content_type => "html"

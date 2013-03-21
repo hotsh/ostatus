@@ -46,34 +46,31 @@ describe OStatus::Atom do
                                    :birthday    => Date.today,
                                    :anniversary => Date.today)
 
-
-    activity = OStatus::Activity.new(:object_type => :note)
-
     source_feed = OStatus::Feed.new(:title => "moo",
                                     :authors => [author],
                                     :rights => "CC")
 
-    reply_to = OStatus::Entry.new(:title => "My First Entry",
+    reply_to = OStatus::Activity.new(:title => "My First Entry",
+                                     :type  => :note,
+                                     :author => author,
+                                     :content => "Hello",
+                                     :content_type => "html",
+                                     :id => "54321",
+                                     :url => "http://example.com/entries/1",
+                                     :published => Time.now,
+                                     :updated => Time.now)
+
+    entry = OStatus::Activity.new(:title => "My Entry",
                                   :author => author,
+                                  :type => :note,
                                   :content => "Hello",
                                   :content_type => "html",
+                                  :source => source_feed,
                                   :id => "54321",
                                   :url => "http://example.com/entries/1",
-                                  :activity => activity,
                                   :published => Time.now,
+                                  :in_reply_to => reply_to,
                                   :updated => Time.now)
-
-    entry = OStatus::Entry.new(:title => "My Entry",
-                               :author => author,
-                               :content => "Hello",
-                               :content_type => "html",
-                               :source => source_feed,
-                               :id => "54321",
-                               :url => "http://example.com/entries/1",
-                               :activity => activity,
-                               :published => Time.now,
-                               :in_reply_to => reply_to,
-                               :updated => Time.now)
 
     @master = OStatus::Feed.new(:title => "My Feed",
                                 :title_type => "html",
@@ -105,6 +102,9 @@ describe OStatus::Atom do
     old_hash[:entries] = old_hash[:entries].map(&:to_hash)
     new_hash[:entries] = new_hash[:entries].map(&:to_hash)
 
+    old_hash[:entries][0][:in_reply_to] = []
+    new_hash[:entries][0][:in_reply_to] = []
+
     old_hash[:entries][0][:author] = old_hash[:entries][0][:author].to_hash
     new_hash[:entries][0][:author] = new_hash[:entries][0][:author].to_hash
 
@@ -113,9 +113,6 @@ describe OStatus::Atom do
 
     old_hash[:entries][0][:source][:authors] = old_hash[:entries][0][:source][:authors].map(&:to_hash)
     new_hash[:entries][0][:source][:authors] = new_hash[:entries][0][:source][:authors].map(&:to_hash)
-
-    old_hash[:entries] = old_hash[:entries].map{|e| e[:activity] = e[:activity].info}
-    new_hash[:entries] = new_hash[:entries].map{|e| e[:activity] = e[:activity].info}
 
     # Flatten all keys to their to_s
     # We want to compare the to_s for all keys

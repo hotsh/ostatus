@@ -2,7 +2,7 @@ require 'ostatus/feed'
 require 'ostatus/entry'
 require 'ostatus/author'
 require 'ostatus/activity'
-require 'ostatus/salmon'
+require 'ostatus/notification'
 require 'ostatus/link'
 
 # This module contains individual elements of the OStatus protocol. It also

@@ -43,8 +43,8 @@ module OStatus
       end
 
       def to_canonical
-        OStatus::Entry.new(:url => self.href,
-                           :id  => self.ref)
+        OStatus::Activity.new(:url => self.href,
+                              :id  => self.ref)
       end
 
       def info

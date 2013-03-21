@@ -1,4 +1,4 @@
-require 'ostatus/entry'
+require 'ostatus/activity'
 require 'ostatus/author'
 
 module OStatus
@@ -57,7 +57,7 @@ module OStatus
     # Holds the list of authors as OStatus::Author responsible for this feed.
     attr_reader :authors
 
-    # Holds the list of entries as OStatus::Entry contained within this feed.
+    # Holds the list of entries as OStatus::Activity contained within this feed.
     attr_reader :entries
 
     # Holds the list of hubs that are available to manage subscriptions to this
@@ -83,7 +83,7 @@ module OStatus
     #                    Defaults: []
     #   contributors  => The list of OStatus::Author's that contributed to this
     #                    feed. Defaults: []
-    #   entries       => The list of OStatus::Entry's for this feed.
+    #   entries       => The list of OStatus::Activity's for this feed.
     #                    Defaults: []
     #   icon          => The url of the icon that represents this feed. It
     #                    should have an aspect ratio of 1 horizontal to 1

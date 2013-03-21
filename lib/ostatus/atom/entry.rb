@@ -14,6 +14,10 @@ module OStatus
 
       require 'libxml'
 
+      # The XML namespace that identifies the conforming specification of 'thr'
+      # elements.
+      THREAD_NAMESPACE = "http://purl.org/syndication/thread/1.0"
+
       include ::Atom::SimpleExtensions
 
       add_extension_namespace :activity, OStatus::Activity::NAMESPACE
@@ -22,12 +26,12 @@ module OStatus
       element 'activity:verb'
       element 'activity:target'
 
-      add_extension_namespace :thr, OStatus::Entry::THREAD_NAMESPACE
+      add_extension_namespace :thr, THREAD_NAMESPACE
       elements 'thr:in-reply-to', :class => OStatus::Atom::Thread
 
       # This is for backwards compatibility with some implementations of Activity
-      # Streams. It should not be used, and in fact is obscured as it is not a
-      # method in OStatus::Activity.
+      # Streams. It should not be generated for Atom representation of Activity
+      # Streams (although it is used in JSON)
       element 'activity:actor', :class => OStatus::Atom::Author
 
       element :source, :class => OStatus::Atom::Source
@@ -40,34 +44,6 @@ module OStatus
       elements :categories, :class => ::Atom::Category
       element :content, :class => ::Atom::Content
       element :author, :class => OStatus::Atom::Author
-
-      def activity
-        # Reform the Activity object type
-        object_type = self.activity_object_type
-        if object_type && object_type.start_with?(OStatus::Activity::SCHEMA_ROOT)
-          object_type.gsub!(/^#{Regexp.escape(OStatus::Activity::SCHEMA_ROOT)}/, "")
-        end
-
-        object = nil
-        object = self.activity_object.to_canonical if self.activity_object
-
-        Activity.new(:object_type => object_type,
-                     :object => object,
-                     :target => self.activity_target,
-                     :verb => self.activity_verb)
-      end
-
-      def activity= value
-        return if value.nil?
-        if value.object_type
-          self.activity_object_type = OStatus::Activity::SCHEMA_ROOT + value.object_type.to_s
-        end
-        self.activity_object = value.object if value.object
-        if value.verb
-          self.activity_verb = OStatus::Activity::SCHEMA_ROOT + value.verb.to_s
-        end
-        self.activity_target = value.target if value.target
-      end
 
       def url
         if links.alternate
@@ -124,24 +100,52 @@ module OStatus
         end
         entry_hash.delete :url
 
+        object_type = entry_hash[:type]
+        if object_type
+          entry_hash[:activity_object_type] = OStatus::Activity::SCHEMA_ROOT + object_type.to_s
+        end
+        entry_hash[:activity_object] = entry_hash[:object] if entry_hash[:object]
+        if entry_hash[:verb]
+          entry_hash[:activity_verb] = OStatus::Activity::SCHEMA_ROOT + entry_hash[:verb].to_s
+        end
+        entry_hash[:activity_target] = entry_hash[:target] if entry_hash[:target]
+
+        entry_hash.delete :object
+        entry_hash.delete :verb
+        entry_hash.delete :target
+        entry_hash.delete :type
+
         self.new(entry_hash)
       end
 
       def to_canonical
+        # Reform the activity type
+        # TODO: Add new Base schema verbs
+        object_type = self.activity_object_type
+        if object_type && object_type.start_with?(OStatus::Activity::SCHEMA_ROOT)
+          object_type.gsub!(/^#{Regexp.escape(OStatus::Activity::SCHEMA_ROOT)}/, "")
+        end
+
+        object = nil
+        object = self.activity_object.to_canonical if self.activity_object
+
         source = self.source
         source = source.to_canonical if source
-        OStatus::Entry.new(:author       => self.author ? self.author.to_canonical : nil,
-                           :activity     => self.activity,
-                           :id           => self.id,
-                           :url          => self.url,
-                           :title        => self.title,
-                           :source       => source,
-                           :in_reply_to  => self.thr_in_reply_to.map(&:to_canonical),
-                           :content      => self.content,
-                           :content_type => self.content.type,
-                           :link         => self.link,
-                           :published    => self.published,
-                           :updated      => self.updated)
+        OStatus::Activity.new(:author       => self.author ? self.author.to_canonical : nil,
+                              :id           => self.id,
+                              :url          => self.url,
+                              :title        => self.title,
+                              :source       => source,
+                              :in_reply_to  => self.thr_in_reply_to.map(&:to_canonical),
+                              :content      => self.content,
+                              :content_type => self.content.type,
+                              :link         => self.link,
+                              :object       => object,
+                              :type         => object_type,
+                              :verb         => self.activity_verb,
+                              :target       => self.activity_target,
+                              :published    => self.published,
+                              :updated      => self.updated)
       end
     end
   end
