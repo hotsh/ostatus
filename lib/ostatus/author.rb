@@ -7,9 +7,6 @@ module OStatus
   class Author
     require 'date'
 
-    # The XML namespace the specifies this content.
-    NAMESPACE = 'http://portablecontacts.net/spec/1.0'
-
     # Holds the id that represents this contact.
     attr_reader :id
 

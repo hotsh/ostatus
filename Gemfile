@@ -12,3 +12,5 @@ group :test do
 
   gem "awesome_print"
 end
+
+gem "redfinger", :git => "git://github.com/hotsh/redfinger.git"

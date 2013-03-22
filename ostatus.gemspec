@@ -15,6 +15,8 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "ostatus"
 
   s.add_dependency "ratom", "~> 0.7.2"
+  s.add_dependency "nokogiri"
+
   s.add_development_dependency "rspec", "~> 2.10.0"
   s.add_development_dependency "rake", "~> 0.9.2"
 

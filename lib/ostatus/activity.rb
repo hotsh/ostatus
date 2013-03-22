@@ -1,12 +1,6 @@
 module OStatus
   # This class represents an Activity object for an OStatus::Entry.
   class Activity
-    # The XML namespace that identifies the conforming specification.
-    NAMESPACE = 'http://activitystrea.ms/spec/1.0/'
-
-    # The XML schema that identifies the conforming schema for objects.
-    SCHEMA_ROOT = 'http://activitystrea.ms/schema/1.0/'
-
     # The object of this activity.
     attr_reader :object
 

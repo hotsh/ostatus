@@ -19,10 +19,16 @@ module OStatus
 
       include ::Atom::SimpleExtensions
 
+      # The XML namespace the specifies this content.
+      POCO_NAMESPACE = 'http://portablecontacts.net/spec/1.0'
+
+      # The XML namespace that identifies the conforming specification.
+      ACTIVITY_NAMESPACE = 'http://activitystrea.ms/spec/1.0/'
+
       namespace ::Atom::NAMESPACE
 
-      add_extension_namespace :poco, OStatus::Author::NAMESPACE
-      add_extension_namespace :activity, OStatus::Activity::NAMESPACE
+      add_extension_namespace :poco, POCO_NAMESPACE
+      add_extension_namespace :activity, ACTIVITY_NAMESPACE
       element :id, :rights, :icon, :logo
       element :generator, :class => OStatus::Atom::Generator
       element :title, :class => ::Atom::Content

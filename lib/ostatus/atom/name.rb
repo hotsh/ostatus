@@ -6,7 +6,10 @@ module OStatus
     class Name
       include ::Atom::Xml::Parseable
 
-      namespace OStatus::Author::NAMESPACE
+      # The XML namespace the specifies this content.
+      POCO_NAMESPACE = 'http://portablecontacts.net/spec/1.0'
+
+      namespace POCO_NAMESPACE
 
       element :formatted
       element :familyName

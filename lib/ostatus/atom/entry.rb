@@ -18,9 +18,15 @@ module OStatus
       # elements.
       THREAD_NAMESPACE = "http://purl.org/syndication/thread/1.0"
 
+      # The XML namespace that identifies the conforming specification.
+      ACTIVITY_NAMESPACE = 'http://activitystrea.ms/spec/1.0/'
+
+      # The XML schema that identifies the conforming schema for objects.
+      SCHEMA_ROOT = 'http://activitystrea.ms/schema/1.0/'
+
       include ::Atom::SimpleExtensions
 
-      add_extension_namespace :activity, OStatus::Activity::NAMESPACE
+      add_extension_namespace :activity, ACTIVITY_NAMESPACE
       element 'activity:object-type'
       element 'activity:object', :class => OStatus::Atom::Author
       element 'activity:verb'
@@ -103,11 +109,11 @@ module OStatus
 
         object_type = entry_hash[:type]
         if object_type
-          entry_hash[:activity_object_type] = OStatus::Activity::SCHEMA_ROOT + object_type.to_s
+          entry_hash[:activity_object_type] = SCHEMA_ROOT + object_type.to_s
         end
         entry_hash[:activity_object] = entry_hash[:object] if entry_hash[:object]
         if entry_hash[:verb]
-          entry_hash[:activity_verb] = OStatus::Activity::SCHEMA_ROOT + entry_hash[:verb].to_s
+          entry_hash[:activity_verb] = SCHEMA_ROOT + entry_hash[:verb].to_s
         end
         entry_hash[:activity_target] = entry_hash[:target] if entry_hash[:target]
 
@@ -123,8 +129,8 @@ module OStatus
         # Reform the activity type
         # TODO: Add new Base schema verbs
         object_type = self.activity_object_type
-        if object_type && object_type.start_with?(OStatus::Activity::SCHEMA_ROOT)
-          object_type.gsub!(/^#{Regexp.escape(OStatus::Activity::SCHEMA_ROOT)}/, "")
+        if object_type && object_type.start_with?(SCHEMA_ROOT)
+          object_type.gsub!(/^#{Regexp.escape(SCHEMA_ROOT)}/, "")
         end
 
         object = nil

@@ -14,7 +14,13 @@ module OStatus
 
       include ::Atom::SimpleExtensions
 
-      add_extension_namespace :activity, OStatus::Activity::NAMESPACE
+      # The XML namespace the specifies this content.
+      POCO_NAMESPACE = 'http://portablecontacts.net/spec/1.0'
+
+      # The XML namespace that identifies the conforming specification.
+      ACTIVITY_NAMESPACE = 'http://activitystrea.ms/spec/1.0/'
+
+      add_extension_namespace :activity, ACTIVITY_NAMESPACE
       element 'activity:object-type'
 
       namespace ::Atom::NAMESPACE
@@ -23,7 +29,7 @@ module OStatus
 
       elements :links, :class => ::Atom::Link
 
-      add_extension_namespace :poco, OStatus::Author::NAMESPACE
+      add_extension_namespace :poco, POCO_NAMESPACE
       element 'poco:id'
       element 'poco:organization', :class => OStatus::Atom::Organization
       element 'poco:address',      :class => OStatus::Atom::Address
@@ -48,7 +54,7 @@ module OStatus
 
       def poco_name
         return @poco_name if @poco_name
-        name = self[OStatus::Author::NAMESPACE, 'name'].first
+        name = self[POCO_NAMESPACE, 'name'].first
         if name
           name = "<name>#{name}</name>"
           reader = XML::Reader.string(name)
